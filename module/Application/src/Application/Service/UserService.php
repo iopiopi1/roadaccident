@@ -23,7 +23,14 @@ class UserService extends EntityServiceAbstract {
 
         return $user;
     }
+	
+	public function checkLogin($username,$password)
+    {
+        $user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy(array('username' => $username, 'password' => $password));
 
+        return $user;
+    }
+	
     public function setEntityManager($em){
         $this->entityManager = $em;
         return $this;

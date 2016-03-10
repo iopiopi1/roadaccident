@@ -27,54 +27,82 @@ class User extends Form {
             'name' => 'username',
             'type' => 'text',
             'options' => array(
-                'label' => 'Логин*'
-            )
+                'label' => '',
+            ),
+			'attributes' => array(
+				'class' => 'form-control',
+				'placeholder' => 'Логин'
+			),
         ));
 
         $this->add(array(
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'options' => array(
-                'label' => 'Email*'
-            )
+                'label' => ''
+            ),
+			'attributes' => array(
+				'class' => 'form-control',
+				'placeholder' => 'Email'
+			),
         ));
 
         $this->add(array(
             'name' => 'password',
             'type' => 'Zend\Form\Element\Password',
             'options' => array(
-                'label' => 'Пароль'
-            )
+                'label' => ''
+            ),
+			'attributes' => array(
+				'class' => 'form-control',
+				'placeholder' => 'Пароль'
+			),
         ));
 
         $this->add(array(
             'name' => 'password_repeat',
             'type' => 'Zend\Form\Element\Password',
             'options' => array(
-                'label' => 'Пароль еще раз'
-            )
+                'label' => ''
+            ),
+			'attributes' => array(
+				'class' => 'form-control',
+				'placeholder' => 'Пароль'
+			),
         ));
 
         $this->add(array(
             'name' => 'firstname',
             'type' => 'text',
             'options' => array(
-                'label' => 'Имя'
-            )
+                'label' => ''
+            ),
+			'attributes' => array(
+				'class' => 'form-control',
+				'placeholder' => 'Имя'
+			),
         ));
 
         $this->add(array(
             'name' => 'lastname',
             'type' => 'text',
             'options' => array(
-                'label' => 'Фамилия'
-            )
+                'label' => ''
+            ),
+			'attributes' => array(
+				'class' => 'form-control',
+				'placeholder' => 'Фамилия'
+			),
         ));
 
         $this->add(array(
             'name' => 'save',
             'type' => 'submit',
-            'attributes' => array('value' => 'Зарегистрироваться'),
+            'attributes' => array(
+				'value' => 'Зарегистрироваться',
+				'class' => 'form-control btn-primary',
+			),
         ));
+				
     }
 } 

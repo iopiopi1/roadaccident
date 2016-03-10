@@ -11,11 +11,29 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 class IndexController extends AbstractActionController
-{
+{	
+	
+	/** @var \Application\Service\VehicleService */
+    protected $serviceVehicle = null;
+
+    function __construct($serviceVehicle)
+    {
+        $this->serviceVehicle = $serviceVehicle;
+    }
+	
     public function indexAction()
     {
-        return new ViewModel();
+		
+		$images = $this->serviceVehicle->getTopImages(15);
+				
+        return new ViewModel(
+			array(
+					'images' => $images
+				)
+		);
+		
     }
 }

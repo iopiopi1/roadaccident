@@ -11,6 +11,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Zend\Session\Container;
 
 class VehicleController extends AbstractActionController
 {
@@ -21,9 +22,12 @@ class VehicleController extends AbstractActionController
     /** @var \Application\Service\VehicleService */
     protected $serviceVehicle = null;
 
-    function __construct($serviceVehicle)
+    protected $entityManager = null;
+	
+    function __construct($serviceVehicle,$entityManager)
     {
         $this->serviceVehicle = $serviceVehicle;
+		$this->entityManager = $entityManager;
     }
 
     public function indexAction()
@@ -64,19 +68,22 @@ class VehicleController extends AbstractActionController
 
     public function addvehicleimagesajaxAction(){
         $request = $this->getRequest();
+		$user_session = new Container('user');
+		$user_id = $user_session->id;
         if ($request->isPost()) {
             $post = $request->getPost()->toArray();
             parse_str($post['vehicleData'], $vehicleData);
             parse_str($post['photoData'], $photoData);
             $vehicle_uid = $photoData['vehicle_uid'];
             $vehicle_id = $photoData['vehicle_id'];
-            if(!is_null($vehicle_uid)) {
+            if($vehicle_uid > 0) {
                 // new vehicle
                 $vehicle = new \Application\Entity\Vehicle();
                 $vehicle->setDateEdited(new \DateTime("now"));
                 $vehicle->setStatus(\Application\Entity\Vehicle::STATUS_ACTIVE);
                 $vehicle->setBrand($vehicleData['brand']);
                 $vehicle->setRegnum($vehicleData['regnum']);
+                $vehicle->setUser($user_id);
                 $vehicle_new = $this->serviceVehicle->save($vehicle);
                 $vehicle_id = $vehicle_new->getId();
                 $img_path_tmp = 'public/' . \Application\Controller\ApiController::FOLDER_IMG_TMP . '/' . $vehicle_uid;
@@ -98,6 +105,7 @@ class VehicleController extends AbstractActionController
                             $image->setType(1);
                             $image->setName($fileInfo->getFilename());
                             $image->setVehicle($vehicle_id);
+                            $image->setUser($user_id);
                             $this->serviceVehicle->save($image);
                         }
                     }
@@ -110,6 +118,7 @@ class VehicleController extends AbstractActionController
                             $image->setType(0);
                             $image->setName($fileInfo->getFilename());
                             $image->setVehicle($vehicle_id);
+                            $image->setUser($user_id);
                             $this->serviceVehicle->save($image);
                         }
                     }
@@ -117,18 +126,11 @@ class VehicleController extends AbstractActionController
             }
             else{
                 // existing vehicle
-                /*$vehicle = new \Application\Entity\Vehicle();
-                $vehicle->setDateEdited(new \DateTime("now"));
-                $vehicle->setStatus(\Application\Entity\Vehicle::STATUS_ACTIVE);
-                $vehicle->setBrand($vehicleData['brand']);
-                $vehicle->setRegnum($vehicleData['regnum']);
-                $vehicle_new = $this->serviceVehicle->save($vehicle);
-                $vehicle_id = $vehicle_new->getId();*/
-                $img_path = 'public/' . \Application\Controller\ApiController::FOLDER_IMG . '/' . $vehicle_id;
-                /*if (!is_dir($img_path)) {
-                    mkdir($img_path, 0777, true);
-                    mkdir($img_path . '/' . 'thumbnail', 0777, true);
-                }*/
+
+                $img_path_tmp = 'public/' . \Application\Controller\ApiController::FOLDER_IMG_TMP . '/' . $vehicle_id;
+				$img_path = 'public/' . \Application\Controller\ApiController::FOLDER_IMG . '/' . $vehicle_id;
+
+				$vehicle = $this->entityManager->find('\Application\Entity\Vehicle',$vehicle_id);
                 $recdir = new \RecursiveDirectoryIterator($img_path_tmp);
                 $recdir->setFlags(\RecursiveDirectoryIterator::SKIP_DOTS);
                 $iterator = new \RecursiveIteratorIterator($recdir);
@@ -142,22 +144,26 @@ class VehicleController extends AbstractActionController
                             $image->setType(1);
                             $image->setName($fileInfo->getFilename());
                             $image->setVehicle($vehicle_id);
+                            $image->setUser($user_id);
                             $this->serviceVehicle->save($image);
                         }
                     }
                     else {
                         if(rename(str_replace('\\', '/', $fileInfo->getPathname()), $img_path . '/' . $fileInfo->getFilename())){
-                            rmdir($fileInfo->getPath());
                             $image = new \Application\Entity\Image();
                             $image->setPath($img_path . '/' . $fileInfo->getFilename());
                             $image->setStatus(0);
                             $image->setType(0);
                             $image->setName($fileInfo->getFilename());
                             $image->setVehicle($vehicle_id);
+                            $image->setUser($user_id);
                             $this->serviceVehicle->save($image);
                         }
                     }
                 }
+				if(is_dir($img_path_tmp)){
+					rmdir($img_path_tmp);
+				}
             }
         }
 

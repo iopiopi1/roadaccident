@@ -9,8 +9,8 @@ $(document).ready(function(){
             url: "registerajax",
             method: "POST",
             data: userData,
-            success: function ($success) {
-                alert('success!');
+            success: function () {
+
             }
         });
     });
@@ -20,11 +20,29 @@ $(document).ready(function(){
         var vehicleData = $('#vehicle').serialize();
         var photoData = $('#fileupload').serialize();
         $.ajax({
-            url: "addvehicleimagesajax",
+            url: baseUrl + "vehicle/addvehicleimagesajax",
             method: "POST",
             data: {vehicleData: vehicleData, photoData: photoData},
-            success: function ($success) {
-                alert('success!');
+            success: function () {
+
+            }
+        });
+    });
+	
+	$('#login').submit(function(event){
+        event.preventDefault();
+        var loginData = $('#login').serialize();
+        $.ajax({
+            url: baseUrl + "user/checklogin",
+            method: "POST",
+            data: loginData,
+            success: function (result) {
+                if(result.state == 'success'){
+					window.location.href = baseUrl + "index";
+				}
+				else{
+					alert(result.errorMsg);
+				}
             }
         });
     });

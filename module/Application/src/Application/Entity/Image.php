@@ -59,6 +59,11 @@ class Image
      */
     protected $name;
 
+	/**
+     * @ORM\Column(type="integer")
+     */
+    protected $user;
+	
     public function __construct()
     {
         $this->setDateCreated(new \DateTime("now"));
@@ -183,4 +188,22 @@ class Image
         return $this->name;
     }
 
+	
+    /**
+     * @param integer $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+	
 }

@@ -12,6 +12,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Zend\Session\Container;
 
 class ApiController extends AbstractActionController
 {
@@ -41,10 +42,14 @@ class ApiController extends AbstractActionController
             );
 
             $vehicle_uid = $post['vehicle_uid'];
+			$vehicle_id = $post['vehicle_id'];
 
             try {
-                if(!is_dir('public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid))
-                    mkdir('public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid);
+				if(!$vehicle_uid > 0){
+					$vehicle_uid = $vehicle_id;
+				}
+				if(!is_dir('public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid))
+						mkdir('public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid);
             }
             catch(Exception $e)
             {

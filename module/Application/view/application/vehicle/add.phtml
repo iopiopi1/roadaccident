@@ -46,36 +46,38 @@
         });
     });
 </script>
-<?
-$form = $this->form;
-$form->prepare();
-echo $this->form()->openTag($form);
-?>
-<div class="row">
-    <div class="col-xs-12 col-md-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">add new vehicle</h3>
-            </div>
-		</div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    <? echo $this->formRow($form->get('brand')); ?>
-                </div>
-                <div class="col-md-4 form-group">
-                    <? echo $this->formRow($form->get('regnum')); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    <? echo $this->formRow($form->get('submit')); ?>
-                </div>
-            </div>
-        </div>
-	</div>	
+<div class="container">
+	<?
+	$form = $this->form;
+	$form->prepare();
+	echo $this->form()->openTag($form);
+	?>
+	<div class="row">
+		<div class="col-xs-12 col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">add new vehicle</h3>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<? echo $this->formRow($form->get('brand')); ?>
+					</div>
+					<div class="col-md-4 form-group">
+						<? echo $this->formRow($form->get('regnum')); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<? echo $this->formRow($form->get('submit')); ?>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+
+	<?	echo $this->form()->closeTag($form);?>
+
+	<?=$this->partial('partial-upload.phtml');?>
 </div>
-
-<?	echo $this->form()->closeTag($form);?>
-
-<?=$this->partial('partial-upload.phtml');?>

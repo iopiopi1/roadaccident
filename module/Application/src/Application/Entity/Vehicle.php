@@ -60,7 +60,12 @@ class Vehicle
     {
         $this->setDateCreated(new \DateTime("now"));
     }
-
+	
+	/**
+     * @ORM\Column(type="integer")
+     */
+    protected $user;
+	
     /**
      * @var int
      * @param integer $id
@@ -165,4 +170,23 @@ class Vehicle
         $this->regnum = $regnum;
         return $this;
     }
+	
+	/**
+     * @var int
+     * @param integer $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+	
 }

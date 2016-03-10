@@ -5,3 +5,38 @@
  * Date: 24.02.2016
  * Time: 23:00
  */ 
+$form = $this->form;
+$form->setAttribute('action', $this->url('user', array('action' => 'checklogin', 'method' => 'POST')));
+$form->prepare();
+echo $this->form()->openTag($form);
+//$errorMsg = $this->getEvent()->getRouteMatch()->getParam('errorMsg');
+?>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Войти на сайт</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-4 form-group">
+							<? echo $this->formRow($form->get('username')); ?>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 form-group">
+							<? echo $this->formRow($form->get('password')); ?>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 form-group">
+							<? echo $this->formRow($form->get('login')); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<? echo $this->form()->closeTag($form); ?>
+</div>

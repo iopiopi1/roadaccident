@@ -16,6 +16,9 @@ use Zend\Mvc\I18n\Translator;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\FormElementProviderInterface;
+use Zend\Session\SessionManager;
+use Zend\Session\Config\SessionConfig;
+use Zend\Session\Container;
 
 class Module
 {
@@ -34,4 +37,40 @@ class Module
     {
         return include __DIR__ . '/config/module.config.php';
     }
+	
+	public function onBootstrap($e)
+    {
+        $app = $e->getParam('application');
+        $app->getEventManager()->attach(MvcEvent::EVENT_RENDER, array($this, 'setFormToView'), 100);
+		
+		$viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+		
+		
+		$this->initSession(array(
+			'remember_me_seconds' => 180,
+			'use_cookies' => true,
+			'cookie_httponly' => true,
+		));
+		
+		$viewModel->user_session = new Container('user');
+		
+    }
+
+    public function setFormToView($event)
+    {
+		
+		$searchForm = new \Application\Form\Searchvehicle();
+		
+        $viewModel = $event->getViewModel();
+        $viewModel->setVariables(array(
+            'searchForm' => $searchForm,
+        ));
+    }
+	
+	public function initSession($config)
+	{
+		$user_session = new Container('user');
+		return $user_session;
+	}
+	
 }

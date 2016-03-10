@@ -31,7 +31,7 @@ return array(
                 'options' => array(
                     'route'    => '/application',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
+                        '__NAMESPACE__' => 'Application\Controller\Index',
                         'controller'    => 'Index',
                         'action'        => 'index',
                     ),
@@ -49,6 +49,19 @@ return array(
                             'defaults' => array(
                             ),
                         ),
+                    ),
+                ),
+            ),
+			'index' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route'    => '/index[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'index',
                     ),
                 ),
             ),
@@ -99,6 +112,20 @@ return array(
                     ),
                 ),
             ),
+			'search' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route'    => '/search[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Search',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -140,17 +167,24 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-
+			'Application\Controller\Search' => 'Application\Controller\SearchController'
         ),
         'factories' => array(
             'Application\Controller\User' => function ($sm) {
                 return new \Application\Controller\UserController($sm->getServiceLocator()->get('Application\Service\UserService'));
             },
 			'Application\Controller\Vehicle' => function ($sm) {
-                return new \Application\Controller\VehicleController($sm->getServiceLocator()->get('Application\Service\VehicleService'));
+                return new \Application\Controller\VehicleController(
+					$sm->getServiceLocator()->get('Application\Service\VehicleService'),
+					$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')
+				);
             },
             'Application\Controller\Api' => function ($sm) {
                 return new \Application\Controller\ApiController($sm->getServiceLocator()->get('Application\Service\ApiService'));
+            },
+			
+            'Application\Controller\Index' => function ($sm) {
+                return new \Application\Controller\IndexController($sm->getServiceLocator()->get('Application\Service\VehicleService'));
             },
         ),
     ),
@@ -184,6 +218,8 @@ return array(
         'invokables' => array(
             'Application\Form\User' => 'Application\Form\User',
 			//'Application\Form\Vehicle'=>'Application\Form\Vehicle',
+			'Application\Form\Searchvehicle' => 'Application\Form\Searchvehicle',
+			'Application\Form\Login' => 'Application\Form\Login',
         ),
         'factories' => array('Application\Form\Vehicle' => function($sm) {
                 $form = new \Application\Form\Vehicle();

@@ -12,5 +12,30 @@
  */
 
 return array(
-    // ...
-);
+     // ...
+
+     'navigation' => array(
+         'default' => array(
+             array(
+                 'label' => 'Главная',
+                 'route' => 'home',
+             ),
+             array(
+                 'label' => 'Автономера',
+                 'route' => 'vehicle',
+                 /*'pages' => array(
+                     array(
+                         'label' => 'Child #1',
+                         'route' => 'page-1-child',
+                     ),
+                 ),*/
+             ),
+         ),
+     ),
+     'service_manager' => array(
+         'factories' => array(
+             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+         ),
+     ),
+     // ...
+ );

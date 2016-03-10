@@ -17,6 +17,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+		
+    const STATUS_ACTIVE = 0;
+    const STATUS_BLOCKED = 1;
+    const STATUS_DELETED = 2;
+	
     /**
      * Primary Identifier
      * @var int

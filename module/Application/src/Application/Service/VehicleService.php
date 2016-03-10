@@ -52,6 +52,37 @@ class VehicleService extends EntityServiceAbstract {
 
         return $images;
     }
+	
+	public function getTopImages($top)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('i')
+            ->from('\Application\Entity\Image', 'i')
+			->innerJoin('\Application\Entity\Vehicle', 'v', 'i.vehicle = v.id')
+            ->andWhere('v.status = :status')
+            ->setParameter('status', 0)
+			->setMaxResults($top);
+
+        $query = $qb->getQuery();
+        $images_array = $query->getScalarResult();
+		
+		$images = [];
+        foreach ($images_array as $image) {
+            if($image['i_type'] == \Application\Entity\Image::TYPE_IMAGE){
+                $images[] = array('path' => $image['i_path'], 'name' => $image['i_name'], 'thumbnail' => null, 'vehicle' => $image['i_vehicle']);
+            }
+        }
+        foreach ($images_array as $image) {
+            if($image['i_type'] = \Application\Entity\Image::TYPE_THUMBNAIL){
+                foreach($images as $key => $img){
+                    if($image['i_name'] == $img['name']){
+                        $images[$key]['thumbnail'] = $image['i_path'];
+                    }
+                }
+            }
+        }
+        return $images;
+    }
 
     public function save($entity)
     {
