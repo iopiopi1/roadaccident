@@ -6,7 +6,7 @@ $(document).ready(function(){
         event.preventDefault();
         var userData = $('#user').serialize();
         $.ajax({
-            url: "registerajax",
+            url: baseUrl + "user/registerajax",
             method: "POST",
             data: userData,
             success: function () {
@@ -41,7 +41,8 @@ $(document).ready(function(){
 					window.location.href = baseUrl + "index";
 				}
 				else{
-					alert(result.errorMsg);
+					//alert(result.errorMsg);
+                    $('#warning_alert_login').css({visibility:'visible'});
 				}
             }
         });

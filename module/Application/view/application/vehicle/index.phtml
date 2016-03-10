@@ -74,6 +74,14 @@ $form->prepare();
 						<? echo $this->formRow($form->get('submit')); ?>
 					</div>
 				</div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        Создан пользователем <span class="badge"><?=$this->user->getUsername();?></span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Дата создания <span class="badge"><?=$this->vehicle->getDatecreated()->format('Y-m-d');?></span>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>

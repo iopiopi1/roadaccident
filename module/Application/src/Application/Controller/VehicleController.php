@@ -35,6 +35,8 @@ class VehicleController extends AbstractActionController
         $vehicle_id = $this->params()->fromRoute('id');
         if($vehicle_id > 0){
             $vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
+            $user_id = $vehicle->getUser();
+            $user = $this->serviceVehicle->getUserById($user_id);
             $images = $this->serviceVehicle->getImages($vehicle_id);
             $form = $this->getVehicleForm();
             $form->bind($vehicle);
@@ -46,6 +48,8 @@ class VehicleController extends AbstractActionController
                 'form' => $form,
                 'vehicle_uid' => null,
                 'vehicle_id' => $vehicle_id,
+                'user' => $user,
+                'vehicle' => $vehicle,
             )
         );
     }

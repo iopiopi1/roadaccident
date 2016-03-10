@@ -28,6 +28,9 @@ echo $this->form()->openTag($form);
 						<div class="col-md-4 form-group">
 							<? echo $this->formRow($form->get('password')); ?>
 						</div>
+                        <div id="warning_alert_login" style="visibility:hidden;" class="alert alert-danger" role="alert">
+                            <strong>Неверный</strong> пароль/логин.
+                        </div>
 					</div>
 					<div class="row">
 						<div class="col-md-4 form-group">

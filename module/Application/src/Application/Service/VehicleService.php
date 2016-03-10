@@ -22,6 +22,12 @@ class VehicleService extends EntityServiceAbstract {
         return $vehicle;
     }
 
+    public function getUserById($user_id)
+    {
+        $user = $this->entityManager->find('\Application\Entity\User',$user_id);
+        return $user;
+    }
+
     public function getImages($vehicle_id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -61,6 +67,7 @@ class VehicleService extends EntityServiceAbstract {
 			->innerJoin('\Application\Entity\Vehicle', 'v', 'i.vehicle = v.id')
             ->andWhere('v.status = :status')
             ->setParameter('status', 0)
+            ->setFirstResult(0)
 			->setMaxResults($top);
 
         $query = $qb->getQuery();
