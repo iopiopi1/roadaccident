@@ -1,0 +1,122 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ярослав
+ * Date: 06.03.2016
+ * Time: 20:25
+ */
+
+$images = $this->images;
+$form = $this->form;
+$form->prepare();
+
+?>
+
+<link rel="stylesheet" href="/roadaccident/public/blueimpgallery/css/blueimp-gallery.min.css">
+
+<script>
+    $(function () {
+        'use strict';
+
+        // Initialize the jQuery File Upload widget:
+        $('#fileupload').fileupload({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: baseUrl + 'api/addvehicleajax'
+        });
+
+        // Enable iframe cross-domain access via redirect option:
+        $('#fileupload').fileupload(
+            'option',
+            'redirect',
+            window.location.href.replace(
+                /\/[^\/]*$/,
+                '/cors/result.html?%s'
+            )
+        );
+
+        // Load existing files:
+        $('#fileupload').addClass('fileupload-processing');
+        $.ajax({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: baseUrl + 'api/addvehicleajax',
+            dataType: 'json',
+            context: $('#fileupload')[0]
+        }).always(function () {
+            $(this).removeClass('fileupload-processing');
+        }).done(function (result) {
+            $(this).fileupload('option', 'done')
+                .call(this, $.Event('done'), {result: result});
+        });
+    });
+</script>
+
+<?=$this->form()->openTag($form); ?>
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Автономер <?=$form->get('regnum')->getValue(); ?></h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <? echo $this->formRow($form->get('brand')); ?>
+                </div>
+                <div class="col-md-4 form-group">
+                    <? echo $this->formRow($form->get('regnum')); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <? echo $this->formRow($form->get('submit')); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?=$this->form()->closeTag($form);?>
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Фотографии ТС</h3>
+            </div>
+            <div class="panel-body">
+                <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+                    <div class="slides"></div>
+                    <h3 class="title"></h3>
+                    <a class="prev">‹</a>
+                    <a class="next">›</a>
+                    <a class="close">×</a>
+                    <a class="play-pause"></a>
+                    <ol class="indicator"></ol>
+                </div>
+                <div id="links">
+                    <?php foreach($images as $image): ?>
+                        <a href="/roadaccident/<?=$image['path']; ?>" title="Banana">
+                            <img src="/roadaccident/<?=$image['thumbnail']; ?>" alt="Banana">
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?=$this->partial('partial-upload.phtml');?>
+
+<script src="/roadaccident/public/blueimpgallery/js/blueimp-gallery.min.js"></script>
+<script>
+    document.getElementById('links').onclick = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement,
+            link = target.src ? target.parentNode : target,
+            options = {index: link, event: event},
+            links = this.getElementsByTagName('a');
+        blueimp.Gallery(links, options);
+    };
+</script>
