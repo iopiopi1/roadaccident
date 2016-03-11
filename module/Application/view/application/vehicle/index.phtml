@@ -52,9 +52,9 @@ $form->prepare();
     });
 </script>
 <div class="container">
-	<?=$this->form()->openTag($form); ?>
 	<div class="row">
-		<div class="col-xs-12 col-md-8">
+		<div class="col-xs-6 col-md-12  col-lg-12">
+			<?=$this->form()->openTag($form); ?>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Автономер <?=$form->get('regnum')->getValue(); ?></h3>
@@ -83,10 +83,10 @@ $form->prepare();
                     </div>
                 </div>
 			</div>
+			<?=$this->form()->closeTag($form);?>
 		</div>
 	</div>
 
-	<?=$this->form()->closeTag($form);?>
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
 			<div class="panel panel-default">

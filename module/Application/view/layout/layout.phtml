@@ -65,49 +65,52 @@
 
     </head>
 	<body>
-        <div class="container-fluid">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-4 col-md-4 col-lg-6 col-xs-offset-4 col-md-offset-4 col-lg-offset-3">
+					<div><a href="<?=$this->basePath()?>"><img src="<?=$this->basePath('img/logo.png')?>" /></a></div>
+					<div class="collapse navbar-collapse">
+					
+						<?php //
+						echo $this->navigation('navigation')
+								  ->menu()
+								  ->setMinDepth(0)
+								  ->setMaxDepth(0)
+								  ->setUlClass('nav navbar-nav');
+						?>
+						<? $searchForm->setAttributes(array('action' => $this->url('search', array('action' => 'index'))));?>
+								<?=$this->form()->openTag($searchForm);?>
+						<div class="col-lg-4 col-xs-2">
+							<div class="input-group">
+
+								<?=$this->formRow($searchForm->get('regnum'))?>
+								<span class="input-group-btn">
+									<?=$this->formRow($searchForm->get('submit'))?>
+								</span>
+
+							</div>
+						</div>
+						<?=$this->form()->closeTag($searchForm);?>
+
+						<ul class="nav nav-pills">
+							<?if($user_session->id > 0):?>
+								<li><a href="<?=$this->url('user', array('action' => 'logout'))?>"><?=$user_session->username; ?>(Выйти)</a></li>
+							<?else:?>
+								<li><a href="<?=$this->url('user', array('action' => 'register'))?>">Регистрация</a></li>
+								<li><a href="<?=$this->url('user', array('action' => 'login'))?>">Войти</a></li>
+							<?endif;?>
+						</ul>
+					</div>
+				</div>
+			</div>
             <div class="row">
-                <div class="col-xs-12 col-md-8 col-md-offset-3 col-xs-offset-2">
-                    <div><a href="<?=$this->basePath()?>"><img src="<?=$this->basePath('img/logo.png')?>" /></a></div>
-                    <div class="collapse navbar-collapse">
-                        <?php //
-                        echo $this->navigation('navigation')
-                                  ->menu()
-                                  ->setMinDepth(0)
-                                  ->setMaxDepth(0)
-                                  ->setUlClass('nav navbar-nav');
-                        ?>
-                        <? $searchForm->setAttributes(array('action' => $this->url('search', array('action' => 'index'))));?>
-                                <?=$this->form()->openTag($searchForm);?>
-                        <div class="col-lg-4 col-xs-2">
-                            <div class="input-group">
-
-                                <?=$this->formRow($searchForm->get('regnum'))?>
-                                <span class="input-group-btn">
-                                    <?=$this->formRow($searchForm->get('submit'))?>
-                                </span>
-
-                            </div>
-                        </div>
-                        <?=$this->form()->closeTag($searchForm);?>
-
-                        <ul class="nav nav-pills">
-                            <?if($user_session->id > 0):?>
-                                <li><a href="<?=$this->url('user', array('action' => 'logout'))?>"><?=$user_session->username; ?>(Выйти)</a></li>
-                            <?else:?>
-                                <li><a href="<?=$this->url('user', array('action' => 'register'))?>">Регистрация</a></li>
-                                <li><a href="<?=$this->url('user', array('action' => 'login'))?>">Войти</a></li>
-                            <?endif;?>
-                        </ul>
-
-                    </div>
+                    
                     <?php echo $this->content; ?>
                     <div class="container">
                         <footer>
                             <p>&copy; 2015 - <?php echo date('Y') ?> by Iaroslav Kasianenko. <?php echo $this->translate('All rights reserved.') ?></p>
                         </footer>
                     </div>
-                </div>
 
             </div>
 		</div> 

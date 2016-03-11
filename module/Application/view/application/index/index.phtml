@@ -1,11 +1,35 @@
 <?$images = $this->images;?>
 
 <div class="row">
-	<div class="col-xs-6 col-md-12 col-lg-12">
-		<?foreach($images as $image):?>
-			<a href="<?=$this->url('vehicle', array('action' => 'index', 'id' => $image['vehicle'])); ?>" title="<?=$image['name']?>">
-				<img src="/roadaccident/<?=$image['thumbnail']; ?>" alt="<?=$image['name']?>">
-			</a>
-		<?endforeach;?>
-	</div>
+	<!--<div class="col-xs-10 col-md-10 col-lg-10">-->
+		<div class="row">
+			<?foreach($images as $image):?>
+
+					<div class="col-xs-1 col-md-1 col-lg-1">
+						<a href="<?=$this->url('vehicle', array('action' => 'index', 'id' => $image['vehicle'])); ?>" title="<?=$image['name']?>">
+							<img class="img-responsive" src="/roadaccident/<?=$image['thumbnail']; ?>" alt="<?=$image['name']?>">
+						</a>
+					</div>
+
+			<?endforeach;?>
+		</div>
+		<div class="emptySpace40px">
+		</div>
+		<div class="container">	
+			<div class="row row-centered">
+				<div class="col-xs-12 col-md-12 col-lg-12 col-centered jumbotron" >
+					<h1>Hello, world!</h1>
+					<p>
+						AVTO-NOMER.RU - крупнейший международный проект в Интернете, посвящённый номерным знакам транспортных средств мира и всему, 
+						что с ними связано: истории, технологиям производства, обращению, статистике выдачи.
+						Главная часть нашего проекта - фотогалерея, в которой любители номеров и автомобилей размещают свои фотографии. Под ними Вы можете 
+						общаться, делиться своими впечатлениями, обсуждать особенности автомобилей, манеру езды владельца, оценить номера. У нас вы можете найти 
+						автомобиль по номеру, но найти сведения о владельце по номеру машины нельзя.
+						Любоваться красивыми номерами хорошо, а иметь на своем автомобиле красивый номер еще лучше! Не упустите возможность купить гос номер на свой автомобиль. 
+						У нас вы найдете предложения о продаже номеров на любой вкус и кошелек.
+						Присоединяйтесь к нам! Добавлять свои фотографии очень просто
+					</p>
+				</div>
+			</div>
+		</div>
 </div>

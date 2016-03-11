@@ -64,9 +64,11 @@ class VehicleService extends EntityServiceAbstract {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('i')
             ->from('\Application\Entity\Image', 'i')
-			->innerJoin('\Application\Entity\Vehicle', 'v', 'i.vehicle = v.id')
+			->innerJoin('\Application\Entity\Vehicle', 'v', 'WITH', 'i.vehicle = v.id')
             ->andWhere('v.status = :status')
             ->setParameter('status', 0)
+			->andWhere('i.type = :type')
+			->setParameter('type', \Application\Entity\Image::TYPE_IMAGE)
             ->setFirstResult(0)
 			->setMaxResults($top);
 
@@ -74,19 +76,13 @@ class VehicleService extends EntityServiceAbstract {
         $images_array = $query->getScalarResult();
 		
 		$images = [];
-        foreach ($images_array as $image) {
-            if($image['i_type'] == \Application\Entity\Image::TYPE_IMAGE){
-                $images[] = array('path' => $image['i_path'], 'name' => $image['i_name'], 'thumbnail' => null, 'vehicle' => $image['i_vehicle']);
-            }
-        }
-        foreach ($images_array as $image) {
-            if($image['i_type'] = \Application\Entity\Image::TYPE_THUMBNAIL){
-                foreach($images as $key => $img){
-                    if($image['i_name'] == $img['name']){
-                        $images[$key]['thumbnail'] = $image['i_path'];
-                    }
-                }
-            }
+        foreach ($images_array as $key => $image) {
+            $images[] = array(
+				'path' => $image['i_path'], 
+				'name' => $image['i_name'], 
+				'thumbnail' => 'public/images/vehicles/' . $image['i_vehicle'] . '/thumbnail/' . $image['i_name'], 
+				'vehicle' => $image['i_vehicle'],
+			);	
         }
         return $images;
     }
