@@ -2,3 +2,14 @@
 	display:block;
 	padding:40px;
 }
+
+.emptySpace20px{
+    display:block;
+    padding:20px;
+}
+
+footer{
+    background: #337ab7;
+    background: darken(#428bca, 6.5%);
+    color:#fff;
+}
