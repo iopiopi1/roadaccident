@@ -51,71 +51,93 @@ $form->prepare();
         });
     });
 </script>
+<div class="emptySpace20px"></div>
 <div class="container">
 	<div class="row">
 		<div class="col-xs-6 col-md-12  col-lg-12">
 			<?=$this->form()->openTag($form); ?>
-			<div class="panel panel-default">
+			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Автономер <?=$form->get('regnum')->getValue(); ?></h3>
 				</div>
-			</div>
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-4 form-group">
-						<?$form->get('brand')->setAttribute('disabled','disabled');?>
-						<?=$this->formRow($form->get('brand'));?>
-					</div>
-					<div class="col-md-4 form-group">
-						<?$form->get('regnum')->setAttribute('disabled','disabled');?>
-						<? echo $this->formRow($form->get('regnum')); ?>
-					</div>
-					<div class="col-md-4 form-group">
-						<? echo $this->formRow($form->get('submit')); ?>
-					</div>
+                <div class="emptySpace40px"></div>
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="col-md-4 form-group">
+                            <?$form->get('brand')->setAttribute('disabled','disabled');?>
+                            <?=$this->formRow($form->get('brand'));?>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <?$form->get('regnum')->setAttribute('disabled','disabled');?>
+                            <? echo $this->formRow($form->get('regnum')); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="col-md-4 form-group">
+                            <? echo $this->formRow($form->get('submit')); ?>
+                        </div>
+                    </div>
 				</div>
                 <div class="row">
-                    <div class="col-md-4 form-group">
-                        Создан пользователем <span class="badge"><?=$this->user->getUsername();?></span>
+                    <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="col-md-4 form-group">
+                            Создан пользователем <span class="badge"><?=$this->user->getUsername();?></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            Дата создания <span class="badge"><?=$this->vehicle->getDatecreated()->format('Y-m-d');?></span>
+                        </div>
                     </div>
-                    <div class="col-md-4 form-group">
-                        Дата создания <span class="badge"><?=$this->vehicle->getDatecreated()->format('Y-m-d');?></span>
+                </div>
+                <div class="emptySpace20px"></div>
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="col-md-4 form-group">
+                            <img src="/roadaccident/public/images/vehicles/<?=$this->vehicle_id?>/regnum.png">
+                        </div>
+                    </div>
+                </div>
+                <?=$this->form()->closeTag($form);?>
+                <div class="emptySpace20px"></div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="col-xs-12 col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Фотографии ТС</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+                                        <div class="slides"></div>
+                                        <h3 class="title"></h3>
+                                        <a class="prev">‹</a>
+                                        <a class="next">›</a>
+                                        <a class="close">×</a>
+                                        <a class="play-pause"></a>
+                                        <ol class="indicator"></ol>
+                                    </div>
+                                    <div id="links">
+                                        <?php foreach($images as $image): ?>
+                                            <a href="/roadaccident/<?=$image['path']; ?>" title="<?=$image['name']?>">
+                                                <img src="/roadaccident/<?=$image['thumbnail']; ?>" alt="<?=$image['name']?>">
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <div class="emptySpace40px"></div>
+                                    <?=$this->partial('partial-upload.phtml');?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 			</div>
-			<?=$this->form()->closeTag($form);?>
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-xs-12 col-md-8">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Фотографии ТС</h3>
-				</div>
-				<div class="panel-body">
-					<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-						<div class="slides"></div>
-						<h3 class="title"></h3>
-						<a class="prev">‹</a>
-						<a class="next">›</a>
-						<a class="close">×</a>
-						<a class="play-pause"></a>
-						<ol class="indicator"></ol>
-					</div>
-					<div id="links">
-						<?php foreach($images as $image): ?>
-							<a href="/roadaccident/<?=$image['path']; ?>" title="<?=$image['name']?>">
-								<img src="/roadaccident/<?=$image['thumbnail']; ?>" alt="<?=$image['name']?>">
-							</a>
-						<?php endforeach; ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<?=$this->partial('partial-upload.phtml');?>
+
+
 </div>
 
 <script src="/roadaccident/public/blueimpgallery/js/blueimp-gallery.min.js"></script>
