@@ -18,15 +18,41 @@ class ApiController extends AbstractActionController
 {
     /** @var \Application\Service\ApiService */
     protected $serviceApi = null;
-
+	
+	/** @var \Application\Service\UserService */
+    protected $serviceUser = null;
+	
     const FOLDER_IMG_TMP = "images/vehicles_tmp";
     const FOLDER_IMG = "images/vehicles";
 
-    function __construct($serviceApi)
+    function __construct($serviceApi,$serviceUser)
     {
         $this->serviceApi = $serviceApi;
+		$this->serviceUser = $serviceUser;
     }
-
+			
+	public function registerconfirmAction()
+    {	
+        $hashcode = $this->params()->fromRoute('url');
+		$user_id = $this->serviceUser->setUserActive($hashcode);
+		
+		if($user_id > 0){
+			
+			$this->serviceUser->updateById($user_id);
+			
+			$result = 'success';
+		}
+		else{
+			$result = 'failed';
+		}
+		
+        return new ViewModel(
+            array(
+                'success' => $result,
+            )
+        );
+    }
+	
     public function addvehicleajaxAction()
     {
 

@@ -27,7 +27,7 @@ class UserController extends AbstractActionController
     {
 		$form = $this->getLoginForm();
         $user = new \Application\Entity\User();
-
+		
         return new ViewModel(
             array(
                 'form' => $form
@@ -55,21 +55,22 @@ class UserController extends AbstractActionController
             )
         );
     }
-
+	
     public function registerajaxAction()
     {
         $form = $this->getUserForm();
         $user = new \Application\Entity\User();
         $form->bind($user);
-
+		$server_url = $this->getRequest()->getUri()->getScheme() . '://' . $this->getRequest()->getUri()->getHost();
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $user = $form->getData();
                 $user->setDateEdited(new \dateTime("now"));
-				$user->setStatus(\Application\Entity\User::STATUS_ACTIVE);
-                $this->serviceUser->save($user);
+				$user->setStatus(\Application\Entity\User::STATUS_NONACTIVE);
+                $user = $this->serviceUser->save($user);
+				$this->serviceUser->sendConfirmationEmail($user->getEmail(),$user->getUsername(),$user->getId(),$user->getPassword(),$server_url);
             }else {
                 $messages = $form->getMessages();
             }

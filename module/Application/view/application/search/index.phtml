@@ -1,0 +1,33 @@
+<?$vehicles = $this->vehicles;?>
+<?$regnum_search = $this->regnum_search;?>
+<div class="row">
+	<div class="col-xs-6 col-md-6  col-lg-6 col-xs-offset-3 col-md-offset-3  col-lg-offset-3">
+		<div class="emptySpace20px"></div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Результаты поиска номера "<?=$regnum_search?>"</h3>
+			</div>
+			<div class="emptySpace30px"></div>
+			<div class="panel-body">
+				<?if(count($vehicles) > 0):?>
+					<?php foreach($vehicles as $vehicle): ?>
+						<div class="col-xs-3 col-md-3  col-lg-3 col-xs-offset-1 col-md-offset-1  col-lg-offset-1">
+							<div class="row">
+								<h2><?=$vehicle['v_regnum']?></h2>
+							</div>				
+								
+							<div class="row">
+								<a href="<?=$this->url('vehicle', array('action' => 'index', 'id' => $vehicle['v_id'])); ?>" title="<?=$vehicle['i_name']?>">
+									<img class="img-responsive" src="/roadaccident/<?=$vehicle['i_path']; ?>" alt="<?=$vehicle['i_name']?>">
+								</a>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				<?else:?>
+					Похожих номеров найдено не было.
+				<?endif;?>
+			</div>
+			<div class="emptySpace30px"></div>
+		</div>
+	</div>
+</div>

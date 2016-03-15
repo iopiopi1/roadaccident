@@ -127,8 +127,6 @@ class VehicleController extends AbstractActionController
                         }
                     }
                 }
-                // create regnum image
-                $this->serviceVehicle->createRegnumImage($vehicle->getRegnum(),$img_path);
             }
             else{
                 // existing vehicle

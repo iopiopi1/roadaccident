@@ -106,30 +106,15 @@
             <div class="row">
                     
                     <?php echo $this->content; ?>
-
+                    <div class="container">
+                        <footer>
+                            <p>&copy; 2015 - <?php echo date('Y') ?> by Iaroslav Kasianenko. <?php echo $this->translate('All rights reserved.') ?></p>
+                        </footer>
+                    </div>
 
             </div>
-		</div>
-        <div class="container-fluent">
-            <footer>
-                <div class="emptySpace40px"></div>
-                    <div class="row">
-                        <div class="col-xs-4 col-md-4 col-lg-6 col-xs-offset-4 col-md-offset-4 col-lg-offset-3">
-                            <p>Фотографии автомобилей, мотоциклов, прочих транспортных средств и номеров
-                            Всего 7 486 273 фото
-                            Копирование материалов возможно только с указанием обязательной активной ссылки на сайт avto-nomer.ru</p>
-                        </div>
-                    </div>
-                <div class="emptySpace20px"></div>
-                    <div class="row">
-                        <div class="col-xs-4 col-md-4 col-lg-6 col-xs-offset-4 col-md-offset-4 col-lg-offset-3">
-                            <p>&copy; 2015 - <?php echo date('Y') ?> by Iaroslav Kasianenko. <?php echo $this->translate('All rights reserved.') ?></p>
-                        </div>
-                    </div>
+		</div> 
 
-                <div class="emptySpace40px"></div>
-            </footer>
-        </div>
 		<?php echo $this->inlineScript() ?>
 	</body>
 </html>

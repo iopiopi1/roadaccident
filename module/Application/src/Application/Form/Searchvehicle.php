@@ -49,6 +49,7 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
             'attributes' => array(
 				'value' => 'Ok',
 				'class' => 'btn btn-default',
+				'type' => 'submit',
 			),
 			'options' => array(
 				'label' => 'Найти'

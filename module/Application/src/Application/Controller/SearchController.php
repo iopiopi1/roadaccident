@@ -16,11 +16,29 @@ use Zend\Session\Container;
 
 class SearchController extends AbstractActionController
 {
+	
+	/** @var \Application\Service\SearchService */
+    protected $serviceSearch = null;
+	
+	function __construct($serviceSearch)
+    {
+        $this->serviceSearch = $serviceSearch;
+    }
+	
 	public function indexAction()
     {
+		$request = $this->getRequest();
+		$vehicles = [];
+		$regnum_search = '';
+		if ($request->isPost()) {
+			$regnum_search = $this->getRequest()->getPost('regnum');
+			$vehicles = $this->serviceSearch->getRegnumMatches($regnum_search);
+		}
+		
 		return new ViewModel(
             array(
-                
+                'vehicles' => $vehicles,
+				'regnum_search' => $regnum_search,
             )
         );
     }

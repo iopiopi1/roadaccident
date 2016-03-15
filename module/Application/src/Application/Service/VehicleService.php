@@ -87,20 +87,6 @@ class VehicleService extends EntityServiceAbstract {
         return $images;
     }
 
-    public function createRegnumImage($regnum, $img_path)
-    {
-        $regnumBase = substr($regnum,0,6);
-        $regnumRegionLength = iconv_strlen($regnum) - iconv_strlen($regnumBase);
-        $regnumRegion = substr($regnum,-$regnumRegionLength);
-
-        $im = imagecreatefrompng("public/img/regnum_template.png");
-        $black = imagecolorallocate($im, 43, 42, 40);
-        $font = 'public/fonts/arial.ttf';
-        imagettftext($im, 60, 0, 40, 80, $black, $font, $regnumBase);
-        imagettftext($im, 40, 0, 350, 60, $black, $font, $regnumRegion);
-        imagepng($im,$img_path . '/regnum.png');
-    }
-
     public function save($entity)
     {
         $this->entityManager->persist($entity);

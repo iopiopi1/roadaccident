@@ -110,6 +110,16 @@ return array(
                             ),
                         ),
                     ),
+					'registerconfirm' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/registerconfirm[/:url]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'registerconfirm',
+                            ),
+                        ),
+                    ),
                 ),
             ),
 			'search' => array(
@@ -141,6 +151,7 @@ return array(
             'Application\Service\UserService' => function($sm) {
                 $service = new \Application\Service\UserService();
                 $service->setEntityManager($sm->get('Doctrine\ORM\EntityManager'));
+				$service->setViewHelper($sm->get('ViewHelperManager'));
                 return $service;
             },
 			'Application\Service\VehicleService' => function($sm) {
@@ -150,6 +161,11 @@ return array(
             },
             'Application\Service\ApiService' => function($sm) {
                 $service = new \Application\Service\ApiService();
+                $service->setEntityManager($sm->get('Doctrine\ORM\EntityManager'));
+                return $service;
+            },
+			'Application\Service\SearchService' => function($sm) {
+                $service = new \Application\Service\SearchService();
                 $service->setEntityManager($sm->get('Doctrine\ORM\EntityManager'));
                 return $service;
             },
@@ -167,7 +183,6 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-			'Application\Controller\Search' => 'Application\Controller\SearchController'
         ),
         'factories' => array(
             'Application\Controller\User' => function ($sm) {
@@ -180,11 +195,16 @@ return array(
 				);
             },
             'Application\Controller\Api' => function ($sm) {
-                return new \Application\Controller\ApiController($sm->getServiceLocator()->get('Application\Service\ApiService'));
+                return new \Application\Controller\ApiController(
+					$sm->getServiceLocator()->get('Application\Service\ApiService'),
+					$sm->getServiceLocator()->get('Application\Service\UserService')
+				);
             },
-			
             'Application\Controller\Index' => function ($sm) {
                 return new \Application\Controller\IndexController($sm->getServiceLocator()->get('Application\Service\VehicleService'));
+            },
+			'Application\Controller\Search' => function ($sm) {
+                return new \Application\Controller\SearchController($sm->getServiceLocator()->get('Application\Service\SearchService'));
             },
         ),
     ),
