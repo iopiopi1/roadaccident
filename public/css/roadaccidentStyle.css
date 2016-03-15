@@ -3,12 +3,18 @@
 	padding:40px;
 }
 
+.emptySpace20px{
+    display:block;
+    padding:20px;
+}
+
 .emptySpace30px{
 	display:block;
 	padding:30px;
 }
 
-.emptySpace20px{
-	display:block;
-	padding:30px;
+footer{
+    background: #337ab7;
+    background: darken(#428bca, 6.5%);
+    color:#fff;
 }
