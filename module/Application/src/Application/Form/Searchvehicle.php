@@ -38,7 +38,8 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
                 'label' => '',
             ),
 			'attributes' => array(
-				'class' => 'form-control',
+				'id' => 'regnum_form_inp',
+				'class' => 'regnum_form',
 				'placeholder' => 'Рег.номер'
 			),
         ));
@@ -47,8 +48,9 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
             'name' => 'submit',
             'type' => 'Zend\Form\Element\Button',
             'attributes' => array(
+				'id' => 'regnum_form_but',
 				'value' => 'Ok',
-				'class' => 'btn btn-default',
+				'class' => 'regnum_form',
 				'type' => 'submit',
 			),
 			'options' => array(
