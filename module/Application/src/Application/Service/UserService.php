@@ -65,7 +65,7 @@ class UserService extends EntityServiceAbstract {
 		$recipient="iopiopi@localhost"; //  $email
 		$subject="Test Email";
 		$headers = "MIME-Version: 1.0\r\n";
-		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 		$mail_body = '
 					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
 

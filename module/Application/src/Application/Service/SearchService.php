@@ -22,7 +22,7 @@ class SearchService extends EntityServiceAbstract {
         $qb->select('v','i')
             ->from('\Application\Entity\Vehicle', 'v')
 			->leftJoin('\Application\Entity\Image', 'i', 'WITH', 'v.id = i.vehicle')
-            ->andWhere('v.regnum LIKE :regnum')
+            ->andWhere('LOWER(v.regnum) LIKE LOWER(:regnum)')
             ->setParameter('regnum', '%' . $regnum . '%')
 			->andWhere('i.type = :type')
 			->setParameter('type', \Application\Entity\Image::TYPE_THUMBNAIL);

@@ -4,6 +4,13 @@
 $(document).ready(function(){
     $('#user').submit(function(event){
         event.preventDefault();
+		var pass1 = $('#password').val();
+		var pass2 = $('#password_repeat').val();
+
+		if(pass1 !== pass2){
+			$('#warning_alert_login').css({visibility:'visible'});
+			return false;
+		}
         var userData = $('#user').serialize();
         $.ajax({
             url: baseUrl + "user/registerajax",

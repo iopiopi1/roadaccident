@@ -32,6 +32,7 @@ class VehicleController extends AbstractActionController
 
     public function indexAction()
     {
+		$user_session = new Container('user');
         $vehicle_id = $this->params()->fromRoute('id');
         if($vehicle_id > 0){
             $vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
@@ -56,6 +57,10 @@ class VehicleController extends AbstractActionController
 
     public function addAction()
     {
+		$user_session = new Container('user');
+		if(!$user_session->id > 0){
+			$this->redirect()->toRoute('user', array('action' => 'login'));
+		}
 		$form = $this->getVehicleForm();
         $vehicle = new \Application\Entity\Vehicle();
 
@@ -66,6 +71,7 @@ class VehicleController extends AbstractActionController
                 'form' => $form,
                 'vehicle_uid' => $uid,
                 'vehicle_id' => null,
+				'user_session' => $user_session,
             )
         );
     }

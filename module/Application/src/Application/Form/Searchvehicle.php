@@ -40,7 +40,8 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
 			'attributes' => array(
 				'id' => 'regnum_form_inp',
 				'class' => 'regnum_form',
-				'placeholder' => 'Рег.номер'
+				'placeholder' => 'Рег.номер (a111aa64)',
+				'pattern' => '[A-Za-zА-Яа-я]\d{3}[A-Za-zА-Яа-я]{2}\d{2,3}',
 			),
         ));
 

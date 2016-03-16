@@ -13,7 +13,9 @@
 					<?php foreach($vehicles as $vehicle): ?>
 						<div class="col-xs-3 col-md-3  col-lg-3 col-xs-offset-1 col-md-offset-1  col-lg-offset-1">
 							<div class="row">
-								<h2><?=$vehicle['v_regnum']?></h2>
+								<h2>
+									<a href="<?=$this->url('vehicle', array('action' => 'index', 'id' => $vehicle['v_id'])); ?>" title="<?=$vehicle['i_name']?>"><?=$vehicle['v_regnum']?>
+								</h2>
 							</div>				
 								
 							<div class="row">
