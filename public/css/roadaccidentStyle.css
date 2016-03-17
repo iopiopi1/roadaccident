@@ -151,3 +151,19 @@ footer{
 	color:#fff;
 }
 
+.descr_btn_simple {
+	display:block;
+	border:0;
+	padding:10px 20px;
+	background: #f0c309;
+	color:#fff;
+	font-family: Arial;
+	text-decoration: none;
+	text-align:center;
+}
+
+.descr_btn_simple:hover{
+	text-decoration:none;
+	color:#fff;
+}
+

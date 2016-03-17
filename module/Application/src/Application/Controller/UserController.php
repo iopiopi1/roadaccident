@@ -77,7 +77,7 @@ class UserController extends AbstractActionController
         }
 
         return new JsonModel(array(
-            'success' => true,
+            'state' => 'success',
             'id' => $user->getId(),
         ));
     }

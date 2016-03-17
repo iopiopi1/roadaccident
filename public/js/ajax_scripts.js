@@ -16,8 +16,10 @@ $(document).ready(function(){
             url: baseUrl + "user/registerajax",
             method: "POST",
             data: userData,
-            success: function () {
-
+            success: function (result) {
+				if(result.state == 'success'){
+					window.location.href = baseUrl + "index";
+				}
             }
         });
     });
@@ -30,8 +32,10 @@ $(document).ready(function(){
             url: baseUrl + "vehicle/addvehicleimagesajax",
             method: "POST",
             data: {vehicleData: vehicleData, photoData: photoData},
-            success: function () {
-
+            success: function (result) {
+				if(result.state == 'success'){
+					window.location.href = baseUrl + "vehicle/index/" + result.id;
+				}
             }
         });
     });

@@ -51,6 +51,7 @@ class VehicleController extends AbstractActionController
                 'vehicle_id' => $vehicle_id,
                 'user' => $user,
                 'vehicle' => $vehicle,
+				'user_session' => $user_session,
             )
         );
     }
@@ -179,9 +180,10 @@ class VehicleController extends AbstractActionController
             }
         }
 
-        return new ViewModel(
+        return new JsonModel(
             array(
                 'id' => $vehicle->getId(),
+				'state' => 'success',
             )
         );
 
