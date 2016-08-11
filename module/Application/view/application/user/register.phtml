@@ -37,7 +37,13 @@ echo $this->form()->openTag($form);
 						<div class="col-md-4 form-group">
 							<? echo $this->formRow($form->get('password_repeat')); ?>
 						</div>
+						<div class="col-md-4 form-group">
+							<div id="warning_alert_login" style="visibility:hidden;" class="alert alert-danger" role="alert">
+								<strong>Пароли не совпадают</strong>.
+							</div>
+						</div>
 					</div>
+					
 					<div class="row">
 						<div class="col-md-4 form-group">
 							<? echo $this->formRow($form->get('firstname')); ?>

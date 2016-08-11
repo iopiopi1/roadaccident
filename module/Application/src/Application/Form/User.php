@@ -31,7 +31,8 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Логин'
+				'placeholder' => 'Логин',
+				'required' => 'required',
 			),
         ));
 
@@ -43,7 +44,9 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Email'
+				'placeholder' => 'Email',
+				'required' => 'required',
+				'pattern' => '^+[A-Za-z][@]+[A-Za-z]$',
 			),
         ));
 
@@ -55,7 +58,9 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Пароль'
+				'placeholder' => 'Пароль',
+				'required' => 'required',
+				'id' => 'password',
 			),
         ));
 
@@ -67,7 +72,9 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Пароль'
+				'placeholder' => 'Пароль',
+				'required' => 'required',
+				'id' => 'password_repeat',
 			),
         ));
 

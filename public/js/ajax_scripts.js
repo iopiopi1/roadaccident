@@ -4,13 +4,22 @@
 $(document).ready(function(){
     $('#user').submit(function(event){
         event.preventDefault();
+		var pass1 = $('#password').val();
+		var pass2 = $('#password_repeat').val();
+
+		if(pass1 !== pass2){
+			$('#warning_alert_login').css({visibility:'visible'});
+			return false;
+		}
         var userData = $('#user').serialize();
         $.ajax({
             url: baseUrl + "user/registerajax",
             method: "POST",
             data: userData,
-            success: function () {
-
+            success: function (result) {
+				if(result.state == 'success'){
+					window.location.href = baseUrl + "index";
+				}
             }
         });
     });
@@ -23,8 +32,10 @@ $(document).ready(function(){
             url: baseUrl + "vehicle/addvehicleimagesajax",
             method: "POST",
             data: {vehicleData: vehicleData, photoData: photoData},
-            success: function () {
-
+            success: function (result) {
+				if(result.state == 'success'){
+					window.location.href = baseUrl + "vehicle/index/" + result.id;
+				}
             }
         });
     });

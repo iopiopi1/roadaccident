@@ -51,6 +51,7 @@ $form->prepare();
         });
     });
 </script>
+
 <div class="emptySpace20px"></div>
 <div class="container">
 	<div class="row">
@@ -125,7 +126,13 @@ $form->prepare();
                                         <?php endforeach; ?>
                                     </div>
                                     <div class="emptySpace40px"></div>
-                                    <?=$this->partial('partial-upload.phtml');?>
+									
+									<?if(!isset($user_session->id)):?>
+										<h5>Для добавления фото необходимо <a href="<?=$this->url('user', array('action' => 'login'))?>"> авторизоваться</a></h5>
+									<?else:?>
+										<?=$this->partial('partial-upload.phtml');?>
+									<?endif;?>
+                                    
                                 </div>
                             </div>
                         </div>
