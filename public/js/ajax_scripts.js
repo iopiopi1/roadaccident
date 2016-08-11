@@ -47,5 +47,19 @@ $(document).ready(function(){
             }
         });
     });
+	
+	$('#vehicle_add_id').keydown(function(){
+		var inputValue = $('#vehicle_add_id').val();
+		if (inputValue != ''){
+			$.ajax({
+				url: baseUrl + "vehicle/getvehiclesmatchedfrominputajax",
+				method: "POST",
+				data: {vehicleData: inputValue},
+				success: function () {
 
+				}
+			});
+		}
+	});
+	
 });

@@ -180,7 +180,22 @@ class VehicleController extends AbstractActionController
         );
 
     }
+	
+	public function getvehiclesmatchedfrominputajaxAction(){
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+            $post = $request->getPost()->toArray();
+            parse_str($post['vehicleData'], $vehicleData);
+		}
+		$vehicles = $this->serviceVehicle->getVehiclesByMatching($vehicleData);
 
+		return new ViewModel(
+            array(
+                'vehicles' => $vehicles,
+            )
+        );
+		
+	}
     public function generateUID(){
         return uniqid();
     }

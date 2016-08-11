@@ -86,6 +86,31 @@ class VehicleService extends EntityServiceAbstract {
         }
         return $images;
     }
+	
+	public function getVehiclesByMatching($vehicleData)
+    {
+		$qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('b,s')
+            ->from('\Application\Entity\Brand', 'b')
+			->innerJoin('\Application\Entity\Supplier', 's', 'WITH', 'b.supplier = s.id')
+            ->andWhere('s.status = :status')
+			->andWhere('b.status = :status')
+            ->setParameter('status', 0)
+			->andWhere("s.name LIKE CONCAT(:vehicleData,'%')")
+			//->andWhere(":vehicleData LIKE CONCAT(CONCAT(CONCAT(b.name,'%'),s.name),'%')")
+			->setParameter('vehicleData', $vehicleData);
+            /*->setFirstResult(0)
+			->setMaxResults($top)*/
+		$vehicles = [];
+		$query = $qb->getQuery();
+        $vehicles_array = $query->getScalarResult();
+
+		foreach ($vehicles_array as $key => $vehicle) {
+			$vehicles[$key] = $vehicle['s_name'] . ' ' . $vehicle['b_name'];
+		}
+		
+		return $vehicles;
+	}
 
     public function createRegnumImage($regnum, $img_path)
     {
