@@ -167,10 +167,19 @@ footer{
 	color:#fff;
 }
 
-#vehicle_add_id{
-    position:absolute;
+#searchVehicleUl_id{
+	list-style-type:none;
+	padding:0;
+	margin:0;
+	border:1px gray solid;
+	border-top:none;
+	--visibility:hidden;
 }
 
-#vehicle_search_id{
-    position:absolute;
+#searchVehicleUl_id li{
+	cursor:pointer;
+}
+
+#searchVehicleUl_id li:hover{
+	background:gray;
 }

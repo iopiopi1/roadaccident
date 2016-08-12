@@ -68,20 +68,15 @@ $(document).ready(function(){
 				data: {vehicleData: inputValue},
 				success: function (vehicles) {
 
-                    /*alert(vehicles.serialize());
-
-                    alert(2);*/
+                    $("#searchVehicleUl_id li").remove();
                     var result = [];
                     for (var key in vehicles){
                         var value = vehicles[key];
                         if(value.name !== undefined){
-                            $("#vehicle_add_id").append($("<option></option>").val(value.brand_id).html(value.name));
+                            $("#searchVehicleUl_id").append('<li>'+value.name+'<input type="hidden" value="'+value.brand_id+'"/></li>');
                         }
                     }
-
-                    $('#vehicle_search_id').hide();
-                    var len = $('#vehicle_add_id> option').length;
-                    $('#vehicle_search_id').attr('size',len);
+					//$("#searchVehicleUl_id").show();
 				}
 			});
 		}
