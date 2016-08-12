@@ -60,7 +60,7 @@ class VehicleController extends AbstractActionController
     {
 		$user_session = new Container('user');
 		if(!$user_session->id > 0){
-			$this->redirect()->toRoute('user', array('action' => 'login'));
+			//$this->redirect()->toRoute('user', array('action' => 'login'));
 		}
 		$form = $this->getVehicleForm();
         $vehicle = new \Application\Entity\Vehicle();
@@ -197,10 +197,8 @@ class VehicleController extends AbstractActionController
 		}
 		$vehicles = $this->serviceVehicle->getVehiclesByMatching($vehicleData);
 
-		return new ViewModel(
-            array(
-                'vehicles' => $vehicles,
-            )
+        return new JsonModel(
+            $vehicles
         );
 		
 	}

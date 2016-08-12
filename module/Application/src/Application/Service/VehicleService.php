@@ -106,7 +106,8 @@ class VehicleService extends EntityServiceAbstract {
         $vehicles_array = $query->getScalarResult();
 
 		foreach ($vehicles_array as $key => $vehicle) {
-			$vehicles[$key] = $vehicle['s_name'] . ' ' . $vehicle['b_name'];
+			$vehicles[] = array('name' => $vehicle['s_name'] . ' ' . $vehicle['b_name'],
+                                'brand_id' => $vehicle['b_id']);
 		}
 		
 		return $vehicles;

@@ -19,14 +19,7 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
     {
 
         parent::__construct();
-    /*public function init()
-    {*/
-        /*$this->setAttributes(
-            array('id' => 'searchvehicle')
-        );*/
-        /*$this->setHydrator(new ClassMethods())
-            ->setObject(new \Application\Entity\Vehicle())
-            ->setInputFilter(new InputFilter());*/
+
 		$this->setAttributes(
             array('id' => 'searchvehicle')
         );
@@ -40,7 +33,7 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
 			'attributes' => array(
 				'id' => 'regnum_form_inp',
 				'class' => 'regnum_form',
-				'placeholder' => 'Рег.номер (a111aa64)',
+				'placeholder' => 'Рег.номер',
 				'pattern' => '[A-Za-zА-Яа-я]\d{3}[A-Za-zА-Яа-я]{2}\d{2,3}',
 			),
         ));

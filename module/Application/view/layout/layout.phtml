@@ -6,7 +6,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle('Фотографии ДТП cardam.ru')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -26,21 +26,6 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-/*
-            ->prependFile($this->basePath() . '/blueimp/js/canvas-to-blob.min.js')
-
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-audio.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-video.js')
-
-
-            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
-
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-angular.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-jquery-ui.js')
-
-            ->prependFile($this->basePath() . '/blueimp/js/cors/jquery.postmessage-transport.js')
-            ->prependFile($this->basePath() . '/blueimp/js/cors/jquery.xdr-transport.js')*/
 
             ->appendFile($this->basePath('js/ajax_scripts.js'), 'text/javascript')
             ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-ui.js')
@@ -93,7 +78,7 @@
 											<?=$this->formRow($searchForm->get('regnum'))?>
 											<?=$this->formRow($searchForm->get('submit'))?>
 									</div>
-									<?=$this->form()->closeTag($searchForm);?>					
+									<?=$this->form()->closeTag($searchForm);?>
 								</li>
 							</ul>					
 						</div>

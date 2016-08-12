@@ -57,7 +57,20 @@ class Vehicle extends Form
 				'id' => 'vehicle_add_id'
 			),
         ));*/
-		
+
+        $this->add(array(
+            'name' => 'regnumSearch',
+            'type' => 'text',
+            'options' => array(
+                'label' => ''
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Марка',
+                'id' => 'vehicle_search_id'
+            ),
+        ));
+
         $this->add(array(
             'name' => 'regnum',
             'type' => 'text',

@@ -167,3 +167,10 @@ footer{
 	color:#fff;
 }
 
+#vehicle_add_id{
+    position:absolute;
+}
+
+#vehicle_search_id{
+    position:absolute;
+}
