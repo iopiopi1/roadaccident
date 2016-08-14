@@ -95,14 +95,16 @@ class VehicleService extends EntityServiceAbstract {
 			->innerJoin('\Application\Entity\Supplier', 's', 'WITH', 'b.supplier = s.id')
             ->andWhere('s.status = :status')
 			->andWhere('b.status = :status')
+			->andWhere("s.name LIKE :param1 OR b.name LIKE :param1 OR :param2 LIKE CONCAT(CONCAT(CONCAT('%',CONCAT(s.name,'%')),b.name),'%')")
+            ->setParameter('param1', $vehicleData.'%')
+            ->setParameter('param2', $vehicleData)
             ->setParameter('status', 0)
-			->andWhere("s.name LIKE CONCAT(:vehicleData,'%')")
-			//->andWhere(":vehicleData LIKE CONCAT(CONCAT(CONCAT(b.name,'%'),s.name),'%')")
-			->setParameter('vehicleData', $vehicleData);
-            /*->setFirstResult(0)
-			->setMaxResults($top)*/
+            ->setFirstResult(0)
+			->setMaxResults(6);
+        $query = $qb->getQuery();
 		$vehicles = [];
-		$query = $qb->getQuery();
+        //$vehicles_array = $dql->getResult();
+        //print_r($vehicles_array);
         $vehicles_array = $query->getScalarResult();
 
 		foreach ($vehicles_array as $key => $vehicle) {
@@ -145,4 +147,31 @@ class VehicleService extends EntityServiceAbstract {
         return $this->entityManager;
     }
 
+    public function getBrandSupplierNameById($brand_id)
+    {
+        $brand = $this->entityManager->find('\Application\Entity\Brand',$brand_id);
+        $supplier = $this->entityManager->find('\Application\Entity\Supplier',$brand->getSupplier());
+        $brandName = $supplier->getName() . " " . $brand->getName();
+        return $brandName;
+    }
+
+    public function correctRegnum($oldRegnum){
+        $upperCase = mb_strtoupper($oldRegnum, 'UTF-8');
+        $newRegnum = '';
+        $letters = array(ord('А') => ord('A'), ord('В') => ord('B'), ord('Е') => ord('E'), ord('К') => ord('K'), ord('М') => ord('M'), ord('Н') => ord('H'), ord('О') => ord('O'),
+                        ord('Р') => ord('P'), ord('С') => ord('C'), ord('Т') => ord('T'), ord('У') => ord('Y'),ord('Х') => ord('X'));
+        print_r($letters);
+        for($i = 0; $i < strlen($upperCase); $i++){
+            $char = substr( $upperCase, $i, 1 );
+            //echo $char;
+            print_r($letters);
+            if(in_array(ord($char), array_keys(letters))){
+                $char = $letters[$char];
+                echo $char.'<br/>';
+            }
+            $newRegnum .= chr($char);
+        }
+        echo $newRegnum;
+        return $newRegnum;
+    }
 } 

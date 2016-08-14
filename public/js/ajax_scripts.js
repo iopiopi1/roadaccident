@@ -73,13 +73,31 @@ $(document).ready(function(){
                     for (var key in vehicles){
                         var value = vehicles[key];
                         if(value.name !== undefined){
-                            $("#searchVehicleUl_id").append('<li>'+value.name+'<input type="hidden" value="'+value.brand_id+'"/></li>');
+                            $("#searchVehicleUl_id").append('<li class="optli">'+value.name+'<input class="hd_id" type="hidden" value="'+value.brand_id+'"/></li>');
                         }
                     }
-					//$("#searchVehicleUl_id").show();
+                    if($("#searchVehicleUl_id").is(':hidden')){
+                        $("#searchVehicleUl_id").show();
+                    }
+                    $(".optli").click(function(){
+                        var index = $("#searchVehicleUl_id li").index(this);
+                        var vehicleName = $("#searchVehicleUl_id li").eq(index).text();
+                        var vehicleId = $(".hd_id").eq(index).val();
+
+                        $('#vehicle_search_id').val(vehicleName);
+                        $('#vehicle_add_id').val(vehicleId);
+                    });
+                    $(document).click(function(){
+                        if($("#searchVehicleUl_id").is(':visible')){
+                            $("#searchVehicleUl_id").hide();
+                        }
+                    });
 				}
+
 			});
+
 		}
 	});
+
 	
 });

@@ -172,8 +172,12 @@ footer{
 	padding:0;
 	margin:0;
 	border:1px gray solid;
+    width:90%;
 	border-top:none;
-	--visibility:hidden;
+    position: absolute;
+	display: none;
+    z-index:100;
+    background:#fff;
 }
 
 #searchVehicleUl_id li{

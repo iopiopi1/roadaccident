@@ -48,6 +48,8 @@ class Vehicle
 	
     /**
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Brand")
+     * @ORM\JoinColumn(name="brand", referencedColumnName="id")
      */
     protected $brand;
 

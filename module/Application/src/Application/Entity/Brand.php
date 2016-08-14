@@ -43,8 +43,8 @@ class Brand
 	
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Supplier", inversedBy="suppliers")
-     * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Supplier")
+     * @ORM\JoinColumn(name="supplier", referencedColumnName="id")
      */
     protected $supplier;
 
@@ -53,7 +53,7 @@ class Brand
      */
     protected $name;
 	
-	    /**
+    /**
      * @var int
      * @param integer $id
      */
@@ -72,7 +72,7 @@ class Brand
     }
 
     /**
-     * @param integer $id
+     * @param integer $status
      */
     public function setStatus($status)
     {
@@ -89,7 +89,7 @@ class Brand
     }
 
     /**
-     * @param \Datetime $id
+     * @param \Datetime $dateCreated
      */
     public function setDateCreated($dateCreated)
     {

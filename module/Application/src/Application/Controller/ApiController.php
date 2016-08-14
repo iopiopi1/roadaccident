@@ -117,7 +117,7 @@ class ApiController extends AbstractActionController
             // if upload failed, delete the directory
             if($uploaded == 0)
             {
-                rmdir(self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid);
+                rmdir('public/'.self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid);
             }
         }//print_r($response);
         return new JsonModel(

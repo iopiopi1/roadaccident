@@ -31,32 +31,27 @@ class Vehicle extends Form
 
         $this->add(array(
             'name' => 'brand',
-            'type' => 'Zend\Form\Element\Select',
-            'options' => array(
-                'label' => '',
-				//'value_options' => $this->getAllBrands(),
-            ),
-			'attributes' => array(
-				'class' => 'form-control',
-				'placeholder' => 'Марка ТС',
-				'id' => 'vehicle_add_id'
-			),
-        ));
-
-		/*
-		$this->add(array(
-            'name' => 'brand',
             'type' => 'text',
             'options' => array(
                 'label' => '',
-				//'value_options' => $this->getAllBrands(),
             ),
 			'attributes' => array(
 				'class' => 'form-control',
 				'placeholder' => 'Марка ТС',
+			),
+        ));
+
+
+		$this->add(array(
+            'name' => 'brand_id_hidden',
+            'type' => 'hidden',
+            'options' => array(
+                'label' => '',
+            ),
+			'attributes' => array(
 				'id' => 'vehicle_add_id'
 			),
-        ));*/
+        ));
 
         $this->add(array(
             'name' => 'regnumSearch',
@@ -67,7 +62,8 @@ class Vehicle extends Form
             'attributes' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Марка',
-                'id' => 'vehicle_search_id'
+                'id' => 'vehicle_search_id',
+                'autocomplete' => 'off',
             ),
         ));
 

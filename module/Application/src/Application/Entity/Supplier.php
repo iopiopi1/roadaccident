@@ -65,7 +65,7 @@ class Supplier
     }
 
     /**
-     * @param integer $id
+     * @param integer $status
      */
     public function setStatus($status)
     {
@@ -82,7 +82,7 @@ class Supplier
     }
 
     /**
-     * @param \Datetime $id
+     * @param \Datetime $dateCreated
      */
     public function setDateCreated($dateCreated)
     {

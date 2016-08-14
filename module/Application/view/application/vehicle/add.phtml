@@ -66,7 +66,8 @@
                         <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
                             <div class="col-md-4 form-group" id="int_cnt1">
                                 <? echo $this->formRow($form->get('regnumSearch')); ?>
-                                <ul id="searchVehicleUl_id"><li>dfsvfvfv</li><li>dfsvfvfv3456</li><li>dfsvfvfv3456</li><li>dfsvfvfv3456</li></ul>
+                                <? echo $this->formRow($form->get('brand_id_hidden')); ?>
+                                <ul id="searchVehicleUl_id"><li class="optli"><input class="hd_id" type="hidden" value="d"/></li></ul>
                             </div>
                             <div class="col-md-4 form-group">
                                 <? echo $this->formRow($form->get('regnum')); ?>

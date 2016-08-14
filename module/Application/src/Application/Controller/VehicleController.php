@@ -36,6 +36,7 @@ class VehicleController extends AbstractActionController
         $vehicle_id = $this->params()->fromRoute('id');
         if($vehicle_id > 0){
             $vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
+            $brandSuppName = $this->serviceVehicle->getBrandSupplierNameById($vehicle->getBrand());
             $user_id = $vehicle->getUser();
             $user = $this->serviceVehicle->getUserById($user_id);
             $images = $this->serviceVehicle->getImages($vehicle_id);
@@ -52,6 +53,7 @@ class VehicleController extends AbstractActionController
                 'user' => $user,
                 'vehicle' => $vehicle,
 				'user_session' => $user_session,
+                'brandSuppName' => $brandSuppName,
             )
         );
     }
@@ -60,7 +62,7 @@ class VehicleController extends AbstractActionController
     {
 		$user_session = new Container('user');
 		if(!$user_session->id > 0){
-			//$this->redirect()->toRoute('user', array('action' => 'login'));
+			$this->redirect()->toRoute('user', array('action' => 'login'));
 		}
 		$form = $this->getVehicleForm();
         $vehicle = new \Application\Entity\Vehicle();
@@ -92,8 +94,9 @@ class VehicleController extends AbstractActionController
                 $vehicle = new \Application\Entity\Vehicle();
                 $vehicle->setDateEdited(new \DateTime("now"));
                 $vehicle->setStatus(\Application\Entity\Vehicle::STATUS_ACTIVE);
-                $vehicle->setBrand($vehicleData['brand']);
-                $vehicle->setRegnum($vehicleData['regnum']);
+                $vehicle->setBrand($vehicleData['brand_id_hidden']);
+                $regnum = $this->serviceVehicle->correctRegnum($vehicleData['regnum']);
+                $vehicle->setRegnum($regnum);
                 $vehicle->setUser($user_id);
                 $vehicle_new = $this->serviceVehicle->save($vehicle);
                 $vehicle_id = $vehicle_new->getId();
@@ -103,6 +106,7 @@ class VehicleController extends AbstractActionController
                     mkdir($img_path, 0777, true);
                     mkdir($img_path . '/' . 'thumbnail', 0777, true);
                 }
+
                 $recdir = new \RecursiveDirectoryIterator($img_path_tmp);
                 $recdir->setFlags(\RecursiveDirectoryIterator::SKIP_DOTS);
                 $iterator = new \RecursiveIteratorIterator($recdir);
@@ -122,7 +126,7 @@ class VehicleController extends AbstractActionController
                     }
                     else {
                         if(rename(str_replace('\\', '/', $fileInfo->getPathname()), $img_path . '/' . $fileInfo->getFilename())){
-                            rmdir($fileInfo->getPath());
+                            //rmdir($fileInfo->getPath());
                             $image = new \Application\Entity\Image();
                             $image->setPath($img_path . '/' . $fileInfo->getFilename());
                             $image->setStatus(0);
@@ -136,6 +140,7 @@ class VehicleController extends AbstractActionController
                 }
                 // create regnum image
                 $this->serviceVehicle->createRegnumImage($vehicle->getRegnum(),$img_path);
+
             }
             else{
                 // existing vehicle
@@ -174,10 +179,11 @@ class VehicleController extends AbstractActionController
                         }
                     }
                 }
-				if(is_dir($img_path_tmp)){
-					rmdir($img_path_tmp);
-				}
             }
+        }
+
+        if(is_dir($img_path_tmp)){
+            rmdir($img_path_tmp);
         }
 
         return new JsonModel(
@@ -193,7 +199,7 @@ class VehicleController extends AbstractActionController
 		$request = $this->getRequest();
 		if ($request->isPost()) {
             $post = $request->getPost()->toArray();
-            parse_str($post['vehicleData'], $vehicleData);
+            $vehicleData = $post['vehicleData'];
 		}
 		$vehicles = $this->serviceVehicle->getVehiclesByMatching($vehicleData);
 
