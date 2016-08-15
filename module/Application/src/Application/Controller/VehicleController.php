@@ -34,6 +34,7 @@ class VehicleController extends AbstractActionController
     {
 		$user_session = new Container('user');
         $vehicle_id = $this->params()->fromRoute('id');
+        $imagesTop = $this->serviceVehicle->getTopImages(6);
         if($vehicle_id > 0){
             $vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
             $brandSuppName = $this->serviceVehicle->getBrandSupplierNameById($vehicle->getBrand());
@@ -54,6 +55,7 @@ class VehicleController extends AbstractActionController
                 'vehicle' => $vehicle,
 				'user_session' => $user_session,
                 'brandSuppName' => $brandSuppName,
+                'imagesTop' => $imagesTop
             )
         );
     }

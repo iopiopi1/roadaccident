@@ -62,7 +62,7 @@ class VehicleService extends EntityServiceAbstract {
 	public function getTopImages($top)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('i')
+        $qb->select('i','v')
             ->from('\Application\Entity\Image', 'i')
 			->innerJoin('\Application\Entity\Vehicle', 'v', 'WITH', 'i.vehicle = v.id')
             ->andWhere('v.status = :status')
@@ -82,6 +82,7 @@ class VehicleService extends EntityServiceAbstract {
 				'name' => $image['i_name'], 
 				'thumbnail' => 'public/images/vehicles/' . $image['i_vehicle'] . '/thumbnail/' . $image['i_name'], 
 				'vehicle' => $image['i_vehicle'],
+                'regnum' => $image['v_regnum'],
 			);	
         }
         return $images;
@@ -117,14 +118,14 @@ class VehicleService extends EntityServiceAbstract {
 
     public function createRegnumImage($regnum, $img_path)
     {
-        $regnumBase = substr($regnum,0,6);
+        $regnumBase = mb_substr($regnum,0,6);
         $regnumRegionLength = iconv_strlen($regnum) - iconv_strlen($regnumBase);
-        $regnumRegion = substr($regnum,-$regnumRegionLength);
+        $regnumRegion = mb_substr($regnum,-$regnumRegionLength);
 
         $im = imagecreatefrompng("public/img/regnum_template.png");
         $black = imagecolorallocate($im, 43, 42, 40);
         $font = 'public/fonts/arial.ttf';
-        imagettftext($im, 60, 0, 40, 80, $black, $font, $regnumBase);
+        imagettftext($im, 60, 0, 10, 80, $black, $font, $regnumBase);
         imagettftext($im, 40, 0, 350, 60, $black, $font, $regnumRegion);
         imagepng($im,$img_path . '/regnum.png');
     }
@@ -156,22 +157,18 @@ class VehicleService extends EntityServiceAbstract {
     }
 
     public function correctRegnum($oldRegnum){
+        mb_internal_encoding("UTF-8");
         $upperCase = mb_strtoupper($oldRegnum, 'UTF-8');
         $newRegnum = '';
-        $letters = array(ord('А') => ord('A'), ord('В') => ord('B'), ord('Е') => ord('E'), ord('К') => ord('K'), ord('М') => ord('M'), ord('Н') => ord('H'), ord('О') => ord('O'),
-                        ord('Р') => ord('P'), ord('С') => ord('C'), ord('Т') => ord('T'), ord('У') => ord('Y'),ord('Х') => ord('X'));
-        print_r($letters);
-        for($i = 0; $i < strlen($upperCase); $i++){
-            $char = substr( $upperCase, $i, 1 );
-            //echo $char;
-            print_r($letters);
-            if(in_array(ord($char), array_keys(letters))){
+        $letters = array('Ы' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M', 'Н' => 'H', 'О' => 'O',
+            'Р' => 'P', 'С' => 'C', 'Т' => 'T', 'У' => 'Y','Х' => 'X');
+        for($i = 0; $i < mb_strlen($upperCase); $i++){
+            $char = mb_substr( $upperCase, $i, 1 );
+            if(in_array($char, array_keys($letters))){
                 $char = $letters[$char];
-                echo $char.'<br/>';
             }
-            $newRegnum .= chr($char);
+            $newRegnum .= $char;
         }
-        echo $newRegnum;
         return $newRegnum;
     }
 } 

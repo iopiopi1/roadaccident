@@ -26,12 +26,9 @@ class IndexController extends AbstractActionController
 	
     public function indexAction()
     {
-		
-		$images = $this->serviceVehicle->getTopImages(12);
 				
         return new ViewModel(
 			array(
-					'images' => $images
 				)
 		);
 		
