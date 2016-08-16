@@ -13,6 +13,11 @@
 	padding:30px;
 }
 
+.emptySpace60px{
+    display:block;
+    padding:60px;
+}
+
 footer{
     background: #50aff9;
     color:#fff;
@@ -68,6 +73,10 @@ footer{
 	background: #ececec;
 }
 
+#navul{
+    padding:0;
+}
+
 #navul li{
 	list-style-type:none;
 	display:inline-block;
@@ -77,7 +86,7 @@ footer{
 
 .nav_a{
 	display:inline-block;
-	padding:10px 30px;	
+	padding:10px 20px;
 }
 
 .nav_a:hover{

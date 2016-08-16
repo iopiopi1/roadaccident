@@ -1,0 +1,50 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ярослав
+ * Date: 24.02.2016
+ * Time: 23:00
+ */
+$form = $this->form;
+$form->prepare();
+?>
+
+
+
+<div class="container">
+    <?echo $this->form()->openTag($form);?>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <h4><a href=<?echo $this->url('admin', array('action' => 'index'));?>>Назад</a></h4>
+            </div>
+        </div>
+        <div class="emptySpace40px"></div>
+        <div class="row">
+
+                <div class="panel panel-default centered">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Регистрация новой марки</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <? echo $this->formRow($form->get('brandname')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <? echo $this->formRow($form->get('suppliernames')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <? echo $this->formRow($form->get('submit')); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <? echo $this->form()->closeTag($form); ?>
+</div>

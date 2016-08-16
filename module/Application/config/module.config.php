@@ -93,6 +93,19 @@ return array(
                     ),
                 ),
             ),
+            'admin' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route'    => '/admin[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Admin',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             'api' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -169,6 +182,11 @@ return array(
                 $service->setEntityManager($sm->get('Doctrine\ORM\EntityManager'));
                 return $service;
             },
+            'Application\Service\AdminService' => function($sm) {
+                $service = new \Application\Service\AdminService();
+                $service->setEntityManager($sm->get('Doctrine\ORM\EntityManager'));
+                return $service;
+            },
         ),
     ),
     'translator' => array(
@@ -206,6 +224,9 @@ return array(
 			'Application\Controller\Search' => function ($sm) {
                 return new \Application\Controller\SearchController($sm->getServiceLocator()->get('Application\Service\SearchService'));
             },
+            'Application\Controller\Admin' => function ($sm) {
+                return new \Application\Controller\AdminController($sm->getServiceLocator()->get('Application\Service\AdminService'));
+            },
         ),
     ),
     'view_manager' => array(
@@ -241,8 +262,19 @@ return array(
 			'Application\Form\Searchvehicle' => 'Application\Form\Searchvehicle',
 			'Application\Form\Login' => 'Application\Form\Login',
         ),
-        'factories' => array('Application\Form\Vehicle' => function($sm) {
+        'factories' => array(
+            'Application\Form\Vehicle' => function($sm) {
                 $form = new \Application\Form\Vehicle();
+                $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                return $form;
+            },
+            'Application\Form\Brand' => function($sm) {
+                $form = new \Application\Form\Brand();
+                $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                return $form;
+            },
+            'Application\Form\Supplier' => function($sm) {
+                $form = new \Application\Form\Supplier();
                 $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
                 return $form;
             },
