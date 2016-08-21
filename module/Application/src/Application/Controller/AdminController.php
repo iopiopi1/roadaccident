@@ -50,10 +50,11 @@ class AdminController extends AbstractActionController
     public function addbrandAction()
     {
         $form = $this->getBrandForm();
-
+        $brands = $this->serviceAdmin->getAllBrands();
         return new ViewModel(
             array(
                 'form' => $form,
+                'brands' => $brands,
             )
         );
     }
@@ -61,10 +62,12 @@ class AdminController extends AbstractActionController
     public function addsupplierAction()
     {
         $form = $this->getSupplierForm();
+        $suppliers = $this->serviceAdmin->getAllSuppliers();
 
         return new ViewModel(
             array(
                 'form' => $form,
+                'suppliers' => $suppliers,
             )
         );
     }
