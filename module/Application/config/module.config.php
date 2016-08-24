@@ -133,6 +133,26 @@ return array(
                             ),
                         ),
                     ),
+					'addbrandajax' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/addbrandajax[/:url]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'addbrandajax',
+                            ),
+                        ),
+                    ),
+					'addsupplierajax' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/addsupplier[/:url]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'addsupplier',
+                            ),
+                        ),
+                    ),
                 ),
             ),
 			'search' => array(
@@ -210,12 +230,14 @@ return array(
                 return new \Application\Controller\VehicleController(
 					$sm->getServiceLocator()->get('Application\Service\VehicleService'),
 					$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')
+					//$sm->getServiceLocator()->get('Application\Entity\Repository\VehicleRepository')
 				);
             },
             'Application\Controller\Api' => function ($sm) {
                 return new \Application\Controller\ApiController(
 					$sm->getServiceLocator()->get('Application\Service\ApiService'),
-					$sm->getServiceLocator()->get('Application\Service\UserService')
+					$sm->getServiceLocator()->get('Application\Service\UserService'),
+					$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')
 				);
             },
             'Application\Controller\Index' => function ($sm) {
@@ -292,7 +314,12 @@ return array(
                 'drivers' => array(
                     'Application\Entity' => 'application_entities'
                 )
-            )
+            ),
+			/*'application_repositories' => array(
+				'class' => 'Application\Entity\Repository\VehicleRepository',
+				'cache' => 'array',
+				'paths' => array(__DIR__ . '/../src/Application/Repository')
+			),*/
         )
     )
 );

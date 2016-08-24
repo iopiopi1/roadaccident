@@ -48,9 +48,10 @@ class AdminController extends AbstractActionController
     }
 
     public function addbrandAction()
-    {
+    {		
         $form = $this->getBrandForm();
         $brands = $this->serviceAdmin->getAllBrands();
+		
         return new ViewModel(
             array(
                 'form' => $form,

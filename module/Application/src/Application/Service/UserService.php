@@ -400,6 +400,21 @@ class UserService extends EntityServiceAbstract {
         return $user;
     }
 	
+	public function getIsUserAdmin($userId){
+		
+		
+		$admin = $this->getEntityManager()->getRepository('\Application\Entity\Admin')->findOneBy(array('id' => $userId));
+		if(!is_null($admin->getId())){
+			$isAdmin = 1;
+		}
+		else{
+			$isAdmin = 0;
+		}
+		
+        return $isAdmin;
+		
+	}
+	
     public function setEntityManager($em){
         $this->entityManager = $em;
         return $this;

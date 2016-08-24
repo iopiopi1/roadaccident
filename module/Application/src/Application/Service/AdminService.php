@@ -15,11 +15,12 @@ class AdminService {
         $em = $this->getEntityManager();
         $query = $em->createQuery('SELECT b.name AS bname, b.id AS bid, s.name AS sname FROM Application\Entity\Brand b JOIN Application\Entity\Supplier s WITH s.id=b.supplier  WHERE b.status = 0');
         $resultSet = $query->getScalarResult();
-
+/*
         foreach($resultSet as $row){
             $result[$row['sname']] = $row['bname'];
         }
-        return $result;
+		print_r($resultSet);*/
+        return $resultSet;
     }
 
     public function getAllSuppliers(){

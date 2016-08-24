@@ -56,10 +56,10 @@ $form->prepare();
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($brands as $supp => $brand): ?>
+                <?php foreach($brands as $brand): ?>
                     <tr>
-                        <td><?=$brand;?></td>
-                        <td><?=$supp;?></td>
+                        <td><?=$brand['bname'];?></td>
+                        <td><?=$brand['sname'];?></td>
                         <td><input  type="checkbox"/></td>
                     </tr>
                 <?php endforeach;?>

@@ -22,7 +22,7 @@ class Brand extends Form
     public function init()
     {
         $this->setAttributes(
-            array('id' => 'user')
+            array('id' => 'brand')
         );
         $this->setHydrator(new ClassMethods())
             ->setObject(new \Application\Entity\User())
@@ -38,6 +38,7 @@ class Brand extends Form
                 'class' => 'form-control',
                 'placeholder' => 'Марка',
                 'required' => 'required',
+				'id' => 'addBrandname'
             ),
         ));
 
@@ -51,6 +52,7 @@ class Brand extends Form
             'attributes' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Производитель',
+				'id' => 'suppliernamesId'
             ),
         ));
 
@@ -59,7 +61,7 @@ class Brand extends Form
             'type' => 'submit',
             'attributes' => array(
                 'value' => 'Сохранить',
-                'id' => 'submitbutton',
+                'id' => 'submitBrandbutton',
                 'class' => 'form-control btn-primary',
             ),
         ));

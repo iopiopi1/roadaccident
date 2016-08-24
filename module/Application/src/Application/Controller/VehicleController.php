@@ -24,10 +24,14 @@ class VehicleController extends AbstractActionController
 
     protected $entityManager = null;
 	
+    /** @var \Application\Entity\Repository\VehicleRepository */
+	protected $vehicleRepository = null;
+	
     function __construct($serviceVehicle,$entityManager)
     {
         $this->serviceVehicle = $serviceVehicle;
 		$this->entityManager = $entityManager;
+		//$this->vehicleRepository = $vehicleRepository;
     }
 
     public function indexAction()
@@ -195,6 +199,29 @@ class VehicleController extends AbstractActionController
             )
         );
 
+    }
+	
+	public function pageAction()
+    {
+		$user_session = new Container('user');
+        
+		$page = $this->params()->fromRoute('id');
+
+        $limit = 10;
+        $offset = ($page == 0) ? 0 : ($page - 1) * $limit;
+		
+		//$pagedVehicles = $this->entityManager->getRepository('Application\Entity\Repository\VehicleRepository')->getPagedVehicles($offset,$limit);
+		$pagedVehicles = $this->serviceVehicle->getPagedVehicles($offset,$limit);
+		$pagedVehicles->setCurrentPageNumber($page)
+                      ->setItemCountPerPage($limit);
+		
+		//print_r($pagedVehicles);
+        return new ViewModel(
+            array(
+				'pagedVehicles' => $pagedVehicles,
+				'page' => $page,
+            )
+        );
     }
 	
 	public function getvehiclesmatchedfrominputajaxAction(){

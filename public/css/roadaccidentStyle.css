@@ -77,10 +77,9 @@ footer{
     padding:0;
 }
 
-#navul li{
+.navulli{
 	list-style-type:none;
 	display:inline-block;
-
 	font-weight:bold;
 }
 
@@ -97,6 +96,31 @@ footer{
 .nav_a,.nav_a:link{
 	color:#fff;
 	text-decoration:none;
+}
+
+#autoregnumUl{
+	padding:5px 5px;
+	margin:0;
+	list-style-type:none;
+	display:inline-block;
+	position:absolute;
+	display:inline-block;
+	z-index:1000;
+	top:40px;
+	background-color:#f0c309;
+	visibility:hidden;
+}
+
+#autoregnumUl li{
+	padding:2px 5px 2px 5px;
+}
+
+.autoregnumUla{
+	color:#fff;
+}
+
+#navulliRegNum{
+	position:relative;
 }
 
 .regnum_form{

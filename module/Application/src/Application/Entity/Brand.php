@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Brand
 {
+	
 	 /**
      * Primary Identifier
      *
@@ -108,18 +109,18 @@ class Brand
     /**
      * @param \Datetime $dateEdited
      */
-    public function setDateEdited($dateEdited)
+    public function setDateModified($dateEdited)
     {
-        $this->dateEdited = $dateEdited;
+        $this->dateModified= $dateEdited;
         return $this;
     }
 
     /**
      * @return \Datetime
      */
-    public function getDateEdited()
+    public function getDateModified()
     {
-        return $this->dateEdited;
+        return $this->dateModified;
     }
 	
 	/**

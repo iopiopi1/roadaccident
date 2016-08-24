@@ -8,9 +8,10 @@
 
 namespace Application\Service;
 use Application\Service\EntityServiceAbstract;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Doctrine\ORM\EntityRepository;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PageAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Zend\Paginator\Paginator as ZendPaginator;
 
 class VehicleService extends EntityServiceAbstract {
 
@@ -171,4 +172,26 @@ class VehicleService extends EntityServiceAbstract {
         }
         return $newRegnum;
     }
+	
+	public function getPagedVehicles($offset = 0, $limit = 10)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('v,s,b,i')
+            ->from('\Application\Entity\Vehicle', 'v')
+			->innerJoin('\Application\Entity\Brand', 'b', 'WITH', 'v.brand = b.id')
+			->innerJoin('\Application\Entity\Supplier', 's', 'WITH', 'b.supplier = s.id')
+			->innerJoin('\Application\Entity\Image', 'i', 'WITH', 'i.vehicle = v.id')
+			->where('v.status = 0')
+			->andWhere('i.type = 1');
+        $query = $qb->getQuery();
+	
+		//print_r($query->getScalarResult());
+		$result = ($query->getScalarResult());
+		//$paginator = new ZendPaginator(new PageAdapter(new ORMPaginator($query)));
+		$paginator = new ZendPaginator(new \Zend\Paginator\Adapter\ArrayAdapter($result));
+        return $paginator;
+    }
+	
 } 

@@ -98,6 +98,24 @@ $(document).ready(function(){
 
 		}
 	});
+	
+	$('#brand').submit(function(event){
+        event.preventDefault();
 
+        var brandData = $('#brand').serialize();
+        $.ajax({
+            url: baseUrl + "api/addbrandajax",
+            method: "POST",
+            data: brandData,
+            success: function (result) {
+				if(result.state == 'success'){
+					//window.location.href = baseUrl + "admin/addbrand";
+				}
+				if(result.state == 'duplicated'){
+					alert('Марка с таким названием уже существует в БД!');
+				}
+            }
+        });
+    });
 	
 });

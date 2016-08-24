@@ -22,13 +22,17 @@ class ApiController extends AbstractActionController
 	/** @var \Application\Service\UserService */
     protected $serviceUser = null;
 	
+	/** @var \Application\Service\VehicleService */
+    protected $serviceVehicle = null;
+	
     const FOLDER_IMG_TMP = "images/vehicles_tmp";
     const FOLDER_IMG = "images/vehicles";
 
-    function __construct($serviceApi,$serviceUser)
+    function __construct($serviceApi,$serviceUser,$entityManager)
     {
         $this->serviceApi = $serviceApi;
 		$this->serviceUser = $serviceUser;
+		$this->entityManager = $entityManager;
     }
 			
 	public function registerconfirmAction()
@@ -124,4 +128,35 @@ class ApiController extends AbstractActionController
             $response
         );
     }
+		
+    public function addbrandajaxAction()
+    {
+		$request = $this->getRequest();
+        if ($request->isPost()) {
+			$post = $request->getPost()->toArray();	
+			$brand_existing = $this->entityManager->getRepository('\Application\Entity\Brand')->findOneBy(array('name' => $post['brandname']));
+			if(is_null($brand_existing->getId())){
+				$brand = new \Application\Entity\Brand();
+				$brand->setName($post['brandname']);
+				$brand->setSupplier($post['suppliernames']);
+				$brand->setStatus(0);
+				$dt = new \DateTime();
+				$brand->setDateCreated($dt);
+				$brand->setDateModified($dt);
+				$this->serviceApi->save($brand);
+				
+				$success = 'success';
+			}
+			else{
+				$success = 'duplicated';
+			}
+		}
+		
+		return new JsonModel(
+            array(
+                'state' => $success,
+            )
+        );
+		
+	}
 }

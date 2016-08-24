@@ -96,7 +96,7 @@ class UserController extends AbstractActionController
 			$user_session = new Container('user');
 			$user_session->username = $user->getUsername();
 			$user_session->id = $user->getId();
-			
+			$user_session->isAdmin = $this->serviceUser->getIsUserAdmin($user->getId());
 			return new JsonModel(array(
 				'state' => 'success', 
 				'errorMsg' => ''
