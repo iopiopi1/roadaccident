@@ -109,10 +109,29 @@ $(document).ready(function(){
             data: brandData,
             success: function (result) {
 				if(result.state == 'success'){
-					//window.location.href = baseUrl + "admin/addbrand";
+					window.location.href = baseUrl + "admin/addbrand";
 				}
 				if(result.state == 'duplicated'){
 					alert('Марка с таким названием уже существует в БД!');
+				}
+            }
+        });
+    });
+	
+	$('#supplier').submit(function(event){
+        event.preventDefault();
+
+        var supplierData = $('#supplier').serialize();
+        $.ajax({
+            url: baseUrl + "api/addsupplierajax",
+            method: "POST",
+            data: supplierData,
+            success: function (result) {
+				if(result.state == 'success'){
+					window.location.href = baseUrl + "admin/addsupplier";
+				}
+				if(result.state == 'duplicated'){
+					alert('Производитель с таким названием уже существует в БД!');
 				}
             }
         });

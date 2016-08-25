@@ -99,20 +99,20 @@ class Supplier
     }
 
     /**
-     * @param \Datetime $dateEdited
+     * @param \Datetime $dateModified
      */
-    public function setDateEdited($dateEdited)
+    public function setDateModified($dateModified)
     {
-        $this->dateEdited = $dateEdited;
+        $this->dateModified = $dateModified;
         return $this;
     }
 
     /**
      * @return \Datetime
      */
-    public function getDateEdited()
+    public function getDateModified()
     {
-        return $this->dateEdited;
+        return $this->dateModified;
     }
 		
     /**

@@ -1,0 +1,47 @@
+﻿<?php
+/**
+ * Created by PhpStorm.
+ * User: ???????
+ * Date: 06.03.2016
+ * Time: 20:25
+ */
+
+$pagedVehicles = $this->pagedVehicles;
+$page = $this->page;
+?>
+
+<div class="emptySpace20px"></div>
+<div class="container">
+    <div class="row">
+		<div class="col-xs-10 col-sm-8 col-md-6  col-lg-8">
+			<h1>Автономера</h1>
+			<div class="paging">
+				<?=$this->paginationControl($this->pagedVehicles,'sliding','partial/paginator.phtml');?>
+			</div>
+			<table class="table">
+				<thead>    
+					<tr>
+						<th>Марка</th>
+						<th>Рег. номер</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<? foreach($pagedVehicles as $vehicle):?>
+						<tr> 
+							<td><a href="<?=$this->url('vehicle', array('action' => 'index' , 'id' => $vehicle['v_id']))?>"><?=$vehicle['b_name']?></a></td>
+							<td><a href="<?=$this->url('vehicle', array('action' => 'index' , 'id' => $vehicle['v_id']))?>"><?=$vehicle['v_regnum']?></a></td>
+							<td><a href="<?=$this->url('vehicle', array('action' => 'index' , 'id' => $vehicle['v_id']))?>">
+								<img class="img-responsive" src="/<?=$vehicle['i_path']?>"/>
+								</a>
+							</td>
+						</tr>
+					<? endforeach;?>
+				</tbody>
+			</table>
+			<div class="paging">
+				<?=$this->paginationControl($this->pagedVehicles,'sliding','partial/paginator.phtml');?>
+			</div>
+		</div>
+	</div>
+</div>

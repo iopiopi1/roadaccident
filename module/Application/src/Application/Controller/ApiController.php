@@ -135,7 +135,7 @@ class ApiController extends AbstractActionController
         if ($request->isPost()) {
 			$post = $request->getPost()->toArray();	
 			$brand_existing = $this->entityManager->getRepository('\Application\Entity\Brand')->findOneBy(array('name' => $post['brandname']));
-			if(is_null($brand_existing->getId())){
+			if(is_null($brand_existing)){
 				$brand = new \Application\Entity\Brand();
 				$brand->setName($post['brandname']);
 				$brand->setSupplier($post['suppliernames']);
@@ -159,4 +159,36 @@ class ApiController extends AbstractActionController
         );
 		
 	}
+	
+		
+    public function addsupplierajaxAction()
+    {
+		$request = $this->getRequest();
+        if ($request->isPost()) {
+			$post = $request->getPost()->toArray();	
+			$supplier_existing = $this->entityManager->getRepository('\Application\Entity\Supplier')->findOneBy(array('name' => $post['suppliername']));
+			if(is_null($supplier_existing)){
+				$supplier = new \Application\Entity\Supplier();
+				$supplier->setName($post['suppliername']);
+				$supplier->setStatus(0);
+				$dt = new \DateTime();
+				$supplier->setDateCreated($dt);
+				$supplier->setDateModified($dt);
+				$this->serviceApi->save($supplier);
+				
+				$success = 'success';
+			}
+			else{
+				$success = 'duplicated';
+			}
+		}
+		
+		return new JsonModel(
+            array(
+                'state' => $success,
+            )
+        );
+		
+	}
+	
 }

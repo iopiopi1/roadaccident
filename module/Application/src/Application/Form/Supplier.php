@@ -22,7 +22,7 @@ class Supplier extends Form
     public function init()
     {
         $this->setAttributes(
-            array('id' => 'user')
+            array('id' => 'supplier')
         );
         $this->setHydrator(new ClassMethods())
             ->setObject(new \Application\Entity\User())

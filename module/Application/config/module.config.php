@@ -146,10 +146,10 @@ return array(
 					'addsupplierajax' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/addsupplier[/:url]',
+                            'route'    => '/addsupplierajax[/:url]',
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Api',
-                                'action'     => 'addsupplier',
+                                'action'     => 'addsupplierajax',
                             ),
                         ),
                     ),
