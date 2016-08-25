@@ -62,8 +62,8 @@ class UserService extends EntityServiceAbstract {
 		$hash_string = md5($email . $username . $id . $password);
 		$link = $server_url . dirname($_SERVER['PHP_SELF']) . '/api/registerconfirm/' . $hash_string;
 		
-		$recipient="iopiopi@localhost"; //  $email
-		$subject="Test Email";
+		$recipient=$email;
+		$subject="Регистрация на сайте cardam.ru";
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 		$mail_body = '
