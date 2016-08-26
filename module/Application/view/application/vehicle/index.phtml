@@ -179,5 +179,11 @@ $form->prepare();
             options = {index: link, event: event},
             links = this.getElementsByTagName('a');
         blueimp.Gallery(links, options);
+		
+		var slide_images = $('img.slide-content');
+		$.each(slide_images,function(index,object){
+			var offset = $(object).position();
+			$(object).parent().prepend('<div style="top:'+offset.top+'px;margin:0 auto;position:relative;width:'+object.clientWidth+'px;height:'+object.clientHeight+'px;z-index:1000;"></div>');
+		});
     };
 </script>
