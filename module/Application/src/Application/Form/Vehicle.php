@@ -38,6 +38,7 @@ class Vehicle extends Form
 			'attributes' => array(
 				'class' => 'form-control',
 				'placeholder' => 'Марка ТС',
+				'id' => 'addvehiclenameId',
 			),
         ));
 
@@ -60,8 +61,7 @@ class Vehicle extends Form
                 'label' => ''
             ),
             'attributes' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Марка',
+                'placeholder' => '  Марка',
                 'id' => 'vehicle_search_id',
                 'autocomplete' => 'off',
             ),
@@ -74,8 +74,8 @@ class Vehicle extends Form
                 'label' => ''
             ),
 			'attributes' => array(
-				'class' => 'form-control',
-				'placeholder' => 'Автономер'
+				'placeholder' => '  Автономер',
+				'id' => 'vehicleaddregnumId'
 			),
         ));
 
@@ -84,8 +84,7 @@ class Vehicle extends Form
             'type' => 'submit',
             'attributes' => array(
                 'value' => 'Сохранить',
-                'id' => 'submitbutton',
-				'class' => 'form-control btn-primary',
+                'id' => 'vehicleaddsubmitbutton',
             ),
         ));
 

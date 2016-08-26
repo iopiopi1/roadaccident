@@ -8,6 +8,16 @@
     padding:20px;
 }
 
+.emptySpace10px{
+    display:block;
+    padding:10px;
+}
+
+.emptySpace5px{
+    display:block;
+    padding:5px;
+}
+
 .emptySpace30px{
 	display:block;
 	padding:30px;
@@ -234,3 +244,5 @@ footer{
     padding: 8px 30px;
     color:#fff;
 }
+
+

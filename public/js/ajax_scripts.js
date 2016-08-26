@@ -24,20 +24,27 @@ $(document).ready(function(){
         });
     });
 
-    $('#vehicle').submit(function(event){
+    $('#vehicleaddsubmitbutton').click(function(event){
         event.preventDefault();
         var vehicleData = $('#vehicle').serialize();
         var photoData = $('#fileupload').serialize();
-        $.ajax({
-            url: baseUrl + "vehicle/addvehicleimagesajax",
-            method: "POST",
-            data: {vehicleData: vehicleData, photoData: photoData},
-            success: function (result) {
-				if(result.state == 'success'){
-					window.location.href = baseUrl + "vehicle/index/" + result.id;
+		console.log(vehicleData);
+		console.log(photoData);
+		if($('#vehicle_search_id').val() !== '' && $('#vehicleaddregnumId').val() !== '' && ($('.files img').length > 0 || $('div#links img').length > 0 )){
+			$.ajax({
+				url: "/vehicle/addvehicleimagesajax",
+				method: "POST",
+				data: {vehicleData: vehicleData, photoData: photoData},
+				success: function (result) {
+					if(result.state == 'success'){
+						window.location.href = baseUrl + "vehicle/index/" + result.id;
+					}
 				}
-            }
-        });
+			});
+		}
+		else{
+			alert('Заполните данные о ТС, а также загрузите фотографии');
+		}
     });
 	
 	$('#login').submit(function(event){
