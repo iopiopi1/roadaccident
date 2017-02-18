@@ -20,9 +20,13 @@ class SearchController extends AbstractActionController
 	/** @var \Application\Service\SearchService */
     protected $serviceSearch = null;
 	
-	function __construct($serviceSearch)
+	/** @var \Application\Service\VehicleService */
+    protected $serviceVehicle = null;
+	
+	function __construct($serviceSearch, $serviceVehicle)
     {
         $this->serviceSearch = $serviceSearch;
+		$this->serviceVehicle = $serviceVehicle;
     }
 	
 	public function indexAction()
@@ -32,7 +36,8 @@ class SearchController extends AbstractActionController
 		$regnum_search = '';
 		if ($request->isPost()) {
 			$regnum_search = $this->getRequest()->getPost('regnum');
-			$vehicles = $this->serviceSearch->getRegnumMatches($regnum_search);
+			$latRegnum = $this->serviceVehicle->correctRegnum($regnum_search);
+			$vehicles = $this->serviceSearch->getRegnumMatches($latRegnum);
 		}
 		
 		return new ViewModel(

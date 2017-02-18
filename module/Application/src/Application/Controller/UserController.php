@@ -67,6 +67,21 @@ class UserController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $user = $form->getData();
+				// if username not unique return error
+				if(!$this->serviceUser->checkIsUsernameUnique($user->getUsername())){
+					return new JsonModel(array(
+						'state' => 'error',
+						'id' => null,
+						'errNumber' => 2,
+					));
+				}
+				if(!$this->serviceUser->checkIsEmailUnique($user->getEmail())){
+					return new JsonModel(array(
+						'state' => 'error',
+						'id' => null,
+						'errNumber' => 3,
+					));
+				}
                 $user->setDateEdited(new \dateTime("now"));
 				$user->setStatus(\Application\Entity\User::STATUS_NONACTIVE);
                 $user = $this->serviceUser->save($user);
@@ -99,7 +114,8 @@ class UserController extends AbstractActionController
 			$user_session->isAdmin = $this->serviceUser->getIsUserAdmin($user->getId());
 			return new JsonModel(array(
 				'state' => 'success', 
-				'errorMsg' => ''
+				'errorMsg' => '',
+				'isAdmin' => $user_session->isAdmin,
 			));
 		}
 		else{	//print_r($user);
@@ -109,6 +125,41 @@ class UserController extends AbstractActionController
 			));
 		}
     }
+	
+	public function restorepasswordAction()
+    {
+		$request = $this->getRequest();
+        if ($request->isPost()) {
+			$email = $request->getPost('email');
+		}
+				
+        $user = $this->serviceUser->findUserByEmail($email);
+		
+		if(!is_null($user)){
+			$userId = $user->getId();
+			$userName = $user->getUsername();
+			$server_url = $this->getRequest()->getUri()->getScheme() . '://' . $this->getRequest()->getUri()->getHost();
+			$user->setStatus(\Application\Entity\User::STATUS_NONACTIVE);
+			$newPass = substr(uniqid(), 0, 10);
+			$user->setPassword($newPass);
+			$user = $this->serviceUser->save($user);
+			
+			$this->serviceUser->sendRestoredDetailsEmail($email,$userName,$userId,$newPass,$server_url);
+			
+			return new JsonModel(array(
+				'state' => 'success', 
+				'msg' => 'На указанный почтовый ящик отправлено письмо с инструкциями для восстановления пароля', 
+				'errorMsg' => null,
+			));
+		}
+		else{	//print_r($user);
+			return new JsonModel(array(
+				'state' => 'failed', 
+				'msg' => null,
+				'errorMsg' => 'Данный email адрес не зарегистрирован!',
+			));
+		}
+	}
 	
     /**
      * @param \Zend\Form\Form $userForm

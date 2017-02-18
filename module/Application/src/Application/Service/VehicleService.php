@@ -161,7 +161,7 @@ class VehicleService extends EntityServiceAbstract {
         mb_internal_encoding("UTF-8");
         $upperCase = mb_strtoupper($oldRegnum, 'UTF-8');
         $newRegnum = '';
-        $letters = array('Ы' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M', 'Н' => 'H', 'О' => 'O',
+        $letters = array('А' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M', 'Н' => 'H', 'О' => 'O',
             'Р' => 'P', 'С' => 'C', 'Т' => 'T', 'У' => 'Y','Х' => 'X');
         for($i = 0; $i < mb_strlen($upperCase); $i++){
             $char = mb_substr( $upperCase, $i, 1 );
@@ -172,6 +172,24 @@ class VehicleService extends EntityServiceAbstract {
         }
         return $newRegnum;
     }
+/*
+	public function changeCyrToLat($regnum){
+
+        $cyr = [
+            'a','b','e','h','k','m','o','p','c','t','y','x',
+            'а','в','е','н','к','м','о','р','с','т','у','х',
+            'А','В','Е','Н','К','М','О','Р','С','Т','У','Х',
+        ];
+        $lat = [
+			'A','B','E','H','K','M','O','P','C','T','Y','X',
+			'A','B','E','H','K','M','O','P','C','T','Y','X',
+            'А','В','Е','Н','К','М','О','Р','С','Т','У','Х'
+        ];
+		
+        $textlat = str_replace($lat, $cyr, $regnum);
+        
+		return $textlat;
+	}*/
 	
 	public function getPagedVehicles($offset = 0, $limit = 10)
     {

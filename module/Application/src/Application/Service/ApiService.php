@@ -63,7 +63,7 @@ class ApiService {
 
         return imagejpeg($thumb, $folder . DIRECTORY_SEPARATOR . self::FOLDER_THUMBNAIL . DIRECTORY_SEPARATOR . $filename, 100);
     }
-	
+
     public function setEntityManager($em){
         $this->entityManager = $em;
         return $this;

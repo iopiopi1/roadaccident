@@ -26,10 +26,12 @@ class IndexController extends AbstractActionController
 	
     public function indexAction()
     {
-				
+		$searchForm = new \Application\Form\Searchvehicle();
+
         return new ViewModel(
 			array(
-				)
+				'searchForm' => $searchForm,
+			)
 		);
 		
     }

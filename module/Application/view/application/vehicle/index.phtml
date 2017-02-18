@@ -22,8 +22,7 @@ $form->prepare();
         $('#fileupload').fileupload({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
-            url: baseUrl + 'api/addvehicleajax',
-			autoUpload:true 
+            url: baseUrl + 'api/addvehicleajax'
         });
 
         // Enable iframe cross-domain access via redirect option:
@@ -101,7 +100,7 @@ $form->prepare();
                 <div class="row">
                     <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
                         <div class="col-md-4 form-group">
-                            <? echo $this->formRow($form->get('submit')); ?>
+                            <? //echo $this->formRow($form->get('submit')); ?>
                         </div>
                     </div>
 				</div>
@@ -144,19 +143,13 @@ $form->prepare();
                                     </div>
                                     <div id="links">
                                         <?php foreach($images as $image): ?>
-                                            <a href="/<?=$image['path']; ?>" title="<?=$image['name']?>">
-                                                <img src="/<?=$image['thumbnail']; ?>" alt="<?=$image['name']?>">
+                                            <a href="/public/<?=$image['path'] . '/' . $image['name']; ?>" title="<?=$image['name']?>">
+                                                <img src="/public/<?=$image['thumbnail'] . '/thumbnail/' . $image['name']; ; ?>" alt="<?=$image['name']?>">
                                             </a>
                                         <?php endforeach; ?>
                                     </div>
-                                    <div class="emptySpace40px"></div>
-									
-									<?if(!isset($user_session->id)):?>
-										<h5>Для добавления фото необходимо <a href="<?=$this->url('user', array('action' => 'login'))?>"> авторизоваться</a></h5>
-									<?else:?>
-										<?=$this->partial('partial-upload.phtml');?>
-									<?endif;?>
-                                    
+
+                                   
                                 </div>
                             </div>
                         </div>
@@ -180,11 +173,5 @@ $form->prepare();
             options = {index: link, event: event},
             links = this.getElementsByTagName('a');
         blueimp.Gallery(links, options);
-		
-		var slide_images = $('img.slide-content');
-		$.each(slide_images,function(index,object){
-			var offset = $(object).position();
-			$(object).parent().prepend('<div style="top:'+offset.top+'px;margin:0 auto;position:relative;width:'+object.clientWidth+'px;height:'+object.clientHeight+'px;z-index:1000;"></div>');
-		});
     };
 </script>

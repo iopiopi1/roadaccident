@@ -17,15 +17,24 @@ echo $this->form()->openTag($form);
 				<div class="panel-heading">
 					<h3 class="panel-title">Регистрация нового пользователя</h3>
 				</div>
+				<div id="warning_alert_mailsent" style="display:none;" class="alert alert-success" role="alert">
+					<strong>На указанный Вами email было отправлено письмо. В письме перейдите по ссылке для завершения регистрации</strong>.
+				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-4 form-group">
 							<? echo $this->formRow($form->get('username')); ?>
+							<div id="warning_alert_username" style="display:none;" class="alert alert-danger" role="alert">
+								<strong>Пользователь с таким ником уже существует!</strong>.
+							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-4 form-group">
 							<? echo $this->formRow($form->get('email')); ?>
+							<div id="warning_alert_email" style="display:none;" class="alert alert-danger" role="alert">
+								<strong>Email уже зарегистрирован!</strong>.
+							</div>
 						</div>
 					</div>
 					<div class="row">
@@ -38,7 +47,7 @@ echo $this->form()->openTag($form);
 							<? echo $this->formRow($form->get('password_repeat')); ?>
 						</div>
 						<div class="col-md-4 form-group">
-							<div id="warning_alert_login" style="visibility:hidden;" class="alert alert-danger" role="alert">
+							<div id="warning_alert_login" style="display:none;" class="alert alert-danger" role="alert">
 								<strong>Пароли не совпадают</strong>.
 							</div>
 						</div>

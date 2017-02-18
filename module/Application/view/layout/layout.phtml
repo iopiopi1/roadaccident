@@ -1,8 +1,9 @@
 <?php echo $this->doctype(); ?>
-<?$searchForm = $this->searchForm;?>
+
 <?
 	//$user_session = new Container('user');
 ?>
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -15,34 +16,36 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath('/css/style.css'))
-                        ->prependStylesheet($this->basePath('/css/bootstrap-theme.min.css'))
-                        ->prependStylesheet($this->basePath('/css/bootstrap.min.css'))
-                        ->prependStylesheet($this->basePath() . '/blueimp/css/jquery.fileupload-ui.css')
-                        ->prependStylesheet($this->basePath() . '/blueimp/css/blueimp-gallery.min.css')
-                        ->prependStylesheet($this->basePath() . '/blueimp/css/jquery.fileupload.css')
-                        ->prependStylesheet($this->basePath('/css/roadaccidentStyle.css'))
-                        ->prependStylesheet($this->basePath('/css/vehicle.css'))
+                        ->prependStylesheet($this->basePath('/public/css/style.css'))
+                        ->prependStylesheet($this->basePath('/public/css/font-awesome.css'))
+                        ->prependStylesheet($this->basePath('/public/css/bootstrap.icon-large.min.css'))
+						->prependStylesheet($this->basePath('/public/css/bootstrap-theme.min.css'))
+                        ->prependStylesheet($this->basePath('/public/css/bootstrap.css'))
+                        ->prependStylesheet($this->basePath() . '/public/blueimp/css/jquery.fileupload-ui.css')
+                        ->prependStylesheet($this->basePath() . '/public/blueimp/css/blueimp-gallery.min.css')
+                        ->prependStylesheet($this->basePath() . '/public/blueimp/css/jquery.fileupload.css')
+                        ->prependStylesheet($this->basePath('/public/css/roadaccidentStyle.css'));
+						
         ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
 
-            ->appendFile($this->basePath('/js/ajax_scripts.js'), 'text/javascript')
-            ->appendFile($this->basePath('/js/ui_scripts.js'), 'text/javascript')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-ui.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-validate.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-image.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload-process.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.fileupload.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.iframe-transport.js')
-            ->prependFile($this->basePath() . '/blueimp/js/jquery.blueimp-gallery.min.js')
-            ->prependFile($this->basePath() . '/blueimp/js/load-image.all.min.js')
-            ->prependFile($this->basePath() . '/blueimp/js/tmpl.min.js')
-            ->prependFile($this->basePath() . '/blueimp/js/vendor/jquery.ui.widget.js')
+            ->appendFile($this->basePath('/public/js/ajax_scripts.js'), 'text/javascript')
+            ->appendFile($this->basePath('/public/js/ui_scripts.js'), 'text/javascript')
+            ->prependFile($this->basePath() . '/public/blueimp/js/jquery.fileupload-ui.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/jquery.fileupload-validate.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/jquery.fileupload-image.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/jquery.fileupload-process.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/jquery.fileupload.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/jquery.iframe-transport.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/jquery.blueimp-gallery.min.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/load-image.all.min.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/tmpl.min.js')
+            ->prependFile($this->basePath() . '/public/blueimp/js/vendor/jquery.ui.widget.js')
             //->prependFile($this->basePath() . '/blueimp/js/main.js')
-            ->prependFile($this->basePath('/js/bootstrap.min.js'))
-            ->prependFile($this->basePath('/js/jquery.min.js'))
+            ->prependFile($this->basePath('/public/js/bootstrap.min.js'))
+            ->prependFile($this->basePath('/public/js/jquery.min.js'))
         ; ?>
 
         <script type='text/javascript'>
@@ -56,44 +59,55 @@
 			<div id="header_row" class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row">
-						<div class="col-xs-2 col-md-2 col-lg-2  col-xs-offset-8 col-md-offset-8 col-lg-offset-8">
-							<ul id="usernavul">
-								<?if($user_session->id > 0):?>
-									<li><a class="usernavul_a" href="<?=$this->url('user', array('action' => 'logout'))?>"><?=$user_session->username; ?>(Выйти)</a></li>
-								<?else:?>
-									<li><a class="usernavul_a" href="<?=$this->url('user', array('action' => 'register'))?>">Регистрация</a></li>
-									<li><a class="usernavul_a" href="<?=$this->url('user', array('action' => 'login'))?>">Войти</a></li>
-								<?endif;?>
-							</ul>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-6 col-sm-10 col-md-10 col-lg-10 col-xs-offset-3 col-sm-offset-1">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
                             <div class="row">
-                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-                                    <div><a href="<?=$this->url('index', array('action' => 'index'))?>"><!--<img src="<?=$this->basePath('img/logo-2.png')?>" />-->
-                                            <span id="iconSpan" style="">CARDAM.RU</span>
-                                        </a></div>
+								<div class="emptySpace10px">
+								</div>
+							</div>
+							<div class="row">
+                                <div class="col-xs-8 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+									<div class="row">
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+											<a href="/"><!--<img src="<?=$this->basePath('img/logo-2.png')?>" />-->
+												<div class="row">
+													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+														<span id="iconSpan" style="">CARDAM.RU</span>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+														<span id="underIconSpan" style="">База поврежденных автомобилей</span>
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+											<ul id="usernavul">
+												<?if($user_session->id > 0):?>
+													<li><a class="usernavul_a yellowBg" href="<?=$this->url('user', array('action' => 'logout'))?>">Выйти</a></li>
+													<li><a class="usernavul_a blackBr" href="#"><span class="glyphicon glyphicon-user"></span> <?=$user_session->username?></a></li>
+												<?else:?>
+													<li><a class="usernavul_a yellowBg" href="<?=$this->url('user', array('action' => 'login'))?>">Войти</a></li>
+													<li><a class="usernavul_a blackBr" href="<?=$this->url('user', array('action' => 'register'))?>">Зарегистрироваться</a></li>
+												<?endif;?>
+												<?if($user_session->isAdmin == 1):?>
+													<li class="usernavul_a"><a class="usernavul_a blackBr" href="<?=$this->url('admin', array('action' => 'index'))?>">Админ</a></li>
+												<?endif;?>
+											</ul>
+										</div>
+									</div>
                                     <ul id="navul">
-                                        <li class="navulli"><a class="nav_a" href="<?=$this->url('index', array('action' => 'index'))?>">Главная</a></li>
+                                        <!--<li class="navulli"><a class="nav_a" href="<?=$this->url('index')?>">Главная</a></li>
                                         <li id="navulliRegNum" class="navulli">
 											<ul id="autoregnumUl">
 												<li><a class="autoregnumUla" href="<?=$this->url('vehicle', array('action' => 'add'))?>">Новый автономер</a></li>
 												<li><a class="autoregnumUla" href="<?=$this->url('vehicle', array('action' => 'page', 'id' => 1))?>">Каталог</a></li>
 											</ul>
 											<a class="nav_a" href="<?=$this->url('vehicle', array('action' => 'add'))?>">Автономера</a>
-										</li>
-										<?if($user_session->isAdmin == 1):?>
-											<li class="navulli"><a class="nav_a" href="<?=$this->url('admin', array('action' => 'index'))?>">Админ</a></li>
-										<?endif;?>
+										</li>-->
+										
                                         <li class="navulli">
-                                            <? $searchForm->setAttributes(array('action' => $this->url('search', array('action' => 'index'))));?>
-                                            <?=$this->form()->openTag($searchForm);?>
-                                            <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6">
-                                                    <?=$this->formRow($searchForm->get('regnum'))?>
-                                                    <?=$this->formRow($searchForm->get('submit'))?>
-                                            </div>
-                                            <?=$this->form()->closeTag($searchForm);?>
+                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -104,13 +118,15 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<?=$this->content?>
+					<div class="row">
+						<?=$this->content?>
+					</div>
 				</div>
 			</div>
 		</div>
         <div class="container-fluid">
             <footer>
-                <div class="emptySpace40px"></div>
+                <!--<div class="emptySpace40px"></div>
                     <div class="row">
                         <div class="col-xs-4 col-md-4 col-lg-6 col-xs-offset-4 col-md-offset-4 col-lg-offset-3">
                             <p>Фотографии автомобилей, мотоциклов, прочих транспортных средств и номеров
@@ -125,7 +141,7 @@
                         </div>
                     </div>
 
-                <div class="emptySpace40px"></div>
+                <div class="emptySpace40px"></div>-->
             </footer>
         </div>
 		<?php echo $this->inlineScript() ?>

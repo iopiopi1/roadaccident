@@ -86,7 +86,7 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Имя'
+				'placeholder' => 'Имя (необязательно)'
 			),
         ));
 
@@ -98,7 +98,7 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Фамилия'
+				'placeholder' => 'Фамилия (необязательно)'
 			),
         ));
 

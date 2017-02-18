@@ -106,6 +106,19 @@ return array(
                     ),
                 ),
             ),
+            'image' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route'    => '/image[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Image',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             'api' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -120,6 +133,16 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Api',
                                 'action'     => 'addvehicleajax',
+                            ),
+                        ),
+                    ),
+					'addimageajax' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/addimageajax[/:addimageajax]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'addimageajax',
                             ),
                         ),
                     ),
@@ -150,6 +173,36 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Api',
                                 'action'     => 'addsupplierajax',
+                            ),
+                        ),
+                    ),
+					'adminupdateimage' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/adminupdateimage[/:url]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'adminupdateimage',
+                            ),
+                        ),
+                    ),
+					'admindeleteimage' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/admindeleteimage[/:url]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'admindeleteimage',
+                            ),
+                        ),
+                    ),
+					'restorepassconfirm' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/restorepassconfirm[/:url]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'restorepassconfirm',
                             ),
                         ),
                     ),
@@ -207,6 +260,11 @@ return array(
                 $service->setEntityManager($sm->get('Doctrine\ORM\EntityManager'));
                 return $service;
             },
+			'Application\Service\ImageService' => function($sm) {
+                $service = new \Application\Service\AdminService();
+                $service->setEntityManager($sm->get('Doctrine\ORM\EntityManager'));
+                return $service;
+            },
         ),
     ),
     'translator' => array(
@@ -237,17 +295,32 @@ return array(
                 return new \Application\Controller\ApiController(
 					$sm->getServiceLocator()->get('Application\Service\ApiService'),
 					$sm->getServiceLocator()->get('Application\Service\UserService'),
-					$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')
+					$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'),
+					$sm->getServiceLocator()->get('Application\Service\VehicleService')
 				);
             },
             'Application\Controller\Index' => function ($sm) {
                 return new \Application\Controller\IndexController($sm->getServiceLocator()->get('Application\Service\VehicleService'));
             },
 			'Application\Controller\Search' => function ($sm) {
-                return new \Application\Controller\SearchController($sm->getServiceLocator()->get('Application\Service\SearchService'));
+                return new \Application\Controller\SearchController(
+					$sm->getServiceLocator()->get('Application\Service\SearchService'),
+					$sm->getServiceLocator()->get('Application\Service\VehicleService')
+				);
             },
             'Application\Controller\Admin' => function ($sm) {
-                return new \Application\Controller\AdminController($sm->getServiceLocator()->get('Application\Service\AdminService'));
+                return new \Application\Controller\AdminController(
+					$sm->getServiceLocator()->get('Application\Service\AdminService'),
+					$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'),
+					$sm->getServiceLocator()->get('Application\Service\UserService'),
+					$sm->getServiceLocator()->get('Application\Service\VehicleService')
+				);
+            },
+            'Application\Controller\Image' => function ($sm) {
+                return new \Application\Controller\ImageController(
+					$sm->getServiceLocator()->get('Application\Service\ImageService'),
+					$sm->getServiceLocator()->get('Application\Service\UserService')
+				);
             },
         ),
     ),

@@ -3,12 +3,15 @@
  */
 $(document).ready(function(){
     $('#user').submit(function(event){
+		$('#warning_alert_mailsent').css({display:'none'});
+		$('#warning_alert_username').css({display:'none'});
+		$('#warning_alert_email').css({display:'none'});
         event.preventDefault();
 		var pass1 = $('#password').val();
 		var pass2 = $('#password_repeat').val();
 
 		if(pass1 !== pass2){
-			$('#warning_alert_login').css({visibility:'visible'});
+			$('#warning_alert_login').css({display:'block'});
 			return false;
 		}
         var userData = $('#user').serialize();
@@ -18,7 +21,16 @@ $(document).ready(function(){
             data: userData,
             success: function (result) {
 				if(result.state == 'success'){
-					window.location.href = baseUrl + "index";
+					//window.location.href = baseUrl + "index";
+					$('#warning_alert_mailsent').css({display:'block'});
+				}
+				else if(result.errNumber == 2){
+					$('#warning_alert_username').css({display:'block'});
+					return false;
+				}
+				else if(result.errNumber == 3){
+					$('#warning_alert_email').css({display:'block'});
+					return false;
 				}
             }
         });
@@ -48,6 +60,7 @@ $(document).ready(function(){
     });
 	
 	$('#login').submit(function(event){
+		$('#warning_alert_login').css({visibility:'hidden'});
         event.preventDefault();
         var loginData = $('#login').serialize();
         $.ajax({
@@ -56,7 +69,13 @@ $(document).ready(function(){
             data: loginData,
             success: function (result) {
                 if(result.state == 'success'){
-					window.location.href = baseUrl + "index";
+					if(result.isAdmin == 0){
+						window.location.href = baseUrl + "index";
+					}
+					else
+					{
+						window.location.href = baseUrl + "admin";
+					}
 				}
 				else{
 					//alert(result.errorMsg);

@@ -41,7 +41,7 @@ class VehicleController extends AbstractActionController
         $imagesTop = $this->serviceVehicle->getTopImages(6);
         if($vehicle_id > 0){
             $vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
-            $brandSuppName = $this->serviceVehicle->getBrandSupplierNameById($vehicle->getBrand());
+            //$brandSuppName = $this->serviceVehicle->getBrandSupplierNameById($vehicle->getBrand());
             $user_id = $vehicle->getUser();
             $user = $this->serviceVehicle->getUserById($user_id);
             $images = $this->serviceVehicle->getImages($vehicle_id);
@@ -58,7 +58,7 @@ class VehicleController extends AbstractActionController
                 'user' => $user,
                 'vehicle' => $vehicle,
 				'user_session' => $user_session,
-                'brandSuppName' => $brandSuppName,
+                'brandSuppName' => null,//$brandSuppName,
                 'imagesTop' => $imagesTop
             )
         );
@@ -259,4 +259,5 @@ class VehicleController extends AbstractActionController
 
         return $this->vehicleForm;
     }
+
 }

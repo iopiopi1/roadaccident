@@ -50,7 +50,7 @@ class Image
     protected $vehicle;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $type;
 
@@ -60,9 +60,14 @@ class Image
     protected $name;
 
 	/**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $user;
+
+	/**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $uniqueId;
 	
     public function __construct()
     {
@@ -206,4 +211,20 @@ class Image
         return $this->user;
     }
 	
+    /**
+     * @param string $uniqueId
+     */
+    public function setUniqueId($uniqueId)
+    {
+        $this->uniqueId = $uniqueId;
+        return $uniqueId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUniqueId()
+    {
+        return $this->uniqueId;
+    }	
 }

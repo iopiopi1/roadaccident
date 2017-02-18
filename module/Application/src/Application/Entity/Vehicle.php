@@ -47,7 +47,7 @@ class Vehicle
     protected $dateEdited;
 	
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Brand")
      * @ORM\JoinColumn(name="brand", referencedColumnName="id")
      */

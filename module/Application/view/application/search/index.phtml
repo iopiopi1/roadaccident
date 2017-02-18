@@ -27,6 +27,10 @@
 					<?php endforeach; ?>
 				<?else:?>
 					Похожих номеров найдено не было.
+					<div class="emptySpace20px"></div>
+					<a href="<?=$this->url('index', array('action' => 'index'));?>">
+						Вернуться к поиску
+					</a>
 				<?endif;?>
 			</div>
 			<div class="emptySpace30px"></div>

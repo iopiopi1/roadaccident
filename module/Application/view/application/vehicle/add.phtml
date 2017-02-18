@@ -17,8 +17,7 @@
         $('#fileupload').fileupload({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
-            url: baseUrl + 'api/addvehicleajax',
-			autoUpload:true 
+            url: baseUrl + 'api/addvehicleajax'
         });
 
         // Enable iframe cross-domain access via redirect option:
@@ -49,68 +48,60 @@
 </script>
 
 <div class="emptySpace20px"></div>
-<div class="container-fluid">
+<div class="container">
 	<?
 	$form = $this->form;
 	$form->prepare();
 
 	?>
     <div class="row row-centered">
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
-			<h3>Добавить новое ТС</h3>
-				<div class="row">
-					<?echo $this->form()->openTag($form);?>
-						<div class="col-xs-12 col-md-10 col-md-3 col-lg-3">
-							<div class="vehicleaddheader">Данные о ТС
-							</div>
-							<div class="vehicleaddbody col-xs-12 col-md-12 col-md-12 col-lg-12">
-								<div class="col-xs-12 col-md-10 col-md-12 col-lg-12">
-									<? echo $this->formRow($form->get('regnumSearch')); ?>
-								</div>
-								<div class="emptySpace20px"></div>
-								<div class="emptySpace10px"></div>
-								<? echo $this->formRow($form->get('brand_id_hidden')); ?>
-								<ul id="searchVehicleUl_id"><li class="optli"><input class="hd_id" type="hidden" value="d"/></li></ul>
-								<div class="col-xs-12 col-md-10 col-md-12 col-lg-12">
-									<? echo $this->formRow($form->get('regnum')); ?>
-								</div>
-								
-							</div>
-						</div>
-					<?	echo $this->form()->closeTag($form);?>
-					<div class="col-xs-1 col-md-1 col-md-1 col-lg-1">
-						<div class="emptySpace40px"></div>
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</div>
-					
-					<div class="col-xs-12 col-md-10 col-md-3 col-lg-3">
-						<div class="vehicleaddheader"> Добавить фотки
-						</div>
-						<div class="vehicleaddbody">
-							<?=$this->partial('partial-upload.phtml');?>
-						</div>
-					</div>
-					
-					<div class="col-xs-1 col-md-1 col-md-1 col-lg-1">
-						<div class="emptySpace40px"></div>
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</div>
-					
-					<div class="col-xs-12 col-md-10 col-md-3 col-lg-3">
-						<div class="vehicleaddheader"> Сохранить ТС
-						</div>
-						<div class="vehicleaddbody">
-							<div class="col-xs-12 col-md-10 col-md-12 col-lg-12">
-								<? echo $this->formRow($form->get('submit')); ?>
-							</div>
-						</div>
-					</div>
-					
+        <div class="col-xs-6 col-md-12  col-lg-12">
+            <div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Добавить новое ТС</h3>
 				</div>
-			
+                <div class="emptySpace40px"></div>
+                <?echo $this->form()->openTag($form);?>
+                    <div class="row">
+                        <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                            <div class="col-md-4 form-group" id="int_cnt1">
+                                <? echo $this->formRow($form->get('regnumSearch')); ?>
+                                <? echo $this->formRow($form->get('brand_id_hidden')); ?>
+                                <ul id="searchVehicleUl_id"><li class="optli"><input class="hd_id" type="hidden" value="d"/></li></ul>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <? echo $this->formRow($form->get('regnum')); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                            <div class="col-md-4 form-group">
+                                <? echo $this->formRow($form->get('submit')); ?>
+                            </div>
+                        </div>
+                    </div>
+                <?	echo $this->form()->closeTag($form);?>
+                <div class="emptySpace40px"></div>
+                <div class="row">
+                    <div class="col-md-10 col-lg-10 col-xs-10 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Фотографии ТС</h3>
+                            </div>
+                            <div class="panel-body">
+
+
+                                <?=$this->partial('partial-upload.phtml');?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="emptySpace20px"></div>
+			</div>
+
 		</div>
 	</div>
-	<div class="emptySpace40px"></div>
-	<div class="emptySpace40px"></div>
-	
+
+
 </div>
