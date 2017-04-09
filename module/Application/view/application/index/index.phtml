@@ -1,35 +1,133 @@
-<?$images = $this->images;?>
-
-<div class="row">
-	<!--<div class="col-xs-10 col-md-10 col-lg-10">-->
-		<div class="row">
-			<?foreach($images as $image):?>
-
-					<div class="col-xs-1 col-md-1 col-lg-1">
-						<a href="<?=$this->url('vehicle', array('action' => 'index', 'id' => $image['vehicle'])); ?>" title="<?=$image['name']?>">
-							<img class="img-responsive" src="/roadaccident/<?=$image['thumbnail']; ?>" alt="<?=$image['name']?>">
-						</a>
+<div id="index_main_div"  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<? $searchForm = $this->searchForm;?>
+	<div class="row" id="main_div">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="emptySpace40px">
 					</div>
-
-			<?endforeach;?>
-		</div>
-		<div class="emptySpace40px">
-		</div>
-		<div class="container">	
-			<div class="row row-centered">
-				<div class="col-xs-12 col-md-12 col-lg-12 col-centered jumbotron" >
-					<h1>Hello, world!</h1>
-					<p>
-						AVTO-NOMER.RU - крупнейший международный проект в Интернете, посвящённый номерным знакам транспортных средств мира и всему, 
-						что с ними связано: истории, технологиям производства, обращению, статистике выдачи.
-						Главная часть нашего проекта - фотогалерея, в которой любители номеров и автомобилей размещают свои фотографии. Под ними Вы можете 
-						общаться, делиться своими впечатлениями, обсуждать особенности автомобилей, манеру езды владельца, оценить номера. У нас вы можете найти 
-						автомобиль по номеру, но найти сведения о владельце по номеру машины нельзя.
-						Любоваться красивыми номерами хорошо, а иметь на своем автомобиле красивый номер еще лучше! Не упустите возможность купить гос номер на свой автомобиль. 
-						У нас вы найдете предложения о продаже номеров на любой вкус и кошелек.
-						Присоединяйтесь к нам! Добавлять свои фотографии очень просто
-					</p>
+					<div class="row" id="huy1">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+							<div class="row">
+								<div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+									<? $searchForm->setAttributes(array('action' => $this->url('search', array('action' => 'index'))));?>
+									<?=$this->form()->openTag($searchForm);?>
+										<?=$this->formRow($searchForm->get('regnum'))?>
+										<?=$this->formRow($searchForm->get('submit'))?>								
+									<?=$this->form()->closeTag($searchForm);?>
+									
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+									<div class="emptySpace10px"></div>
+									<p class="pText1">Сайт cardam.ru является общественной базой фотографий поврежденных автомобилей. Проверить авто на участие в ДТП можно,
+										введя его регистрационный номерной знак в строку поиска.
+									</p>
+									<div class="emptySpace10px"></div>
+									<p class="pText1">Чтобы добавить поврежденный автомобиль в базу, нажмите "добавить фото в базу". Добавление фотографий доступно только 
+										зарегистрированным пользователям.
+									</p>
+								</div>	
+							</div>
+						</div>
+						<div class="col-xs-10 col-sm-4 col-md-2 col-lg-2 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+							<div class="row">
+								<div class="col-xs-10 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+									<a class="autoregnumUla" href="<?=$this->url('image', array('action' => 'add'))?>">Добавить фото в базу</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-10 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">					
+									<div class="emptySpace10px"></div>
+									<p class="pText1">На фото должны быть видны повреждения автомобиля, а также его регистрационный номер.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>	
 				</div>
 			</div>
+		<div class="emptySpace20px"></div>
 		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row row-centered yellowBg">
+				<div class="emptySpace20px"></div>
+				<div  class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-xs-offset-0 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
+					<div class="row row-centered">
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-10 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-1">
+							<div class="row" id="huy1">
+								
+								<div class="circles col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 div-centered">
+									<div class="row row-centered">	
+										<div class="col-xs-10 col-sm-10 col-md-10 col-lg-12  col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0">
+											<div class="row">
+												<div class="col-xs-6 col-sm-6 col-md-6 col-lg-5  col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+													<div class="div-circle-bordered">
+														<span class="cntSpan"><span class="fa fa-car fa-3x iconMy"></span></span>
+													</div>
+													
+														<span class="circleUnderSpan">УВИДЕЛ ПОВРЕЖДЕННОЕ АВТО</span>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row row-centered">
+										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8  col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+											<div class="emptySpace10px"></div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="circles col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 div-centered">
+									<div class="row row-centered">	
+										<div class="col-xs-10 col-sm-10 col-md-10 col-lg-12  col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0">
+											<div class="row">
+												<div class="col-xs-6 col-sm-6 col-md-6 col-lg-5  col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+													<div class="div-circle-bordered">
+														<span class="cntSpan"><span class="glyphicon glyphicon-camera fa-3x iconMyPhoto"></span></span>
+													</div>
+													<span class="circleUnderSpan">СДЕЛАЛ ФОТО</span>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row row-centered">
+										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8  col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+											<div class="emptySpace10px"></div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="circles col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 div-centered">
+									<div class="row">
+										<div class="col-xs-10 col-sm-10 col-md-10 col-lg-12  col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0">
+											<div class="row">
+												<div class="col-xs-6 col-sm-6 col-md-6 col-lg-5  col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">												
+													<div class="div-circle-bordered">
+														<span class="cntSpan"><i class="fa fa-desktop fa-3x iconMy"></i>
+														</span>
+													</div>
+													<span class="circleUnderSpan">ДОБАВИЛ НА САЙТ</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row row-centered">
+										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8  col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+											<div class="emptySpace10px"></div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="emptySpace20px"></div>
+				</div>
+			</div>	
+		</div>	
+	</div>	
 </div>

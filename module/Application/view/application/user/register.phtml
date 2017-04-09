@@ -17,39 +17,63 @@ echo $this->form()->openTag($form);
 				<div class="panel-heading">
 					<h3 class="panel-title">Регистрация нового пользователя</h3>
 				</div>
+				<div id="warning_alert_mailsent" style="display:none;" class="alert alert-success" role="alert">
+					<strong>На указанный Вами email было отправлено письмо. В письме перейдите по ссылке для завершения регистрации</strong>.
+				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
 							<? echo $this->formRow($form->get('username')); ?>
+							<div id="warning_alert_username" style="display:none;" class="alert alert-danger" role="alert">
+								<strong>Пользователь с таким ником уже существует!</strong>.
+							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
 							<? echo $this->formRow($form->get('email')); ?>
+							<div id="warning_alert_email" style="display:none;" class="alert alert-danger" role="alert">
+								<strong>Email уже зарегистрирован!</strong>.
+							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
 							<? echo $this->formRow($form->get('password')); ?>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
 							<? echo $this->formRow($form->get('password_repeat')); ?>
 						</div>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
+							<div id="warning_alert_login" style="display:none;" class="alert alert-danger" role="alert">
+								<strong>Пароли не совпадают</strong>.
+							</div>
+						</div>
 					</div>
+					
 					<div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
 							<? echo $this->formRow($form->get('firstname')); ?>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
 							<? echo $this->formRow($form->get('lastname')); ?>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 form-group">
+						<div id="AgrBox" class="col-xs-6 col-sm-6 col-md-6 col-lg-6  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
+							<input type="checkbox" id="agreementCheck">
+							<a href="/user/agreement"> Я согласен с условиями использования сайта CARDAM.RU </a>
+							<div id="warning_alert_agreement" style="display:none;" class="alert alert-danger" role="alert">
+								<strong>Согласие с условиями использования обязательно!</strong>.
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
 							<? echo $this->formRow($form->get('save')); ?>
 						</div>
 					</div>

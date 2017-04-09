@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Brand
 {
+	
 	 /**
      * Primary Identifier
      *
@@ -43,8 +44,8 @@ class Brand
 	
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Supplier", inversedBy="suppliers")
-     * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Supplier")
+     * @ORM\JoinColumn(name="supplier", referencedColumnName="id")
      */
     protected $supplier;
 
@@ -53,7 +54,7 @@ class Brand
      */
     protected $name;
 	
-	    /**
+    /**
      * @var int
      * @param integer $id
      */
@@ -72,7 +73,7 @@ class Brand
     }
 
     /**
-     * @param integer $id
+     * @param integer $status
      */
     public function setStatus($status)
     {
@@ -89,7 +90,7 @@ class Brand
     }
 
     /**
-     * @param \Datetime $id
+     * @param \Datetime $dateCreated
      */
     public function setDateCreated($dateCreated)
     {
@@ -108,18 +109,18 @@ class Brand
     /**
      * @param \Datetime $dateEdited
      */
-    public function setDateEdited($dateEdited)
+    public function setDateModified($dateEdited)
     {
-        $this->dateEdited = $dateEdited;
+        $this->dateModified= $dateEdited;
         return $this;
     }
 
     /**
      * @return \Datetime
      */
-    public function getDateEdited()
+    public function getDateModified()
     {
-        return $this->dateEdited;
+        return $this->dateModified;
     }
 	
 	/**

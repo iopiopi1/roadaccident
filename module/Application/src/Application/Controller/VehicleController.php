@@ -24,17 +24,24 @@ class VehicleController extends AbstractActionController
 
     protected $entityManager = null;
 	
+    /** @var \Application\Entity\Repository\VehicleRepository */
+	protected $vehicleRepository = null;
+	
     function __construct($serviceVehicle,$entityManager)
     {
         $this->serviceVehicle = $serviceVehicle;
 		$this->entityManager = $entityManager;
+		//$this->vehicleRepository = $vehicleRepository;
     }
 
     public function indexAction()
     {
+		$user_session = new Container('user');
         $vehicle_id = $this->params()->fromRoute('id');
+        $imagesTop = $this->serviceVehicle->getTopImages(6);
         if($vehicle_id > 0){
             $vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
+            //$brandSuppName = $this->serviceVehicle->getBrandSupplierNameById($vehicle->getBrand());
             $user_id = $vehicle->getUser();
             $user = $this->serviceVehicle->getUserById($user_id);
             $images = $this->serviceVehicle->getImages($vehicle_id);
@@ -50,12 +57,19 @@ class VehicleController extends AbstractActionController
                 'vehicle_id' => $vehicle_id,
                 'user' => $user,
                 'vehicle' => $vehicle,
+				'user_session' => $user_session,
+                'brandSuppName' => null,//$brandSuppName,
+                'imagesTop' => $imagesTop
             )
         );
     }
 
     public function addAction()
     {
+		$user_session = new Container('user');
+		if(!$user_session->id > 0){
+			$this->redirect()->toRoute('user', array('action' => 'login'));
+		}
 		$form = $this->getVehicleForm();
         $vehicle = new \Application\Entity\Vehicle();
 
@@ -66,6 +80,7 @@ class VehicleController extends AbstractActionController
                 'form' => $form,
                 'vehicle_uid' => $uid,
                 'vehicle_id' => null,
+				'user_session' => $user_session,
             )
         );
     }
@@ -85,8 +100,9 @@ class VehicleController extends AbstractActionController
                 $vehicle = new \Application\Entity\Vehicle();
                 $vehicle->setDateEdited(new \DateTime("now"));
                 $vehicle->setStatus(\Application\Entity\Vehicle::STATUS_ACTIVE);
-                $vehicle->setBrand($vehicleData['brand']);
-                $vehicle->setRegnum($vehicleData['regnum']);
+                $vehicle->setBrand($vehicleData['brand_id_hidden']);
+                $regnum = $this->serviceVehicle->correctRegnum($vehicleData['regnum']);
+                $vehicle->setRegnum($regnum);
                 $vehicle->setUser($user_id);
                 $vehicle_new = $this->serviceVehicle->save($vehicle);
                 $vehicle_id = $vehicle_new->getId();
@@ -96,6 +112,7 @@ class VehicleController extends AbstractActionController
                     mkdir($img_path, 0777, true);
                     mkdir($img_path . '/' . 'thumbnail', 0777, true);
                 }
+
                 $recdir = new \RecursiveDirectoryIterator($img_path_tmp);
                 $recdir->setFlags(\RecursiveDirectoryIterator::SKIP_DOTS);
                 $iterator = new \RecursiveIteratorIterator($recdir);
@@ -115,7 +132,7 @@ class VehicleController extends AbstractActionController
                     }
                     else {
                         if(rename(str_replace('\\', '/', $fileInfo->getPathname()), $img_path . '/' . $fileInfo->getFilename())){
-                            rmdir($fileInfo->getPath());
+                            //rmdir($fileInfo->getPath());
                             $image = new \Application\Entity\Image();
                             $image->setPath($img_path . '/' . $fileInfo->getFilename());
                             $image->setStatus(0);
@@ -129,6 +146,7 @@ class VehicleController extends AbstractActionController
                 }
                 // create regnum image
                 $this->serviceVehicle->createRegnumImage($vehicle->getRegnum(),$img_path);
+
             }
             else{
                 // existing vehicle
@@ -167,20 +185,58 @@ class VehicleController extends AbstractActionController
                         }
                     }
                 }
-				if(is_dir($img_path_tmp)){
-					rmdir($img_path_tmp);
-				}
             }
         }
 
-        return new ViewModel(
+        if(is_dir($img_path_tmp)){
+            rmdir($img_path_tmp);
+        }
+
+        return new JsonModel(
             array(
                 'id' => $vehicle->getId(),
+				'state' => 'success',
             )
         );
 
     }
+	
+	public function pageAction()
+    {
+		$user_session = new Container('user');
+        
+		$page = $this->params()->fromRoute('id');
 
+        $limit = 10;
+        $offset = ($page == 0) ? 0 : ($page - 1) * $limit;
+		
+		//$pagedVehicles = $this->entityManager->getRepository('Application\Entity\Repository\VehicleRepository')->getPagedVehicles($offset,$limit);
+		$pagedVehicles = $this->serviceVehicle->getPagedVehicles($offset,$limit);
+		$pagedVehicles->setCurrentPageNumber($page)
+                      ->setItemCountPerPage($limit);
+		
+		//print_r($pagedVehicles);
+        return new ViewModel(
+            array(
+				'pagedVehicles' => $pagedVehicles,
+				'page' => $page,
+            )
+        );
+    }
+	
+	public function getvehiclesmatchedfrominputajaxAction(){
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+            $post = $request->getPost()->toArray();
+            $vehicleData = $post['vehicleData'];
+		}
+		$vehicles = $this->serviceVehicle->getVehiclesByMatching($vehicleData);
+
+        return new JsonModel(
+            $vehicles
+        );
+		
+	}
     public function generateUID(){
         return uniqid();
     }
@@ -203,4 +259,5 @@ class VehicleController extends AbstractActionController
 
         return $this->vehicleForm;
     }
+
 }

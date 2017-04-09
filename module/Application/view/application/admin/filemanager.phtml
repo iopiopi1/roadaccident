@@ -1,0 +1,80 @@
+<script>
+	$(function () { 
+		$(document).on("click", '.spImageDel' , function(){
+			var imgId = $(this).attr('data-imgid');
+			$.ajax({
+				url: "/api/imgdeleteadmin",
+				method: "POST",
+				data: {	imgId: imgId
+				},
+				success: function(response){
+					$('.vehicleRow').remove();
+				}
+			})	
+		});
+	});
+</script>
+
+<div class="emptySpace40px"></div>
+<?
+$vehicle = $this->vehicle;
+$images = $this->images;
+?>
+<div class="container" id="specialDiv">
+    <div class="row">
+		<ul class="nav nav-pills">
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'listusers'));?>">Все пользователи</a></li>
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'editvehicles'));?>">Назал</a></li>
+		</ul>
+	<div>
+	<div class="row">
+		<div id="elfinder"></div>
+	</div>
+</div>
+
+<div class="emptySpace20px"></div>
+<div class="container">
+
+    <div class="emptySpace20px"></div>
+	<div class="row">
+		<div class="col-xs-10 col-sm-12 col-md-12  col-lg-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Редактировать картинки автономера <?=$vehicle->getRegnum(); ?></h3>
+				</div>
+
+                <div class="emptySpace20px"></div>
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="col-md-4 form-group">
+                            <img src="/public/images/vehicles/<?=$vehicle->getId()?>/regnum.png">
+                        </div>
+                    </div>
+                </div>
+                <div class="emptySpace20px"></div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
+                        <div class="col-xs-12 col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-body">									
+									<div id="links">
+										
+										<?php foreach($images as $image): ?>
+											<li data-imgid="<?=$image['i_id']?>" style="list-style-type:none;margin:8px; background-color:#f4f0f2;">
+												<a href="/public/<?=$image['i_path'] . '/' . $image['i_name']; ?>" title="<?=$image['i_name']?>">
+													<img src="/public/<?=$image['i_path'] . '/thumbnail/' . $image['i_name'];?>" alt="<?=$image['i_name']?>">
+												</a>
+												<span style="cursor:pointer;position:absolute;z-index:100;" class="spImageDel" data-imgid="<?=$image['i_id']?>">Удалить</span>
+											</li>
+										<?php endforeach; ?>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/public/blueimpgallery/js/blueimp-gallery.min.js"></script>

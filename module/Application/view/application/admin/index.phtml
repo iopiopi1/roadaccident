@@ -1,0 +1,126 @@
+<script>
+	$(function () {  
+				
+		var RegEx = new RegExp("[ABEHKMOPCTYXabehkmopctyx]\\d{3}[ABEHKMOPCTYXabehkmopctyx]{2}\\d{2,3}|[АВЕКМНОРСТУХавекмнорстух]\\d{3}[АВЕКМНОРСТУХавекмнорстух]{2}\\d{2,3}");
+		$('.imgImages').click(function(){
+			$('#imgImg').remove();
+			//var numImage = $(this).index('.imgImages');
+			var imgSrc = $(this).attr('data-primarypic');			
+			//$('#specialDiv').Append('<img style="position:absolute;z-index:101;" src="'+imgSrc+'" />');
+			$('<img id="imgImg" style="position:absolute;z-index:101;" src="'+imgSrc+'" />').prependTo('#specialDiv');
+		});
+		
+		$('body').keypress(function(e) {
+			if ( e.which == 27 || e.which == 0 || e.which == 13 ) {
+				$('#imgImg').remove();
+			}
+		});
+
+		$('.inpRegnumOk').click(function(){
+			var numObj = $(this).index('.inpRegnumOk');
+			var regNum = $('.inpRegnum').eq(numObj).val();
+			var regNum2 = $('.inpRegnum2').eq(numObj).val();
+			var picsId = $('.imgImages').eq(numObj).attr('data-picgroup-id');
+			var userId = $('.imgImages').eq(numObj).attr('data-user-id');
+			var thumbnailPath = $('.imgImages').eq(numObj).attr('src');
+			var primaryPath = $('.imgImages').eq(numObj).attr('data-primarypic');
+			var dataPrimarypicName = $('.imgImages').eq(numObj).attr('data-primarypic-name');
+			if (RegEx.test(regNum)) {
+				$.ajax({
+					url: "api/adminupdateimage",
+					method: "POST",
+					data: {	picsId: picsId, 
+							regNum: regNum, 
+							regNum2: regNum2, 
+							userId: userId, 
+							thumbnailPath: thumbnailPath, 
+							primaryPath: primaryPath,
+							dataPrimarypicName: dataPrimarypicName
+							},
+					success: function(response){
+						if(response.state == 'success'){
+							$('.imagesRow').eq(numObj).remove();
+						}
+					}
+				})
+			}
+			else{alert('Формат А111АА11(1) латиницей или кириллицей, только буквы ABEHKMOPCTYX!');}
+			
+		});
+		
+		$('.inpRegnumDel').click(function(){
+			var numObj = $(this).index('.inpRegnumDel');
+			var regNum = $('.inpRegnum').eq(numObj).val();
+			var regNum2 = $('.inpRegnum2').eq(numObj).val();
+			var picsId = $('.imgImages').eq(numObj).attr('data-picgroup-id');
+			var userId = $('.imgImages').eq(numObj).attr('data-user-id');
+			var thumbnailPath = $('.imgImages').eq(numObj).attr('src');
+			var primaryPath = $('.imgImages').eq(numObj).attr('data-primarypic');
+			var dataPrimarypicName = $('.imgImages').eq(numObj).attr('data-primarypic-name');
+			var textDeletion = $('.inpDelText').eq(numObj).val();//alert(picsId+" "+dataPrimarypicName);
+			$.ajax({
+				url: "api/admindeleteimage",
+				method: "POST",
+				data: {	picsId: picsId, 
+						regNum: regNum, 
+						regNum2: regNum2, 
+						userId: userId, 
+						thumbnailPath: thumbnailPath, 
+						primaryPath: primaryPath,
+						dataPrimarypicName: dataPrimarypicName,
+						textDeletion: textDeletion
+						},
+				success: function(response){
+					if(response.state == 'success'){
+						$('.imagesRow').eq(numObj).remove();
+					}
+				}
+			})
+		});
+	});
+</script>
+<div class="emptySpace40px"></div>
+<div class="container" id="specialDiv">
+    <div class="row">
+		<ul class="nav nav-pills">
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'editvehicles'));?>">Все авто</a></li>
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'listusers'));?>">Все пользователи</a></li>
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'filemanager'));?>">Файл менеджер</a></li>
+		</ul>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-0  col-sm-offset-0  col-md-offset-0  col-lg-offset-0">
+			<table class="table">
+				<tr>
+					<th>#</th>
+					<th>Фото</th>
+					<th>Дата загрузки</th>
+					<th>Пользователь</th>
+					<th>Регномер</th>
+					<th>Регномер #2</th>
+					<th>Сохранить</th>
+					<th>Удалить</th>
+					<th>Комментарий</th>
+				</tr>
+				<? foreach($newImages as $uniqueId => $image): ?>
+					<tr class="imagesRow">
+						<th><?=$image['id']?></th>
+						<th class="inpRegnumDbId">
+							<a href="#"><img class="imgImages" src="public/<?=$image['thumbnailPicPath']?>" 
+							data-user-id="<?=$image['userId']?>" 
+							data-picgroup-id="<?=$uniqueId?>" 
+							data-primarypic-name="<?=$image['name']?>"
+							data-primarypic="public/<?=$image['primaryPicPath']?>" class="img-circle" />
+							</a>
+						</th>
+						<th><?=$image['dateCreated']->format('Y-m-d')?></th>
+						<th><?=$image['username']?></th>
+						<th><input class="inpRegnum" type="text"/></th>
+						<th><input class="inpRegnum2" type="text" placeholder="2ая машина"/></th>
+						<th><input class="inpRegnumOk" type="button" value="Ок"/></th>
+						<th><input class="inpRegnumDel" type="button" value="Удалить"/></th>				
+						<th><textarea class="inpDelText" placeholder="Комментарий" maxlength="200"></textarea></th>
+					</tr>
+				<? endforeach ?>
+			</table>
+		</div>
+    </div>
+</div>

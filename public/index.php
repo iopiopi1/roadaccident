@@ -4,8 +4,7 @@
  * Display all errors when APPLICATION_ENV is development.
  */
     error_reporting(E_ALL);
-    ini_set("display_errors", 1);
-
+    ini_set("display_errors", true);
 
 /**
  * This makes our life easier when dealing with paths. Everything is relative
