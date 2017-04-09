@@ -191,7 +191,7 @@ class AdminController extends AbstractActionController
 		if(is_null($page)){
 			$page = 0;
 		}
-        //$imagesTop = $this->serviceVehicle->getTopImages(6);
+		
 		$paginator = $this->serviceAdmin->getVehicles($page, 20);
         
 		

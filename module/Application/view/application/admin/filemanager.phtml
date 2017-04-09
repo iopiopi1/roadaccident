@@ -2,13 +2,17 @@
 	$(function () { 
 		$(document).on("click", '.spImageDel' , function(){
 			var imgId = $(this).attr('data-imgid');
+			var liDel = $('.liDel[data-imgid=' + imgId + ']');
 			$.ajax({
 				url: "/api/imgdeleteadmin",
 				method: "POST",
 				data: {	imgId: imgId
 				},
 				success: function(response){
-					$('.vehicleRow').remove();
+					if(response.state == 'success'){
+						liDel.remove();
+					}
+					else{alert('Произошла какая-то ошибка');}
 				}
 			})	
 		});
@@ -24,7 +28,7 @@ $images = $this->images;
     <div class="row">
 		<ul class="nav nav-pills">
 			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'listusers'));?>">Все пользователи</a></li>
-			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'editvehicles'));?>">Назал</a></li>
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'editvehicles'));?>">Назад</a></li>
 		</ul>
 	<div>
 	<div class="row">
@@ -60,7 +64,7 @@ $images = $this->images;
 									<div id="links">
 										
 										<?php foreach($images as $image): ?>
-											<li data-imgid="<?=$image['i_id']?>" style="list-style-type:none;margin:8px; background-color:#f4f0f2;">
+											<li class="liDel" data-imgid="<?=$image['i_id']?>" style="list-style-type:none;margin:8px; background-color:#f4f0f2;">
 												<a href="/public/<?=$image['i_path'] . '/' . $image['i_name']; ?>" title="<?=$image['i_name']?>">
 													<img src="/public/<?=$image['i_path'] . '/thumbnail/' . $image['i_name'];?>" alt="<?=$image['i_name']?>">
 												</a>

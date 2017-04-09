@@ -87,8 +87,15 @@ class AdminService {
 			
         $query = $em->getQuery();
 		$resultSet = $query->getScalarResult();
-		
-		$paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter($resultSet));
+		$rsKey = [];
+		//print_r($resultSet);
+		foreach($resultSet as $row){
+			if(!in_array($row['i_vehicle'], $rsKey)){
+				$rsSet[] = $row;
+				$rsKey[$row['i_vehicle']] = $row['i_vehicle'];
+			}
+		}
+		$paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter($rsSet));
 
 		$paginator
 			->setCurrentPageNumber($page)

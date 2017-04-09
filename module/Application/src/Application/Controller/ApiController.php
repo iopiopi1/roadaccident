@@ -726,13 +726,13 @@ class ApiController extends AbstractActionController
 			$imgPath = $path . DIRECTORY_SEPARATOR . $name;
 			if(!is_null($image)){
 				$qb = $this->entityManager->createQueryBuilder();
-				$qb->delete('Image', 'i');
-				$qb->where('i.uniqueId = :uniqueId');
-				$qb->setParameter('uniqueId', $uniqueId);
-				$p = $qb->execute();
-				
-				//unlink($thmbPath);
-				//unlink($imgPath);
+				$qb->delete('\Application\Entity\Image', 'i')
+				->where('i.uniqueId = :uniqueId')
+				->setParameter('uniqueId', $uniqueId);
+				$query = $qb->getQuery();
+				$result = $query->getResult();
+				unlink($thmbPath);
+				unlink($imgPath);
 				
 				$state = 'success';	
 			}
@@ -811,10 +811,20 @@ class ApiController extends AbstractActionController
 			
         $query = $em->getQuery();
 		$resultSet = $query->getScalarResult();
+		//print_r($resultSet);
+		$rsKey = [];
+		$rsSet = [];
+		foreach($resultSet as $row){
+			if(!in_array($row['i_vehicle'], $rsKey)){
+				$rsSet[] = $row;
+				$rsKey[$row['i_vehicle']] = $row['i_vehicle'];
+			}
+		}
+		
 		$itemsPerPage = 20;
-		$pages = count($resultSet);
+		$pages = count($rsSet);
 		$totPages = ceil($pages/$itemsPerPage);
-		$paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter($resultSet));
+		$paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter($rsSet));
 
 		$paginator
 			->setCurrentPageNumber($currentPage)

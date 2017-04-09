@@ -2,6 +2,9 @@
  * Created by Ярослав on 28.02.2016.
  */
 $(document).ready(function(){
+	document.addEventListener("contextmenu", function(e){
+		e.preventDefault();
+	}, false);
     $('#user').submit(function(event){
 		$('#warning_alert_mailsent').css({display:'none'});
 		$('#warning_alert_username').css({display:'none'});
