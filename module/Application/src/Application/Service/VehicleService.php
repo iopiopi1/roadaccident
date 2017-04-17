@@ -171,8 +171,9 @@ class VehicleService extends EntityServiceAbstract {
 		$black = imagecolorallocatealpha($im, 0, 0, 0, 90);
         $font = 'public/fonts/DaysOne-Regular.ttf';
         imagettftext($im, 60, 0, 10, 80, $black, $font, 'CARDAM.RU');
-			@imagepng($im,$img_path) or
-				@imagejpeg($im,$img_path);
+			@imagejpeg($im,$img_path) or
+				@imagepng($im,$img_path);
+				
     }
 	
     public function save($entity)

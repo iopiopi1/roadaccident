@@ -329,6 +329,7 @@ form{
 	
 	#regnum_form_but{
 		padding:12px 0px;
+		bottom:2px;
 	}
 	
 	.circles {
@@ -336,24 +337,50 @@ form{
 	}
 	
 	.div-circle-bordered{
-		width:80px;
-		height:80px;
+		width:60px;
+		height:60px;
 		border-radius:60px;
 
 
 	}
 	.circleUnderSpan{
 		width:80px;
-		font-size:10px
+		font-size:7px;
+		position:relative;
+		right:10px;
+		top:8px;
+		display:block;
 	}
 	
-	.cntSpan{
+	
+	.cntSpan1{
 		display:block;
 		position:relative;
-		top:15px;
+		top:8px;
+	}
+	
+	.cntSpan2{
+		display:block;
+		position:relative;
+		top:14px;
+	}
+	
+	.cntSpan3{
+		display:block;
+		position:relative;
+		top:8px;
+	}
+	
+	
+	.usernavul_a.blackBr{
+		padding:4px 10px;
 	}
 
-	
+	.usernavul_a.yellowBg{
+		background-color:#f0c309;
+		padding:6px 12px;
+	}
+
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -364,13 +391,29 @@ form{
 	}
 	.circleUnderSpan{
 		width:100px;
-		font-size:12px
+		font-size:12px;
+		position:relative;
+		top:8px;
 	}
 	
-	.cntSpan{
+		
+	
+	.cntSpan1{
 		display:block;
 		position:relative;
-		top:20px;
+		top:22px;
+	}
+	
+	.cntSpan2{
+		display:block;
+		position:relative;
+		top:28px;
+	}
+	
+	.cntSpan3{
+		display:block;
+		position:relative;
+		top:22px;
 	}
 
 }
@@ -381,14 +424,29 @@ form{
 		height:100px;
 		border-radius:80px;
 	}
+	
 	.circleUnderSpan{
 		width:100px;
+		position:relative;
+		top:12px;
 	}
 	
-	.cntSpan{
+	.cntSpan1{
 		display:block;
 		position:relative;
-		top:20px;
+		top:22px;
+	}
+	
+	.cntSpan2{
+		display:block;
+		position:relative;
+		top:28px;
+	}
+	
+	.cntSpan3{
+		display:block;
+		position:relative;
+		top:22px;
 	}
 
 }
@@ -402,6 +460,8 @@ form{
 	
 	.circleUnderSpan{
 		width:100px;
+		position:relative;
+		top:12px;
 	}
 	
 	.cntSpan{
@@ -410,6 +470,26 @@ form{
 		top:20px;
 	}
 
+	
+	
+	.cntSpan1{
+		display:block;
+		position:relative;
+		top:22px;
+	}
+	
+	.cntSpan2{
+		display:block;
+		position:relative;
+		top:28px;
+	}
+	
+	.cntSpan3{
+		display:block;
+		position:relative;
+		top:22px;
+	}
+	
 }
 
 #.huy1 div{border:1px red solid;}

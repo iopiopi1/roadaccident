@@ -427,6 +427,15 @@ return array(
 							'action' => 'unziploadimages'
 						)
 					)
+				),
+				'updateoldimgs' => array(
+					'options' => array(
+						'route'    => 'updateoldimgs [<filePath>]',
+						'defaults' => array(
+							'controller' => 'Application\Controller\Api',
+							'action' => 'updateoldimgs'
+						)
+					)
 				)
             ),
         ),

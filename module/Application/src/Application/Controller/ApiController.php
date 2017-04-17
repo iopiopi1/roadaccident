@@ -712,6 +712,41 @@ class ApiController extends AbstractActionController
 		}
 	}
 	
+	public function updateoldimgsAction(){
+		error_reporting(E_ALL & ~E_NOTICE);
+		$filePath = $this->getRequest()->getParam('filePath');
+		
+		$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($filePath, \RecursiveDirectoryIterator::SKIP_DOTS), 
+            \RecursiveIteratorIterator::SELF_FIRST);
+
+		foreach($iterator as $file) {
+			if(!$file->isDir() && $file->getFilename() != 'regnum.png' && !strpos($file->getPathname(), 'thumbnail')  && !strpos($file->getPathname(), '.tmb')) {	
+				preg_match('/.(gif|jpg|jpeg|tiff|png)$/', strtolower($file), $imageInfo, PREG_OFFSET_CAPTURE);
+				$extension = $imageInfo[1][0];
+				$x = @getimagesize($file->getPathname());
+				if(max(array($x[0],$x[1])) != 800){
+					if(in_array($extension, array('gif', 'jpg', 'jpeg', 'png'))){
+						echo $file->getPathname() . PHP_EOL;
+						$this->serviceApi->reduceImageSize($file->getPathname(), $file->getPathname(), 800);
+						$this->serviceVehicle->createWatermark($file->getPathname());
+					}
+				}
+				
+				//resizing pictures
+				//
+				/*if()
+				{ 
+	
+						
+				}
+				else
+				{
+					echo "Update failed".PHP_EOL;
+				}*/
+			}
+		}
+	}
+	
 	public function imgdeleteadminAction(){
 		$request = $this->getRequest();
 		$state = 'failed';

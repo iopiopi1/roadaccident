@@ -65,23 +65,26 @@
 								</div>
 							</div>
 							<div class="row">
-                                <div class="col-xs-8 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
 									<div class="row">
-										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-											<a href="/"><!--<img src="<?=$this->basePath('img/logo-2.png')?>" />-->
-												<div class="row">
-													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
-														<span id="iconSpan" style="">CARDAM.RU</span>
+										<div class="col-xs-5 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-1 col-md-offset-2 col-lg-offset-2">
+											
+												<a href="/">
+													<div class="row">
+														<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+															<span id="iconSpan" style="">CARDAM.RU</span>
+														</div>
 													</div>
-												</div>
-												<div class="row">
-													<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
-														<span id="underIconSpan" style="">База поврежденных автомобилей</span>
+													<div class="row">
+														<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+															<span id="underIconSpan" style="">База поврежденных автомобилей</span>
+														</div>
 													</div>
-												</div>
-											</a>
+												</a>
+											
 										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+										<div class="col-xs-5 col-sm-4 col-md-4 col-lg-4  col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+											<div class="row">
 											<ul id="usernavul">
 												<?if($user_session->id > 0):?>
 													<li><a class="usernavul_a yellowBg" href="<?=$this->url('user', array('action' => 'logout'))?>">Выйти</a></li>
@@ -94,6 +97,7 @@
 													<li class="usernavul_a"><a class="usernavul_a blackBr" href="<?=$this->url('admin', array('action' => 'index'))?>">Админ</a></li>
 												<?endif;?>
 											</ul>
+											</div>
 										</div>
 									</div>
                                     <ul id="navul">
@@ -139,5 +143,45 @@
 			</div>
         </div>
 		<?php echo $this->inlineScript() ?>
+		<!-- Yandex.Metrika counter -->
+		<script type="text/javascript">
+			(function (d, w, c) {
+				(w[c] = w[c] || []).push(function() {
+					try {
+						w.yaCounter44095419 = new Ya.Metrika({
+							id:44095419,
+							clickmap:true,
+							trackLinks:true,
+							accurateTrackBounce:true
+						});
+					} catch(e) { }
+				});
+
+				var n = d.getElementsByTagName("script")[0],
+					s = d.createElement("script"),
+					f = function () { n.parentNode.insertBefore(s, n); };
+				s.type = "text/javascript";
+				s.async = true;
+				s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+				if (w.opera == "[object Opera]") {
+					d.addEventListener("DOMContentLoaded", f, false);
+				} else { f(); }
+			})(document, window, "yandex_metrika_callbacks");
+		</script>
+		<noscript><div><img src="https://mc.yandex.ru/watch/44095419" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+		<!-- /Yandex.Metrika counter -->
+		
+		<script> <!-- GoogleAnalytics -->
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-97466806-1', 'auto');
+			ga('send', 'pageview');
+
+		</script>
+		
 	</body>
 </html>
