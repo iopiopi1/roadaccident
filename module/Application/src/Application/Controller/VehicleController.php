@@ -85,6 +85,21 @@ class VehicleController extends AbstractActionController
         );
     }
 
+    public function allAction()
+    {	$page = $this->getEvent()->getRouteMatch()->getParam('id');
+		if (is_null($page)) {
+			$page = 0;
+		}
+		
+		$paginator = $this->serviceVehicle->getAllVehicles($page, 100);
+
+        return new ViewModel(
+            array(
+				'paginator' => $paginator
+            )
+        );
+    }
+
     public function addvehicleimagesajaxAction(){
         $request = $this->getRequest();
 		$user_session = new Container('user');

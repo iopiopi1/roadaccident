@@ -236,6 +236,26 @@ class VehicleService extends EntityServiceAbstract {
 		return $textlat;
 	}*/
 	
+	public function getAllVehicles($offset, $limit)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('v')
+            ->from('\Application\Entity\Vehicle', 'v')
+			->where('v.status = 0')
+			//->setFirstResult($offset)
+			//->setMaxResults($limit)
+			;
+        $query = $qb->getQuery();
+		
+		$result = ($query->getScalarResult());
+		$paginator = new ZendPaginator(new \Zend\Paginator\Adapter\ArrayAdapter($result));
+		$paginator->setCurrentPageNumber($offset);
+		$paginator->setItemCountPerPage($limit);
+        return $paginator;
+    }
+	
 	public function getPagedVehicles($offset = 0, $limit = 10)
     {
         $em = $this->getEntityManager();

@@ -21,6 +21,10 @@ $(document).ready(function(){
 			$('#warning_alert_agreement').css({display:'block'});
 			return false;
 		}
+		if($('#confidentialityCheck').prop('checked') == false){
+			$('#warning_alert_confidentiality').css({display:'block'});
+			return false;
+		}
 		
         var userData = $('#user').serialize();
         $.ajax({
@@ -47,6 +51,11 @@ $(document).ready(function(){
 	$('#agreementCheck').click(function(){
 		if($('#agreementCheck').prop('checked') == true){
 			$('#warning_alert_agreement').css({display:'none'});
+		}
+	});
+	$('#confidentialityCheck').click(function(){
+		if($('#confidentialityCheck').prop('checked') == true){
+			$('#warning_alert_confidentiality').css({display:'none'});
 		}
 	});
 

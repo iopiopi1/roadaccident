@@ -18,6 +18,9 @@ class SearchService extends EntityServiceAbstract {
 	
 	public function getRegnumMatches($regnum){
 		$regnum = str_replace(' ','',$regnum);
+		if ($regnum == ''){
+			$regnum = '(_o_)';
+		}
 		$qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('v','i')
             ->from('\Application\Entity\Vehicle', 'v')

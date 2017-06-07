@@ -170,6 +170,15 @@ class UserController extends AbstractActionController
         );
 	}
 	
+	public function confidentialityAction()
+    {
+		
+        return new ViewModel(
+            array(
+            )
+        );
+	}
+	
     /**
      * @param \Zend\Form\Form $userForm
      */
