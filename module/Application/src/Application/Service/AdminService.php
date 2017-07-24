@@ -88,6 +88,7 @@ class AdminService {
         $query = $em->getQuery();
 		$resultSet = $query->getScalarResult();
 		$rsKey = [];
+		$rsSet = [];
 		//print_r($resultSet);
 		foreach($resultSet as $row){
 			if(!in_array($row['i_vehicle'], $rsKey)){

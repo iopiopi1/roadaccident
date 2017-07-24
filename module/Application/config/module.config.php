@@ -266,6 +266,28 @@ return array(
                             ),
                         ),
                     ),
+					'searchvehicle' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/searchvehicle[/:regnum]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'searchvehicle',
+                            ),
+                        ),
+                    ),
+					'getvehicle' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/getvehicle[/:id]',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Api',
+                                'action'     => 'getvehicle',
+                            ),
+                        ),
+                    ),
+					
+					
                 ),
             ),
 			'search' => array(
@@ -359,7 +381,8 @@ return array(
 					$sm->getServiceLocator()->get('Application\Service\UserService'),
 					$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'),
 					$sm->getServiceLocator()->get('Application\Service\VehicleService'),
-					$sm->getServiceLocator()->get('ViewHelperManager')
+					$sm->getServiceLocator()->get('ViewHelperManager'),
+					$sm->getServiceLocator()->get('Application\Service\SearchService')
 				);
             },
             'Application\Controller\Index' => function ($sm) {

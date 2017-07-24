@@ -34,12 +34,13 @@ class ApiController extends AbstractActionController
     const FOLDER_IMG_TMP = "images/vehicles_tmp";
     const FOLDER_IMG = "images/vehicles";
 
-    function __construct($serviceApi, $serviceUser, $entityManager, $serviceVehicle, $viewHelperManager)
+    function __construct($serviceApi, $serviceUser, $entityManager, $serviceVehicle, $viewHelperManager, $serviceSearch)
     {
         $this->serviceApi = $serviceApi;
 		$this->serviceUser = $serviceUser;
 		$this->entityManager = $entityManager;
 		$this->serviceVehicle = $serviceVehicle;
+		$this->serviceSearch = $serviceSearch;
 		$this->user_session = new Container('user');
 		$this->viewHelperManager = $viewHelperManager;
     }
@@ -911,4 +912,31 @@ class ApiController extends AbstractActionController
         );
 	}
 	
+	public function searchvehicleAction(){
+		$regnum = $this->params()->fromRoute('regnum');
+		$latRegnum = $this->serviceVehicle->correctRegnum($regnum);
+		$vehicles = $this->serviceSearch->getRegnumMatches($regnum);
+		
+		return new JsonModel(
+            array(
+				'vehicles' => $vehicles,
+            )
+        );
+		
+	}
+	
+	public function getvehicleAction(){
+		$vehicle_id = $this->params()->fromRoute('id');
+		$vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
+		print_r($vehicle);
+		$images = $this->serviceVehicle->getImages($vehicle_id);
+		return new JsonModel(
+            array(
+				'vehicle' => array(
+									'date' => array('id' => $vehicle->getId(), 'regnum' => $vehicle->getRegnum() ), 
+				'images' => $images),
+            )
+        );
+		
+	}
 }
