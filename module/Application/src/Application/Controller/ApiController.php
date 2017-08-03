@@ -916,10 +916,21 @@ class ApiController extends AbstractActionController
 		$regnum = $this->params()->fromRoute('regnum');
 		$latRegnum = $this->serviceVehicle->correctRegnum($regnum);
 		$vehicles = $this->serviceSearch->getRegnumMatches($regnum);
-		
+        $v = [];   
+        //print_r($vehicles);     
+        foreach($vehicles as $vehicle){ 
+            $v[] = array(
+                'vehicleId' => $vehicle['v_id'],
+                'regnum' => $vehicle['v_regnum'],
+                'imagePath' => 'public/' . $vehicle['i_path'] . '/' . $vehicle['i_name'],
+                'regnum' => $vehicle['v_regnum'],
+            );
+        }
+
 		return new JsonModel(
             array(
-				'vehicles' => $vehicles,
+				'vehicles' => $v,
+                //'vehicle_id' => 
             )
         );
 		
@@ -928,13 +939,20 @@ class ApiController extends AbstractActionController
 	public function getvehicleAction(){
 		$vehicle_id = $this->params()->fromRoute('id');
 		$vehicle = $this->serviceVehicle->getVehicleById($vehicle_id);
-		print_r($vehicle);
 		$images = $this->serviceVehicle->getImages($vehicle_id);
+        $i = [];
+        foreach($images as $image){
+
+            $i[] = array('imagePath' => 'public/' . $image['path'] . '/' . $image['name']);
+        }
 		return new JsonModel(
             array(
-				'vehicle' => array(
-									'date' => array('id' => $vehicle->getId(), 'regnum' => $vehicle->getRegnum() ), 
-				'images' => $images),
+                'vehicles' => array(
+				                'id' => $vehicle->getId(),
+                                'regnum' => $vehicle->getRegnum(),
+				                
+                            ),
+                'images' => $i,
             )
         );
 		
