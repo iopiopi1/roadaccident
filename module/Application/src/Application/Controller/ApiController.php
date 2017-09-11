@@ -619,7 +619,9 @@ class ApiController extends AbstractActionController
         $qb->select('e')
             ->from('\Application\Entity\Email', 'e')
             ->where('e.status = ?1')
-            ->setParameter(1, \Application\Entity\Email::STATUS_CREATED);
+            ->setParameter(1, \Application\Entity\Email::STATUS_CREATED)
+			->setFirstResult(0)
+			->setMaxResults(30);
 			
         $query = $qb->getQuery();
         $emails_array = $query->getScalarResult();
