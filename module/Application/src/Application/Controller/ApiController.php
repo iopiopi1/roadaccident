@@ -615,8 +615,6 @@ class ApiController extends AbstractActionController
 	
 	public function sendemailcronAction(){
 		$request = $this->getRequest();
-
-        
 		$qb = $this->entityManager->createQueryBuilder();
         $qb->select('e')
             ->from('\Application\Entity\Email', 'e')
@@ -625,7 +623,7 @@ class ApiController extends AbstractActionController
 			
         $query = $qb->getQuery();
         $emails_array = $query->getScalarResult();
-		
+
 		foreach($emails_array as $email){
 			if(mail($email['e_recipient'], $email['e_subject'], $email['e_mailBody'], $email['e_headers'], $email['e_extraHeader'])){
 				$qb = $this->entityManager->createQueryBuilder();
@@ -636,6 +634,10 @@ class ApiController extends AbstractActionController
 					->setParameter(2, $email['e_id'])
 					->getQuery();
 				$p = $q->execute();
+				
+				echo "\r\n". 'Письмо '.$email['e_id'].' отправлено';
+			}
+			else{echo "\r\n". 'Письмо '.$email['e_id'].' НЕ ОТПРАВЛЕНО ' . 'Ошибка: ' . error_get_last()['message'];
 			}
 		}
 		
