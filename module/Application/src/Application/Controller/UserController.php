@@ -73,6 +73,7 @@ class UserController extends AbstractActionController
 						'state' => 'error',
 						'id' => null,
 						'errNumber' => 2,
+                        'errorMsg' => 'Такой пользователь уже существует!',
 					));
 				}
 				if(!$this->serviceUser->checkIsEmailUnique($user->getEmail())){
@@ -80,6 +81,7 @@ class UserController extends AbstractActionController
 						'state' => 'error',
 						'id' => null,
 						'errNumber' => 3,
+                        'errorMsg' => 'Такой email уже существует!',
 					));
 				}
                 $user->setDateEdited(new \dateTime("now"));
@@ -116,6 +118,7 @@ class UserController extends AbstractActionController
 				'state' => 'success', 
 				'errorMsg' => '',
 				'isAdmin' => $user_session->isAdmin,
+				'id' => $user_session->id,
 			));
 		}
 		else{	//print_r($user);

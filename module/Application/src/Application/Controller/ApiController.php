@@ -69,7 +69,8 @@ class ApiController extends AbstractActionController
 	
 	public function addimageajaxAction()
     {
-
+        
+        $uploaded = 0;
         $response = array(
             'files' => array()
         );
@@ -80,9 +81,15 @@ class ApiController extends AbstractActionController
                 $request->getPost()->toArray(),
                 $request->getFiles()->toArray()
             );
-
+            //print_r($post['files']['tmp_name']);
+//print_r($post['files']);
             $vehicle_uid = $post['vehicle_uid'];
 			$vehicle_id = $post['vehicle_id'];
+            $postSaved = $post;
+			$userId = $post['userId'];
+            if(!isset($this->user_session->id) && isset($userId)){
+                $this->user_session->id = $userId;    
+            }
 
             try {
 				if(!$vehicle_uid > 0){
@@ -90,16 +97,18 @@ class ApiController extends AbstractActionController
 				}
 				if(!is_dir('public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid))
 						mkdir('public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid);
+//echo 'public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid;
             }
             catch(Exception $e)
             {
                 echo $e->getMessage();
             }
 
-            $uploaded = 0;
             $uniqid = uniqid();
-            foreach($post['files'] as $counter => $image)
-            {	//echo 'public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid . DIRECTORY_SEPARATOR . $uniqid . '.' . $extension;
+            foreach($postSaved['files'] as $counter => $image)
+            {
+
+                //echo 'public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid . DIRECTORY_SEPARATOR . $uniqid . '.' . $extension;
 				preg_match('/.(gif|jpg|jpeg|tiff|png)$/', strtolower($image['name']), $emageInfo, PREG_OFFSET_CAPTURE);
 				$extension = $emageInfo[1][0];
 				//resizing pictures
@@ -113,6 +122,7 @@ class ApiController extends AbstractActionController
                     }
                     //else $thumbnail = str_replace("public/", "", $post['target']) . DIRECTORY_SEPARATOR . $image['name'];
 					$this->serviceVehicle->createWatermark('public/' . self::FOLDER_IMG_TMP . DIRECTORY_SEPARATOR  . $vehicle_uid . DIRECTORY_SEPARATOR . $uniqid . '.' . $extension);
+                    $response['status'] = 'success';
                     $response['files'][] = array(
                         'name' => $uniqid . '.' . $extension,
                         'size' => filesize('public/'.$filePath),
@@ -152,7 +162,7 @@ class ApiController extends AbstractActionController
                 }
                 else
                 {
-				
+				    $response['status'] = 'failure';
                     $response['files'][] = array(
                         'name' => $image['tmp_name'],
                         "error" => "Upload failed"
@@ -615,17 +625,17 @@ class ApiController extends AbstractActionController
 	
 	public function sendemailcronAction(){
 		$request = $this->getRequest();
+
+        
 		$qb = $this->entityManager->createQueryBuilder();
         $qb->select('e')
             ->from('\Application\Entity\Email', 'e')
             ->where('e.status = ?1')
-            ->setParameter(1, \Application\Entity\Email::STATUS_CREATED)
-			->setFirstResult(0)
-			->setMaxResults(30);
+            ->setParameter(1, \Application\Entity\Email::STATUS_CREATED);
 			
         $query = $qb->getQuery();
         $emails_array = $query->getScalarResult();
-
+		
 		foreach($emails_array as $email){
 			if(mail($email['e_recipient'], $email['e_subject'], $email['e_mailBody'], $email['e_headers'], $email['e_extraHeader'])){
 				$qb = $this->entityManager->createQueryBuilder();
@@ -636,10 +646,6 @@ class ApiController extends AbstractActionController
 					->setParameter(2, $email['e_id'])
 					->getQuery();
 				$p = $q->execute();
-				
-				echo "\r\n". 'Письмо '.$email['e_id'].' отправлено';
-			}
-			else{echo "\r\n". 'Письмо '.$email['e_id'].' НЕ ОТПРАВЛЕНО ' . 'Ошибка: ' . error_get_last()['message'];
 			}
 		}
 		
@@ -917,7 +923,7 @@ class ApiController extends AbstractActionController
 	}
 	
 	public function searchvehicleAction(){
-		$regnum = $this->params()->fromRoute('regnum');
+		$regnum = $this->params()->fromRoute('regnum'); 
 		$latRegnum = $this->serviceVehicle->correctRegnum($regnum);
 		$vehicles = $this->serviceSearch->getRegnumMatches($regnum);
         $v = [];   
