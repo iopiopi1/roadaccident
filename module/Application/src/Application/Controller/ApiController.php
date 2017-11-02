@@ -608,7 +608,9 @@ class ApiController extends AbstractActionController
 		
 		if($user_id > 0){
 			
-			$this->serviceUser->updateById($user_id);
+			$user = $this->serviceUser->updateById($user_id);
+			$user->setPasswordChangeddate(new \DateTime("now"));
+			$this->serviceUser->save($user);
 			
 			$result = 'success';
 		}

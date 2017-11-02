@@ -103,10 +103,17 @@ class User
      * @ORM\Column(type="integer")
      */
     protected $okId;
+	
+	 /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $passwordChangeddate;
 
     public function __construct()
     {
         $this->setDateCreated(new \DateTime("now"));
+        $this->setPasswordChangeddate(new \DateTime("now"));
     }
 
     /**
@@ -227,6 +234,28 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }	
+	
+	
+    /**
+     * @param \Datetime $passwordChangeddate
+     */
+    public function setPasswordChangeddate($passwordChangeddate)
+    {
+        $this->passwordChangeddate = $passwordChangeddate;
+        return $this;
     }
+
+    /**
+     * @return \Datetime
+     */
+    public function getPasswordChangeddate()
+    {
+        return $this->passwordChangeddate;
+    }
+	
+	
+	
+	
 
 }

@@ -119,6 +119,7 @@ class UserController extends AbstractActionController
 				'errorMsg' => '',
 				'isAdmin' => $user_session->isAdmin,
 				'id' => $user_session->id,
+				'passTime' => $user->getPasswordChangeddate(),
 			));
 		}
 		else{	//print_r($user);
