@@ -9,3 +9,12 @@ nbproject
 .settings
 vendor
 composer.phar
+/module/Application/src/Application/Entity/UserAction.php
+/module/Application/src/models/Application/Entity/Admin.php
+/module/Application/src/models/Application/Entity/Brand.php
+/module/Application/src/models/Application/Entity/Email.php
+/module/Application/src/models/Application/Entity/Image.php
+/module/Application/src/models/Application/Entity/Supplier.php
+/module/Application/src/models/Application/Entity/User.php
+/module/Application/src/models/Application/Entity/Vehicle.php
+/module/Application/src/models/Application/Entity/VehicleImage.php

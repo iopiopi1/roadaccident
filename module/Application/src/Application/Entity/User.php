@@ -21,7 +21,7 @@ class User
     const STATUS_ACTIVE = 0;
     const STATUS_BLOCKED = 1;
     const STATUS_DELETED = 2;
-	const STATUS_NONACTIVE = 3;
+    const STATUS_NONACTIVE = 3;
 	
     /**
      * Primary Identifier

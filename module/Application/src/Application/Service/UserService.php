@@ -1797,9 +1797,9 @@ class UserService extends EntityServiceAbstract {
 		//$mail_result = mail($recipient, $subject, $mail_body, $headers, "-f admin@cardam.ru");
 	}
 		
+    
 	
-	
-	public function checkLogin($username,$password)
+    public function checkLogin($username,$password)
     {
         $user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy(
 		array(
@@ -1812,7 +1812,41 @@ class UserService extends EntityServiceAbstract {
         return $user;
     }
 	
-	public function checkIsUsernameUnique($username)
+    public function checkUserStAccd($user)
+    {
+        $userAction = $this->getEntityManager()->getRepository('\Application\Entity\UserAction')->findOneBy(
+            array(
+                    'userId' => $user->getId(), 
+                    'actionType' => \Application\Entity\UserAction::ACTION_ACCEPT_USERSTATEMENT, 
+                    'intValue' => \Application\Entity\UserAction::ACCEPTED,
+                    )
+            );
+        if($userAction  != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+	
+    public function checkSecPolAccd($user)
+    {
+        $userAction = $this->getEntityManager()->getRepository('\Application\Entity\UserAction')->findOneBy(
+            array(
+                    'userId' => $user->getId(), 
+                    'actionType' => \Application\Entity\UserAction::ACTION_ACCEPT_SECPOLICY, 
+                    'intValue' => \Application\Entity\UserAction::ACCEPTED,
+                    )
+            );
+        if($userAction  != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    
+	
+    public function checkIsUsernameUnique($username)
     {
         $user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy(array('username' => $username));
 		
@@ -1824,7 +1858,7 @@ class UserService extends EntityServiceAbstract {
 		}
     }		
 	
-	public function checkIsEmailUnique($email)
+    public function checkIsEmailUnique($email)
     {
         $user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy(array('email' => $email));
 		
