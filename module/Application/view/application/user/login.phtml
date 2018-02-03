@@ -9,33 +9,93 @@ $form = $this->form;
 $form->setAttribute('action', $this->url('user', array('action' => 'checklogin', 'method' => 'POST')));
 $form->prepare();
 echo $this->form()->openTag($form);
-//$errorMsg = $this->getEvent()->getRouteMatch()->getParam('errorMsg');
+
 ?>
+
+<script>
+	$(function () {
+			
+		$('#forgotPass').click(function(){
+			$('#resetPassForm').show();
+			
+		});
+		
+		$('#resetPassBt').click(function(){
+			$('#warning_alert_resetPassSent').hide();
+			$('#warning_alert_resetPass').hide();
+			var email = $('#resetPassInp').val();
+			$.ajax({
+				url: baseUrl + "user/restorepassword",
+				method: "POST",
+				data: {email: email},
+				success: function (result) {
+					if(result.state == 'success'){
+						$('#warning_alert_resetPassSent').show();
+					}
+					else{
+						//alert(result.errorMsg);
+						$('#warning_alert_resetPass').show();
+					}
+				}
+			});
+		});
+		
+	});
+</script>
+
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-md-8">
+		<div class="col-xs-12 col-md-8" id="huy1">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Войти на сайт</h3>
 				</div>
 				<div class="panel-body">
-					<div class="row">
-						<div class="col-md-4 form-group">
-							<? echo $this->formRow($form->get('username')); ?>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+						<div class="row">
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
+								<? echo $this->formRow($form->get('username')); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0  form-group">
+								<? echo $this->formRow($form->get('password')); ?>
+							</div>
+							<div id="warning_alert_login" style="visibility:hidden;" class="alert alert-danger" role="alert">
+								<strong>Неверный</strong> пароль/логин.
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0  form-group">
+								<? echo $this->formRow($form->get('login')); ?>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-4 form-group">
-							<? echo $this->formRow($form->get('password')); ?>
+
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+						<div class="row">
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 form-group">
+								<a id="forgotPass" href="#"><h4>Забыли пароль?</h4></a>
+							</div>
 						</div>
-                        <div id="warning_alert_login" style="visibility:hidden;" class="alert alert-danger" role="alert">
-                            <strong>Неверный</strong> пароль/логин.
-                        </div>
-					</div>
-					<div class="row">
-						<div class="col-md-4 form-group">
-							<? echo $this->formRow($form->get('login')); ?>
+						<div id="resetPassForm" style="display:none;">
+							<div class="row">
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0  form-group">
+									<input id="resetPassInp" type="text" class="form-control" placeholder="Ваш email">
+								</div>
+								<div id="warning_alert_resetPass" style="display:none;" class="alert alert-danger" role="alert">
+									<strong>Данный email </strong> адрес не зарегистрирован!
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0  form-group">
+									<button id="resetPassBt" type="button" class="form-control btn-success">Восстановить</button>
+								</div>
+							</div>
 						</div>
+						<div id="warning_alert_resetPassSent" style="display:none;" class="alert alert-success" role="alert">
+							<strong>На указанный </strong> почтовый ящик отправлено письмо с инструкциями для восстановления пароля.
+						</div> 
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,85 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ???????
+ * Date: 24.02.2016
+ * Time: 23:00
+ */
+
+
+?>
+
+<script>
+    $(function () {
+        'use strict';
+
+        // Initialize the jQuery File Upload widget:
+        $('#fileupload').fileupload({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: baseUrl + 'api/addimageajax',
+			autoUpload : true,
+			add: function (e, data) {
+				var goUpload = true;
+				var uploadFile = data.files[0];
+				if (!(/\.(jpg|jpeg|png)$/i).test(uploadFile.name)) {
+					alert('Фото должно быть следующего типа: jpg,jpeg,png');
+					goUpload = false;
+				}
+				if (uploadFile.size > 4000000) { // 4mb
+					alert('Пожалуйста, загрузите фото меньшего размера. Максимально доспустимый размер 4МБ!');
+					goUpload = false;
+				}
+				if (goUpload == true) {
+					data.submit();
+				}
+			},
+        });
+
+        // Enable iframe cross-domain access via redirect option:
+        $('#fileupload').fileupload(
+            'option',
+            'redirect',
+            window.location.href.replace(
+                /\/[^\/]*$/,
+                '/cors/result.html?%s'
+            )
+        );
+
+        // Load existing files:
+        $('#fileupload').addClass('fileupload-processing');
+        $.ajax({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: baseUrl + 'api/addimageajax',
+            dataType: 'json',
+            context: $('#fileupload')[0]
+        }).always(function () {
+            $(this).removeClass('fileupload-processing');
+        }).done(function (result) {
+            $(this).fileupload('option', 'done')
+                .call(this, $.Event('done'), {result: result});
+        })
+		;
+    });
+</script>
+
+<div class="emptySpace20px"></div>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 col-md-offset-0 col-sm-offset-0 col-lg-offset-0 col-xs-offset-0">
+			<div class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-md-offset-1 col-sm-offset-1 col-lg-offset-1 col-xs-offset-1">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Добавить фотографии поврежденного авто</h3>
+						<span style="font-size:12px;">Для добавления нескольких фото сразу - 
+						1. нажать "Добавить фото" 2. зажмите CTRL и выберите нужные фото</span>
+					</div>
+					<div class="panel-body">
+						<?=$this->partial('partial-upload.phtml');?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

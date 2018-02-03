@@ -1,0 +1,30 @@
+<?$pagedVehicles = $this->paginator;?> 
+
+<div class="emptySpace20px"></div>
+<div class="container">
+    <div class="row">
+		<div class="col-xs-10 col-sm-8 col-md-6  col-lg-8">
+			<h1>Автономера</h1>
+			<table class="table">
+				<thead>    
+					<tr>
+						<th>Рег. номер</th>
+					</tr>
+				</thead>
+				<tbody>
+					<? foreach($pagedVehicles as $vehicle):?>
+						<tr> 
+							<td><a href="<?=$this->url('vehicle', array('action' => 'index' , 'id' => $vehicle['v_id']))?>"><?=$vehicle['v_regnum']?></a></td>
+
+								</a>
+							</td>
+						</tr>
+					<? endforeach;?>
+				</tbody>
+			</table>
+			<div class="paging">
+				<?=$this->paginationControl($this->pagedVehicles,'sliding','partial/paginatorSiteMap.phtml');?>
+			</div>
+		</div>
+	</div>
+</div>

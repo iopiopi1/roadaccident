@@ -26,13 +26,12 @@ class IndexController extends AbstractActionController
 	
     public function indexAction()
     {
+		$searchForm = new \Application\Form\Searchvehicle();
 		
-		$images = $this->serviceVehicle->getTopImages(12);
-				
         return new ViewModel(
 			array(
-					'images' => $images
-				)
+				'searchForm' => $searchForm,
+			)
 		);
 		
     }

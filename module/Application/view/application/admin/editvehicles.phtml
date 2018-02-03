@@ -1,0 +1,131 @@
+<script>
+	$(function () { 
+		var RegEx = new RegExp("[ABEHKMOPCTYXabehkmopctyx]\\d{3}[ABEHKMOPCTYXabehkmopctyx]{2}\\d{2,3}|[АВЕКМНОРСТУХавекмнорстух]\\d{3}[АВЕКМНОРСТУХавекмнорстух]{2}\\d{2,3}");
+
+		$(document).on("click", '.inpRegnumSave input' , function(){
+			var numObj = $(this).index('.inpRegnumSave input');
+			var regNum = $('.inpRegnum input').eq(numObj).val();
+			var vehicleId = $('.inpRegnumDbId span').eq(numObj).text();
+			if (RegEx.test(regNum)) {
+				$.ajax({
+					url: "/api/editvehicleregnum",
+					method: "POST",
+					data: {	vehicleId: vehicleId, 
+							regNum: regNum
+					},
+					success: function(response){
+						if(response.state == 'success'){
+							//$('.imagesRow').eq(numObj).remove();
+						}
+						else{alert(response.state);}
+					}
+				})
+			}
+			else{alert('Формат А111АА11(1) латиницей или кириллицей, только буквы ABEHKMOPCTYX!');}
+			
+		});
+		
+		$('#searchVehicle').keyup(function(){
+			var inputValue = $('#searchVehicle').val();
+			$.ajax({
+				url: "/api/editvehicles",
+				method: "POST",
+				data: {	regNum: inputValue, 
+						page: 1
+				},
+				success: function(response){
+					$('.vehicleRow').remove();
+					$('#paginationBox ul li').remove();
+					$('table').append(response.html);
+					for(var i = 1;i < (response.totPages + 1); i++){
+						if(response.currentPage == i){
+							$('#paginationBox ul').append('<li class="active"><a href="#">' + i + '</a></li>');
+						}
+						else{
+							$('#paginationBox ul').append('<li><a href="#">' + i + '</a></li>');
+						}
+					}
+				}
+			})	
+		});
+		
+		$(document).on("click", '#paginationBox ul a' , function(){
+			var inputValue = $('#searchVehicle').val();
+			var numObj = $(this).index('#paginationBox ul a');
+			var page = $('#paginationBox ul a').eq(numObj).text(); 
+			$.ajax({
+				url: "/api/editvehicles",
+				method: "POST",
+				data: {	regNum: inputValue, 
+						page: page
+				},
+				success: function(response){
+					$('.vehicleRow').remove();
+					$('#paginationBox ul li').remove();
+					$('table').append(response.html);
+					for(var i = 1;i < response.totPages + 1; i++){
+						if(response.currentPage == i){
+							$('#paginationBox ul').append('<li class="active"><a href="#">' + i + '</a></li>');
+						}
+						else{
+							$('#paginationBox ul').append('<li><a href="#">' + i + '</a></li>');
+						}
+					}
+				}
+			})	
+		});
+		$( "#searchVehicle" ).trigger( "keyup" );
+	});
+</script>
+<div class="emptySpace40px"></div>
+<div class="container" id="specialDiv">
+    <div class="row">
+		<ul class="nav nav-pills">
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'editvehicles'));?>">Все авто</a></li>
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'listusers'));?>">Все пользователи</a></li>
+		</ul>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-0  col-sm-offset-0  col-md-offset-0  col-lg-offset-0">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0  col-sm-offset-0  col-md-offset-0  col-lg-offset-0">
+					<input class="form-control" id="searchVehicle" placeholder="Поиск (A777AA64)" type="text"/>
+				</div>
+			</div>
+			<table class="table">
+				<tr>
+					<th>#</th>
+					<th>Фото</th>
+					<th>Дата загрузки</th>
+					<th>Регномер</th>
+					<th>Сохранить</th>
+					<th> </th>
+				</tr>
+				<!--foreach($this->paginator as $vehicle): 
+					<tr class="vehicleRow">
+						<th class="inpRegnumDbId">
+							<span>$vehicle['v_id']?></span>
+						</th>
+						<th class="inpRegnumImg">
+							<a href="/vehicle/index/$vehicle['v_id']?>"><img class="imgImages" src="/public/$vehicle['i_path'] . '/thumbnail/' . $vehicle['i_name']?>"/></a>
+						</th>
+						<th class="inpDateCreate">
+							$vehicle['v_dateCreated']->format('d-m-Y')
+						</th>
+						<th class="inpRegnum">
+							<input class="form-control"  type="text" value="$vehicle['v_regnum']?>" />
+						</th>
+						<th class="inpRegnumSave">
+							<input class="form-control"  type="button" value="Сохранить"/>
+						</th>
+					</tr>
+				 //endforeach ?>
+				-->
+			</table>
+			<div class="row">
+				<div id="paginationBox" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-0  col-sm-offset-0  col-md-offset-0  col-lg-offset-0">
+					<ul class="pagination">
+					</ul>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>

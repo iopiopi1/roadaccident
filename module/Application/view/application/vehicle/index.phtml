@@ -12,7 +12,7 @@ $form->prepare();
 
 ?>
 
-<link rel="stylesheet" href="/roadaccident/public/blueimpgallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="/public/blueimpgallery/css/blueimp-gallery.min.css">
 
 <script>
     $(function () {
@@ -51,10 +51,13 @@ $form->prepare();
         });
     });
 </script>
+
 <div class="emptySpace20px"></div>
 <div class="container">
+
+    <div class="emptySpace20px"></div>
 	<div class="row">
-		<div class="col-xs-6 col-md-12  col-lg-12">
+		<div class="col-xs-10 col-sm-12 col-md-12  col-lg-12">
 			<?=$this->form()->openTag($form); ?>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -63,10 +66,7 @@ $form->prepare();
                 <div class="emptySpace40px"></div>
                 <div class="row">
                     <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
-                        <div class="col-md-4 form-group">
                             <?$form->get('brand')->setAttribute('disabled','disabled');?>
-                            <?=$this->formRow($form->get('brand'));?>
-                        </div>
                         <div class="col-md-4 form-group">
                             <?$form->get('regnum')->setAttribute('disabled','disabled');?>
                             <? echo $this->formRow($form->get('regnum')); ?>
@@ -76,7 +76,6 @@ $form->prepare();
                 <div class="row">
                     <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
                         <div class="col-md-4 form-group">
-                            <? echo $this->formRow($form->get('submit')); ?>
                         </div>
                     </div>
 				</div>
@@ -94,7 +93,7 @@ $form->prepare();
                 <div class="row">
                     <div class="col-md-8 col-lg-8 col-xs-8 col-md-offset-1 col-lg-offset-1 col-xs-offset-1">
                         <div class="col-md-4 form-group">
-                            <img src="/roadaccident/public/images/vehicles/<?=$this->vehicle_id?>/regnum.png">
+                            <img src="/public/images/vehicles/<?=$this->vehicle_id?>/regnum.png">
                         </div>
                     </div>
                 </div>
@@ -119,13 +118,13 @@ $form->prepare();
                                     </div>
                                     <div id="links">
                                         <?php foreach($images as $image): ?>
-                                            <a href="/roadaccident/<?=$image['path']; ?>" title="<?=$image['name']?>">
-                                                <img src="/roadaccident/<?=$image['thumbnail']; ?>" alt="<?=$image['name']?>">
+                                            <a href="/public/<?=$image['path'] . '/' . $image['name']; ?>" title="<?=$image['name']?>">
+                                                <img src="/public/<?=$image['thumbnail'] . '/thumbnail/' . $image['name']; ; ?>" alt="<?=$image['name']?>">
                                             </a>
                                         <?php endforeach; ?>
                                     </div>
-                                    <div class="emptySpace40px"></div>
-                                    <?=$this->partial('partial-upload.phtml');?>
+
+                                   
                                 </div>
                             </div>
                         </div>
@@ -140,7 +139,7 @@ $form->prepare();
 
 </div>
 
-<script src="/roadaccident/public/blueimpgallery/js/blueimp-gallery.min.js"></script>
+<script src="/public/blueimpgallery/js/blueimp-gallery.min.js"></script>
 <script>
     document.getElementById('links').onclick = function (event) {
         event = event || window.event;

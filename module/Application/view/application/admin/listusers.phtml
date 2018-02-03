@@ -1,0 +1,87 @@
+<script>
+	$(function(){
+		$('.inpUserSave input').click(function(){
+			var numObj = $(this).index('.inpUserSave input');
+			var userId = $('.inpUserId span').eq(numObj).text();
+			var textReason = $('.inpUpdateDescr').eq(numObj).val();
+			$.ajax({
+				url: "/api/adminupdateuser",
+				method: "POST",
+				data: {	 
+						userId: userId, 
+						textReason: textReason
+						},
+				success: function(response){
+					if(response.state == 'success'){
+						$('.inpUserStatus span').eq(numObj).text('Заблокирован');
+						alert('Сообщение о блокировке отправлено пользователю!');
+					}
+				}
+			})
+		});
+	});
+</script>
+
+<div class="emptySpace40px"></div>
+<div class="container" id="specialDiv">
+    <div class="row">
+		<ul class="nav nav-pills">
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'editvehicles'));?>">Все авто</a></li>
+			<li role="presentation" ><a href="<?=$this->url('admin', array('action' => 'listusers'));?>">Все пользователи</a></li>
+		</ul>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-0  col-sm-offset-0  col-md-offset-0  col-lg-offset-0">
+			<table class="table">
+				<tr>
+					<th>id</th>
+					<th>Логин</th>
+					<th>Email</th>
+					<th>Статус</th>
+					<th>Создан</th>
+					<th>Действие</th>
+					<th>Причина</th>
+				</tr>
+				<? foreach($this->paginator as $user): ?>
+					<tr class="vehicleRow">
+						<th class="inpUserId">
+							<span><?=$user['u_id']?></span>
+						</th>
+						<th class="inpUsername">
+							<span><?=$user['u_username']?></span>
+						</th>
+						<th class="inpEmail">
+							<span><?=$user['u_email']?></span>
+						</th>
+						<th class="inpUserStatus">
+							<span>		
+								<? switch ($user['u_status']):
+								case 0:?> Активирован <? break;?>
+								<? case 1:?> Заблокирован <? break;?>
+								<? case 2:?> Удален <? break;?>
+								<? case 3:?> Неактивный <? break;?>
+								<? endswitch ?>
+							</span>
+						</th>
+						<th class="inpUserCreated">
+							<span><?=$user['u_dateCreated']->format('d-m-Y')?></span>
+						</th>			
+						<th class="inpUserSave">
+							<input type="button" value="Блокировка"/>
+						</th>		
+						<th class="inpUpdateDescr">
+							<textarea class="inpDescrText" placeholder="Комментарий" maxlength="200"></textarea>
+						</th>
+					</tr>
+				<? endforeach ?>
+				<?=$this->paginationControl(
+						$this->paginator,
+						'sliding',
+						'partial/paginatorUsers.phtml',
+						array(
+							'route' => 'admin'
+						)
+					);
+				?>
+			</table>
+		</div>
+    </div>
+</div>

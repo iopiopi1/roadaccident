@@ -31,7 +31,8 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Логин'
+				'placeholder' => 'Логин',
+				'required' => 'required',
 			),
         ));
 
@@ -43,7 +44,9 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Email'
+				'placeholder' => 'Email',
+				'required' => 'required',
+				'pattern' => '[^@]+@[^@]+\.[a-zA-Z]{2,6}',
 			),
         ));
 
@@ -55,7 +58,9 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Пароль'
+				'placeholder' => 'Пароль',
+				'required' => 'required',
+				'id' => 'password',
 			),
         ));
 
@@ -67,7 +72,9 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Пароль'
+				'placeholder' => 'Пароль',
+				'required' => 'required',
+				'id' => 'password_repeat',
 			),
         ));
 
@@ -79,7 +86,7 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Имя'
+				'placeholder' => 'Имя (необязательно)'
 			),
         ));
 
@@ -91,7 +98,7 @@ class User extends Form {
             ),
 			'attributes' => array(
 				'class' => 'form-control',
-				'placeholder' => 'Фамилия'
+				'placeholder' => 'Фамилия (необязательно)'
 			),
         ));
 

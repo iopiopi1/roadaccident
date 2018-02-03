@@ -1,0 +1,39 @@
+.vehicleaddheader{
+	padding:16px 10px;
+	color:#fff;
+	background-color:#EDB600;
+}
+
+.vehicleaddbody{
+	background-color:#f0f5f5;
+	min-height:200px;
+	padding:16px 10px;
+	position:relative;
+}
+
+#vehicle_search_id,#vehicleaddregnumId{
+	width:80%;
+	padding:10px 0;
+	border-radius:0px;
+	border:2px #EDB600 solid;
+}
+
+.submAdd,.submUpload,.submDelete{
+	border:2px #EDB600 solid;
+	width:80%;
+	padding:10px 20px;
+	border-radius:0px;
+	background-color:#fff;
+}
+
+#vehicleaddsubmitbutton{
+	width:80%;
+	padding:10px 0;
+	border-radius:0px;
+	border:2px #EDB600 solid;
+	background-color:#fff;
+}
+
+.glyphicon-chevron-right{
+	color:#EDB600;
+}

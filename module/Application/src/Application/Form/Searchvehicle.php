@@ -19,14 +19,7 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
     {
 
         parent::__construct();
-    /*public function init()
-    {*/
-        /*$this->setAttributes(
-            array('id' => 'searchvehicle')
-        );*/
-        /*$this->setHydrator(new ClassMethods())
-            ->setObject(new \Application\Entity\Vehicle())
-            ->setInputFilter(new InputFilter());*/
+
 		$this->setAttributes(
             array('id' => 'searchvehicle')
         );
@@ -38,8 +31,11 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
                 'label' => '',
             ),
 			'attributes' => array(
-				'class' => 'form-control',
-				'placeholder' => 'Рег.номер'
+				'id' => 'regnum_form_inp',
+				'class' => 'regnum_form',
+				'placeholder' => 'Рег.номер (напр. А777АА64)',
+				'pattern' => '[ABEHKMOPCTYXabehkmopctyx]\\d{3}[ABEHKMOPCTYXabehkmopctyx]{2}\\d{2,3}|[АВЕКМНОРСТУХавекмнорстух]\\d{3}[АВЕКМНОРСТУХавекмнорстух]{2}\\d{2,3}',
+				'title' => 'Формат X111XX11'
 			),
         ));
 
@@ -47,8 +43,10 @@ class Searchvehicle extends Form  implements InputFilterProviderInterface{
             'name' => 'submit',
             'type' => 'Zend\Form\Element\Button',
             'attributes' => array(
+				'id' => 'regnum_form_but',
 				'value' => 'Ok',
-				'class' => 'btn btn-default',
+				'class' => 'regnum_form',
+				'type' => 'submit',
 			),
 			'options' => array(
 				'label' => 'Найти'
