@@ -87,7 +87,20 @@ class UserController extends AbstractActionController
                 $user->setDateEdited(new \dateTime("now"));
 				$user->setStatus(\Application\Entity\User::STATUS_NONACTIVE);
                 $user = $this->serviceUser->save($user);
-				$this->serviceUser->sendConfirmationEmail($user->getEmail(),$user->getUsername(),$user->getId(),$user->getPassword(),$server_url);
+                
+                $this->serviceUser->sendConfirmationEmail($user->getEmail(),$user->getUsername(),$user->getId(),$user->getPassword(),$server_url);
+                        
+                $userAccepPolicy = new \Application\Entity\UserAction();
+                $userAccepPolicy->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_SECPOLICY);
+                $userAccepPolicy->setUserId($user->getId());
+                $userAccepPolicy->setIntValue(\Application\Entity\UserAction::ACCEPTED);
+                $this->serviceUser->save($userAccepPolicy);
+                $userAccepUsStatement = new \Application\Entity\UserAction();
+                $userAccepUsStatement->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_USERSTATEMENT);
+                $userAccepUsStatement->setUserId($user->getId());
+                $userAccepUsStatement->setIntValue(\Application\Entity\UserAction::ACCEPTED);
+                $this->serviceUser->save($userAccepUsStatement);
+                
             }else {
                 $messages = $form->getMessages();
             }
@@ -107,20 +120,21 @@ class UserController extends AbstractActionController
 			$password = $request->getPost('password');
 		}
 				
-        $user = $this->serviceUser->checkLogin($username,$password);
-		
+        $user = $this->serviceUser->checkLogin($username,$password);		
 		if(!is_null($user)){
 			$user_session = new Container('user');
 			$user_session->username = $user->getUsername();
 			$user_session->id = $user->getId();
 			$user_session->isAdmin = $this->serviceUser->getIsUserAdmin($user->getId());
 			return new JsonModel(array(
-				'state' => 'success', 
-				'errorMsg' => '',
-				'isAdmin' => $user_session->isAdmin,
-				'id' => $user_session->id,
-				'passTime' => $user->getPasswordChangeddate()->format('d-m-Y-H-i-s'),
-				'email' => $user->getEmail(),
+                            'state' => 'success', 
+                            'errorMsg' => '',
+                            'isAdmin' => $user_session->isAdmin,
+                            'id' => $user_session->id,
+                            'passTime' => $user->getPasswordChangeddate()->format('d-m-Y-H-i-s'),
+                            'email' => $user->getEmail(),
+                            'userStAccd' => $this->serviceUser->checkUserStAccd($user),
+                            'secPolAccd' => $this->serviceUser->checkSecPolAccd($user),                            
 			));
 		}
 		else{	//print_r($user);
