@@ -79,7 +79,7 @@ return array(
                     ),
                 ),
             ),
-			'vehicle' => array(
+            'vehicle' => array(
                 'type' => 'Segment',
                 'options' => array(
                     'route'    => '/vehicle[/:action][/:id]',

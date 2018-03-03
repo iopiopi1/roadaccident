@@ -25,7 +25,7 @@ class UserController extends AbstractActionController
 
     public function loginAction()
     {
-		$form = $this->getLoginForm();
+        $form = $this->getLoginForm();
         $user = new \Application\Entity\User();
 		
         return new ViewModel(
@@ -54,6 +54,36 @@ class UserController extends AbstractActionController
                 'form' => $form
             )
         );
+    }
+    
+    public function updatepoliciesAction(){
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            //$post = $request->getPost();
+            $email = $request->getPost('email');
+            //$email = 'yarillo@bk.ru';
+            //$user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy(array('email' => $email));
+            $user = $this->serviceUser->findUserByArray(array('email' => $email));
+            
+            if(!$this->serviceUser->checkUserStAccd($user)){
+            //print_r($user);
+                $userAccepPolicy = new \Application\Entity\UserAction();
+                $userAccepPolicy->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_SECPOLICY);
+                $userAccepPolicy->setUserId($user->getId());
+                $userAccepPolicy->setIntValue(\Application\Entity\UserAction::ACCEPTED);
+                $this->serviceUser->save($userAccepPolicy);
+                $userAccepUsStatement = new \Application\Entity\UserAction();
+                $userAccepUsStatement->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_USERSTATEMENT);
+                $userAccepUsStatement->setUserId($user->getId());
+                $userAccepUsStatement->setIntValue(\Application\Entity\UserAction::ACCEPTED);
+                $this->serviceUser->save($userAccepUsStatement);    
+            }
+        }
+        
+        return new JsonModel(array(
+            'state' => 'success',
+        ));
+        
     }
 	
     public function registerajaxAction()
@@ -84,7 +114,7 @@ class UserController extends AbstractActionController
                         'errorMsg' => 'Такой email уже существует!',
 					));
 				}
-                $user->setDateEdited(new \dateTime("now"));
+                $user->setDateEdited(new \dateTime("now", new \DateTimeZone("UTC")));
 				$user->setStatus(\Application\Entity\User::STATUS_NONACTIVE);
                 $user = $this->serviceUser->save($user);
                 
@@ -112,9 +142,11 @@ class UserController extends AbstractActionController
         ));
     }
 	
-	public function checkloginAction()
+    public function checkloginAction()
     {
-		$request = $this->getRequest();
+        $request = $this->getRequest();
+        $username = null;
+        $password = null;
         if ($request->isPost()) {
 			$username = $request->getPost('username');
 			$password = $request->getPost('password');

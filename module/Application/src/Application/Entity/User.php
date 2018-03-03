@@ -112,8 +112,8 @@ class User
 
     public function __construct()
     {
-        $this->setDateCreated(new \DateTime("now"));
-        $this->setPasswordChangeddate(new \DateTime("now"));
+        $this->setDateCreated(new \DateTime("now", new \DateTimeZone("UTC")));
+        $this->setPasswordChangeddate(new \DateTime("now", new \DateTimeZone("UTC")));
     }
 
     /**

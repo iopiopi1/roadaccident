@@ -24,11 +24,16 @@ class UserService extends EntityServiceAbstract {
 
         return $user;
     }
-	
-	public function updateById($user_id)
+    
+    public function findUserByArray($findArray){
+        $user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy($findArray);
+        return $user;
+    }
+    
+    public function updateById($user_id)
     {
-		$user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy(array('id' => $user_id));
-		$user->setStatus(\Application\Entity\User::STATUS_ACTIVE);
+        $user = $this->getEntityManager()->getRepository('\Application\Entity\User')->findOneBy(array('id' => $user_id));
+        $user->setStatus(\Application\Entity\User::STATUS_ACTIVE);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

@@ -377,7 +377,7 @@ class ApiController extends AbstractActionController
 			$latRegnum = $this->serviceVehicle->correctRegnum($regnum);
 			
 			$vehicle->setRegnum($latRegnum);
-			$vehicle->setDateEdited(new \DateTime("now"));
+			$vehicle->setDateEdited(new \DateTime("now", new \DateTimeZone("UTC")));
 			$vehicle->setUser($post['userId']);	
 			$this->serviceApi->save($vehicle);
 			
@@ -609,7 +609,7 @@ class ApiController extends AbstractActionController
 		if($user_id > 0){
 			
 			$user = $this->serviceUser->updateById($user_id);
-			$user->setPasswordChangeddate(new \DateTime("now"));
+			$user->setPasswordChangeddate(new \DateTime("now", new \DateTimeZone("UTC")));
 			$this->serviceUser->save($user);
 			
 			$result = 'success';
