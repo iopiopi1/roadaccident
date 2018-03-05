@@ -56,12 +56,12 @@ class User extends Form {
             'options' => array(
                 'label' => ''
             ),
-			'attributes' => array(
-				'class' => 'form-control',
-				'placeholder' => 'Пароль',
-				'required' => 'required',
-				'id' => 'password',
-			),
+            'attributes' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Пароль',
+                    'required' => 'required',
+                    'id' => 'password',
+            ),
         ));
 
         $this->add(array(
@@ -109,6 +109,13 @@ class User extends Form {
 				'value' => 'Зарегистрироваться',
 				'class' => 'form-control btn-primary',
 			),
+        ));
+        
+        $this->add(array(
+            'name' => 'isMobile',
+            'type' => 'hidden',
+            'attributes' => array(
+                'value' => '1')
         ));
 				
     }

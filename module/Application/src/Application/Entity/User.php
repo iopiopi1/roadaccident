@@ -104,11 +104,17 @@ class User
      */
     protected $okId;
 	
-	 /**
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
     protected $passwordChangeddate;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $isMobile;
 
     public function __construct()
     {
@@ -254,7 +260,22 @@ class User
         return $this->passwordChangeddate;
     }
 	
-	
+    /**
+     * @param integer $isMobile
+     */
+    public function setIsMobile($isMobile)
+    {
+        $this->isMobile = $isMobile;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getIsMobile()
+    {
+        return $this->isMobile;
+    }
 	
 	
 

@@ -119,17 +119,19 @@ class UserController extends AbstractActionController
                 $user = $this->serviceUser->save($user);
                 
                 $this->serviceUser->sendConfirmationEmail($user->getEmail(),$user->getUsername(),$user->getId(),$user->getPassword(),$server_url);
-                        
-                $userAccepPolicy = new \Application\Entity\UserAction();
-                $userAccepPolicy->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_SECPOLICY);
-                $userAccepPolicy->setUserId($user->getId());
-                $userAccepPolicy->setIntValue(\Application\Entity\UserAction::ACCEPTED);
-                $this->serviceUser->save($userAccepPolicy);
-                $userAccepUsStatement = new \Application\Entity\UserAction();
-                $userAccepUsStatement->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_USERSTATEMENT);
-                $userAccepUsStatement->setUserId($user->getId());
-                $userAccepUsStatement->setIntValue(\Application\Entity\UserAction::ACCEPTED);
-                $this->serviceUser->save($userAccepUsStatement);
+                
+                if($user->getIsMobile() == 1){
+                    $userAccepPolicy = new \Application\Entity\UserAction();
+                    $userAccepPolicy->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_SECPOLICY);
+                    $userAccepPolicy->setUserId($user->getId());
+                    $userAccepPolicy->setIntValue(\Application\Entity\UserAction::ACCEPTED);
+                    $this->serviceUser->save($userAccepPolicy);
+                    $userAccepUsStatement = new \Application\Entity\UserAction();
+                    $userAccepUsStatement->setActionType(\Application\Entity\UserAction::ACTION_ACCEPT_USERSTATEMENT);
+                    $userAccepUsStatement->setUserId($user->getId());
+                    $userAccepUsStatement->setIntValue(\Application\Entity\UserAction::ACCEPTED);
+                    $this->serviceUser->save($userAccepUsStatement);
+                }
                 
             }else {
                 $messages = $form->getMessages();
